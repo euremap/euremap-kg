@@ -1,4 +1,4 @@
-# EUREMAP Ontology and Service Knowledge Graph (v0.2.0)
+# EUREMAP Ontology and Service Knowledge Graph
 
 An RDF/OWL schema plus instance graph for the [EUREMAP Pipeline of Marine Bioprospecting Services Catalogue](https://services.euremap.eu/), with all 71 services, 9 pipeline steps, 11 institutions, 9 countries, 3 research infrastructures and 10 national nodes. It is designed as EUREMAP's semantic control plane: it describes and links services for discovery, routing and governance, and does not hold scientific data.
 
