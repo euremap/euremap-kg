@@ -1,0 +1,3288 @@
+@prefix biotools: <https://bio.tools/> .
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix edam: <http://edamontology.org/> .
+@prefix euc: <http://publications.europa.eu/resource/authority/country/> .
+@prefix eur: <https://w3id.org/euremap/ontology/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+@prefix org: <http://www.w3.org/ns/org#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix res: <https://w3id.org/euremap/resource/> .
+@prefix schema: <https://schema.org/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix wd: <http://www.wikidata.org/entity/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+eur:acceptsInput a owl:ObjectProperty ;
+    rdfs:label "accepts input"@en ;
+    rdfs:comment "Service-level statement, asserted only where the catalogue text states it explicitly."@en ;
+    rdfs:domain eur:Service ;
+    rdfs:range eur:MaterialOrDataType .
+
+eur:accessConditions a owl:DatatypeProperty ;
+    rdfs:label "access conditions (verbatim)"@en ;
+    rdfs:domain eur:Service ;
+    rdfs:range rdf:langString .
+
+eur:atPipelineStep a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "at pipeline step"@en ;
+    rdfs:domain eur:Service ;
+    rdfs:range eur:PipelineStep ;
+    rdfs:subPropertyOf dct:subject .
+
+eur:catalogueLabel a owl:DatatypeProperty ;
+    rdfs:label "label as written in the catalogue"@en ;
+    rdfs:subPropertyOf skos:hiddenLabel .
+
+eur:deliveredByUnit a owl:ObjectProperty ;
+    rdfs:label "delivered by unit"@en ;
+    rdfs:domain eur:Service ;
+    rdfs:range eur:OrganisationalUnit .
+
+eur:feedsInto a owl:ObjectProperty ;
+    rdfs:label "feeds into"@en ;
+    rdfs:comment "Step A feedsInto step B when a typical output of A is a typical input of B. Materialised by the CONSTRUCT query Q07."@en ;
+    rdfs:domain eur:PipelineStep ;
+    rdfs:range eur:PipelineStep .
+
+eur:hasAccessMode a owl:ObjectProperty ;
+    rdfs:label "has access mode"@en ;
+    rdfs:domain eur:Service ;
+    rdfs:range eur:AccessMode .
+
+eur:hasCapability a owl:ObjectProperty ;
+    rdfs:label "has capability"@en ;
+    rdfs:comment "Assigned from controlled keyword matching over the catalogue title and overview; see prov:wasGeneratedBy on the graph."@en ;
+    rdfs:domain eur:Service ;
+    rdfs:range eur:Capability .
+
+eur:hasCapacity a owl:ObjectProperty ;
+    rdfs:label "has capacity"@en ;
+    rdfs:domain eur:Service ;
+    rdfs:range eur:Capacity .
+
+eur:hasFeeModel a owl:ObjectProperty ;
+    rdfs:label "has fee model"@en ;
+    rdfs:domain eur:Service ;
+    rdfs:range eur:FeeModel .
+
+eur:inPhase a owl:ObjectProperty ;
+    rdfs:label "in phase"@en ;
+    rdfs:domain eur:PipelineStep ;
+    rdfs:range eur:PipelinePhase ;
+    rdfs:subPropertyOf skos:broader .
+
+eur:iso3166Alpha2 a owl:DatatypeProperty ;
+    rdfs:label "ISO 3166-1 alpha-2 code"@en ;
+    rdfs:domain eur:Country ;
+    rdfs:range xsd:string .
+
+eur:listedIn a owl:ObjectProperty ;
+    rdfs:label "listed in"@en ;
+    rdfs:domain eur:Service ;
+    rdfs:range eur:ServiceCatalogue ;
+    rdfs:subPropertyOf dct:isPartOf .
+
+eur:nextStep a owl:ObjectProperty ;
+    rdfs:label "next step (catalogue order)"@en ;
+    rdfs:comment "Linear presentation order of the catalogue. Real workflows are iterative (e.g. bioassay-guided fractionation); scientific routing should use eur:feedsInto, derived from I/O contracts."@en ;
+    rdfs:subPropertyOf eur:precedes ;
+    owl:inverseOf eur:previousStep .
+
+eur:nodeMember a owl:ObjectProperty ;
+    rdfs:label "node member"@en ;
+    rdfs:domain eur:NationalNode ;
+    rdfs:range eur:Institution ;
+    rdfs:subPropertyOf org:hasMember .
+
+eur:nodeOf a owl:ObjectProperty ;
+    rdfs:label "node of"@en ;
+    rdfs:domain eur:NationalNode ;
+    rdfs:range eur:ResearchInfrastructure ;
+    rdfs:subPropertyOf org:unitOf .
+
+eur:offeredInCountry a owl:ObjectProperty ;
+    rdfs:label "offered in country"@en ;
+    rdfs:comment "Inferred by an OWL 2 RL reasoner; in plain SPARQL use the path eur:providedBy/eur:locatedInCountry."@en ;
+    rdfs:domain eur:Service ;
+    rdfs:range eur:Country ;
+    owl:propertyChainAxiom ( eur:providedBy eur:locatedInCountry ) .
+
+eur:offeredThrough a owl:ObjectProperty ;
+    rdfs:label "offered through research infrastructure"@en ;
+    rdfs:domain eur:Service ;
+    rdfs:range eur:ResearchInfrastructure .
+
+eur:producesOutput a owl:ObjectProperty ;
+    rdfs:label "produces output"@en ;
+    rdfs:domain eur:Service ;
+    rdfs:range eur:MaterialOrDataType .
+
+eur:quantityKind a owl:ObjectProperty ;
+    rdfs:label "quantity kind"@en ;
+    rdfs:domain eur:Capacity ;
+    rdfs:range eur:QuantityKind .
+
+eur:requiresPriorContact a owl:DatatypeProperty ;
+    rdfs:label "requires prior contact"@en ;
+    rdfs:domain eur:Service ;
+    rdfs:range xsd:boolean .
+
+eur:requiresSubmissionTo a owl:ObjectProperty ;
+    rdfs:label "requires data submission to"@en ;
+    rdfs:domain eur:Service ;
+    rdfs:range eur:Repository .
+
+eur:rorId a owl:DatatypeProperty ;
+    rdfs:label "ROR identifier"@en ;
+    rdfs:subPropertyOf dct:identifier .
+
+eur:stepOrder a owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:label "step order"@en ;
+    rdfs:domain eur:PipelineStep ;
+    rdfs:range xsd:integer .
+
+eur:typicalInput a owl:ObjectProperty ;
+    rdfs:label "typical input"@en ;
+    rdfs:comment "Step-level default: what services at this step generally consume."@en ;
+    rdfs:domain eur:PipelineStep ;
+    rdfs:range eur:MaterialOrDataType .
+
+eur:typicalOutput a owl:ObjectProperty ;
+    rdfs:label "typical output"@en ;
+    rdfs:domain eur:PipelineStep ;
+    rdfs:range eur:MaterialOrDataType .
+
+eur:usesSoftware a owl:ObjectProperty ;
+    rdfs:label "uses software"@en ;
+    rdfs:domain eur:Service ;
+    rdfs:range eur:SoftwareTool .
+
+res:dataset-euremap-kg a dcat:Dataset,
+        prov:Entity ;
+    dct:conformsTo <https://w3id.org/euremap/ontology> ;
+    dct:description "Generated from the public catalogue listing and the 71 service detail pages retrieved on 2026-11-19. Capability tags are assigned by controlled keyword matching; national nodes are derived from service affiliations. Personal contact e-mails are intentionally not included."@en ;
+    dct:issued "2026-11-19"^^xsd:date ;
+    dct:title "EUREMAP service knowledge graph (instance data)"@en ;
+    prov:wasDerivedFrom res:catalogue-euremap .
+
+res:service-EUREMAP_001 a dcat:DataService,
+        eur:Service ;
+    dct:description "Assembly and analysis of raw DNA sequencing reads from environmental or biological samples to identify which organisms are present and what functions they may perform. The service includes quality control, taxonomic classification, gene prediction, and functional annotation using trusted databases. Results can reveal biological pathways, biosynthetic potential for natural product production, and other functional insights."@en ;
+    dct:identifier "EUREMAP_001" ;
+    dct:source <https://services.euremap.eu/service/euremap_001/> ;
+    dct:title "Metagenomic read assembly with taxonomic and functional assignments"@en ;
+    dcat:landingPage <https://services.euremap.eu/service/euremap_001/> ;
+    foaf:page <https://www.ebi.ac.uk/metagenomics> ;
+    eur:acceptsInput res:mat-raw-reads ;
+    eur:accessConditions "Free; raw reads submission to ENA (EMBL-EBI) required"@en ;
+    eur:atPipelineStep res:step-genomics ;
+    eur:deliveredByUnit res:unit-embl-ebi-mgnify-at-embl-ebi ;
+    eur:hasAccessMode res:access-virtual ;
+    eur:hasCapability res:cap-functional-annotation,
+        res:cap-gene-prediction,
+        res:cap-metagenome-assembly,
+        res:cap-taxonomic-classification ;
+    eur:hasFeeModel res:fee-free ;
+    eur:listedIn res:catalogue-euremap ;
+    eur:offeredThrough res:ri-embl ;
+    eur:providedBy res:org-embl-ebi ;
+    eur:requiresPriorContact false ;
+    eur:requiresSubmissionTo res:repo-ena ;
+    eur:usesSoftware res:sw-mgnify .
+
+res:service-EUREMAP_002 a dcat:DataService,
+        eur:Service ;
+    dct:description "Metagenome Assembled Genomes (MAGs) generation and analysis pipeline. The service includes quality assessment of recovered genomes and determination of their taxonomic origin."@en ;
+    dct:identifier "EUREMAP_002" ;
+    dct:source <https://services.euremap.eu/service/euremap_002/> ;
+    dct:title "MAG generation and analysis with quality assessment and taxonomic assignment"@en ;
+    dcat:landingPage <https://services.euremap.eu/service/euremap_002/> ;
+    foaf:page <https://www.ebi.ac.uk/metagenomics> ;
+    eur:acceptsInput res:mat-raw-reads ;
+    eur:accessConditions "Free; raw reads submission to ENA (EMBL-EBI) required"@en ;
+    eur:atPipelineStep res:step-genomics ;
+    eur:deliveredByUnit res:unit-embl-ebi-mgnify-at-embl-ebi ;
+    eur:hasAccessMode res:access-virtual ;
+    eur:hasCapability res:cap-mag-binning,
+        res:cap-metagenome-assembly,
+        res:cap-taxonomic-classification ;
+    eur:hasFeeModel res:fee-free ;
+    eur:listedIn res:catalogue-euremap ;
+    eur:offeredThrough res:ri-embl ;
+    eur:providedBy res:org-embl-ebi ;
+    eur:requiresPriorContact false ;
+    eur:requiresSubmissionTo res:repo-ena ;
+    eur:usesSoftware res:sw-mgnify .
+
+res:service-EUREMAP_003 a dcat:DataService,
+        eur:Service ;
+    dct:description "Platform for the prediction, exploration and analysis of BGCs from metagenomic datasets.The service includes an analysis pipeline, a large searchable database, a user-friendly data portal, and tools that enable both scientists and developers to access and analyse the data."@en ;
+    dct:identifier "EUREMAP_003" ;
+    dct:source <https://services.euremap.eu/service/euremap_003/> ;
+    dct:title "Prediction, exploration and analysis of biosynthetic gene clusters from metagenomic datasets"@en ;
+    dcat:landingPage <https://services.euremap.eu/service/euremap_003/> ;
+    foaf:page <https://www.ebi.ac.uk/finn-srv/mgnify-bgcs> ;
+    eur:acceptsInput res:mat-raw-reads ;
+    eur:accessConditions "Free; raw reads submission to ENA (EMBL-EBI) required"@en ;
+    eur:atPipelineStep res:step-genomics ;
+    eur:deliveredByUnit res:unit-embl-ebi-mgnify-at-embl-ebi ;
+    eur:hasAccessMode res:access-virtual ;
+    eur:hasCapability res:cap-bgc-mining ;
+    eur:hasFeeModel res:fee-free ;
+    eur:listedIn res:catalogue-euremap ;
+    eur:offeredThrough res:ri-embl ;
+    eur:providedBy res:org-embl-ebi ;
+    eur:requiresPriorContact false ;
+    eur:requiresSubmissionTo res:repo-ena ;
+    eur:usesSoftware res:sw-mgnify .
+
+res:service-EUREMAP_004 a eur:Service ;
+    dct:description "Metagenomics assembly and analysis pipeline including short-read, long-read and hybrid assembly, functional and taxonomic annotation, MAG generation and connected analysis, and primary analysis of prokaryotic genomes."@en ;
+    dct:identifier "EUREMAP_004" ;
+    dct:source <https://services.euremap.eu/service/euremap_004/> ;
+    dct:title "Illumina and ONT sequencing with metagenome assembly, annotation, and genome analysis"@en ;
+    dcat:landingPage <https://services.euremap.eu/service/euremap_004/> ;
+    foaf:page <https://www.sintef.no/en/all-laboratories/molecular-biology-laboratory/> ;
+    eur:accessConditions "Please contact us by email before each service request. Fee-for-service conditions apply."@en ;
+    eur:atPipelineStep res:step-genomics ;
+    eur:deliveredByUnit res:unit-sintef-department-of-biotechnology-and-nanomedicine-at-sintef-indus ;
+    eur:hasAccessMode res:access-remote ;
+    eur:hasCapability res:cap-functional-annotation,
+        res:cap-illumina-sequencing,
+        res:cap-mag-binning,
+        res:cap-metagenome-assembly,
+        res:cap-nanopore-sequencing,
+        res:cap-taxonomic-classification ;
+    eur:hasFeeModel res:fee-for-service ;
+    eur:listedIn res:catalogue-euremap ;
+    eur:offeredThrough res:ri-eu-openscreen ;
+    eur:providedBy res:org-sintef ;
+    eur:requiresPriorContact true .
+
+res:service-EUREMAP_005 a eur:Service ;
+    dct:description "Metagenomic assembly and analysis pipeline based on Nextflow. The service provides an automated workflow for processing metagenomic datasets."@en ;
+    dct:identifier "EUREMAP_005" ;
+    dct:source <https://services.euremap.eu/service/euremap_005/> ;
+    dct:title "Automated metagenomic assembly and analysis pipeline based on Nextflow"@en ;
+    dcat:landingPage <https://services.euremap.eu/service/euremap_005/> ;
+    foaf:page <https://www.sintef.no/en/all-laboratories/molecular-biology-laboratory/> ;
+    eur:accessConditions "Please contact us by email before each service request. Fee-for-service conditions apply."@en ;
+    eur:atPipelineStep res:step-genomics ;
+    eur:deliveredByUnit res:unit-sintef-department-of-biotechnology-and-nanomedicine-at-sintef-indus ;
+    eur:hasAccessMode res:access-remote ;
+    eur:hasCapability res:cap-metagenome-assembly,
+        res:cap-workflow-automation ;
+    eur:hasFeeModel res:fee-for-service ;
+    eur:listedIn res:catalogue-euremap ;
+    eur:offeredThrough res:ri-eu-openscreen ;
+    eur:providedBy res:org-sintef ;
+    eur:requiresPriorContact true ;
+    eur:usesSoftware res:sw-nextflow .
+
+res:service-EUREMAP_006 a eur:Service ;
+    dct:description "BGC detection pipeline using antiSMASH, BiG-SCAPE and Sanntis. This service includes full genome assembly and identification of BGCs"@en ;
+    dct:identifier "EUREMAP_006" ;
+    dct:source <https://services.euremap.eu/service/euremap_006/> ;
+    dct:title "Detection of BGCs using antiSMASH, BiG-SCAPE and Sanntis"@en ;
+    dcat:landingPage <https://services.euremap.eu/service/euremap_006/> ;
+    foaf:page <https://www.sintef.no/en/all-laboratories/molecular-biology-laboratory/> ;
+    eur:accessConditions "Please contact us by email before each service request. Fee-for-service conditions apply."@en ;
+    eur:atPipelineStep res:step-genomics ;
+    eur:deliveredByUnit res:unit-sintef-department-of-biotechnology-and-nanomedicine-at-sintef-indus ;
+    eur:hasAccessMode res:access-remote ;
+    eur:hasCapability res:cap-bgc-mining,
+        res:cap-metagenome-assembly ;
+    eur:hasFeeModel res:fee-for-service ;
+    eur:listedIn res:catalogue-euremap ;
+    eur:offeredThrough res:ri-eu-openscreen ;
+    eur:providedBy res:org-sintef ;
+    eur:requiresPriorContact true ;
+    eur:usesSoftware res:sw-antismash,
+        res:sw-big-scape,
+        res:sw-sanntis .
+
+res:service-EUREMAP_007 a eur:Service ;
+    dct:description "Cultivation of microorganisms for biomass production, including all types of bacteria, including anaerobes, and fungi. This service includes culture scale-up to volumes of up to 50 L."@en ;
+    dct:identifier "EUREMAP_007" ;
+    dct:source <https://services.euremap.eu/service/euremap_007/> ;
+    dct:title "Cultivation of bacteria and fungi, 1 ml-50 L scale"@en ;
+    dcat:landingPage <https://services.euremap.eu/service/euremap_007/> ;
+    foaf:page <https://www.sintef.no/en/all-laboratories/fermentation-laboratory-at-sintef/> ;
+    eur:accessConditions "Please contact us by email before each service request. Fee-for-service conditions apply."@en ;
+    eur:atPipelineStep res:step-biomass-production ;
+    eur:deliveredByUnit res:unit-sintef-department-of-biotechnology-and-nanomedicine-at-sintef-indus ;
+    eur:hasAccessMode res:access-remote ;
+    eur:hasCapability res:cap-anaerobic-cultivation,
+        res:cap-bacterial-cultivation,
+        res:cap-bioreactor-cultivation,
+        res:cap-fungal-cultivation ;
+    eur:hasCapacity res:capacity-EUREMAP_007-1 ;
+    eur:hasFeeModel res:fee-for-service ;
+    eur:listedIn res:catalogue-euremap ;
+    eur:offeredThrough res:ri-eu-openscreen ;
+    eur:providedBy res:org-sintef ;
+    eur:requiresPriorContact true .
+
+res:service-EUREMAP_008 a eur:Service ;
+    dct:description "Production of microbial biomass from cultured strains under aerobic conditions in different formats using a suite of INFORS automated bioreactors ranging from 0.5 to 2 L, including four photobioreactors. This service includes scale-up to 10 L through continuous to semi-continuous cultivation, as well as optimisation of culture conditions using eight replicate bioreactors. Shake Flask Cultivation on INFORS Incubators with flask volumes up to 3L"@en ;
+    dct:identifier "EUREMAP_008" ;
+    dct:source <https://services.euremap.eu/service/euremap_008/> ;
+    dct:title "Aerobic microbial biomass production using automated bioreactors, with scale-up to 10 L"@en ;
+    dcat:landingPage <https://services.euremap.eu/service/euremap_008/> ;
+    foaf:page <https://www.embrc-france.fr/en/nos-services/plate-formes-technologiques/culture-and-biomass> ;
+    eur:accessConditions "Since it depends on the strain, contact the service"@en ;
+    eur:atPipelineStep res:step-biomass-production ;
+    eur:deliveredByUnit res:unit-su-bio2mar-platform-sorbonne-universit-observatoire-oc-anologiq ;
+    eur:hasAccessMode res:access-physical ;
+    eur:hasCapability res:cap-bacterial-cultivation,
+        res:cap-bioreactor-cultivation,
+        res:cap-photobioreactor ;
+    eur:hasCapacity res:capacity-EUREMAP_008-1 ;
+    eur:hasFeeModel res:fee-on-request ;
+    eur:listedIn res:catalogue-euremap ;
+    eur:offeredThrough res:ri-embrc ;
+    eur:providedBy res:org-su ;
+    eur:requiresPriorContact true .
+
+res:service-EUREMAP_009 a eur:Service ;
+    dct:description "This service includes extraction of culture media at scales of up to 100 g / 5 L."@en ;
+    dct:identifier "EUREMAP_009" ;
+    dct:source <https://services.euremap.eu/service/euremap_009/> ;
+    dct:title "Extraction of culture media at scales of up to 100 g / 5 L"@en ;
+    dcat:landingPage <https://services.euremap.eu/service/euremap_009/> ;
+    foaf:page <https://en.uit.no/forskning/forskningsgrupper/sub?p_document_id=380005&sub_id=602146> ;
+    eur:acceptsInput res:mat-culture-broth ;
+    eur:accessConditions "Please contact us by email before each service request. Fee-for-service conditions apply."@en ;
+    eur:atPipelineStep res:step-chemical-extraction ;
+    eur:deliveredByUnit res:unit-uit-marbio-faculty-of-biosciences-fisheries-and-economics ;
+    eur:hasAccessMode res:access-physical ;
+    eur:hasCapability res:cap-culture-medium-extraction ;
+    eur:hasCapacity res:capacity-EUREMAP_009-1,
+        res:capacity-EUREMAP_009-2 ;
+    eur:hasFeeModel res:fee-for-service ;
+    eur:listedIn res:catalogue-euremap ;
+    eur:offeredThrough res:ri-eu-openscreen ;
+    eur:providedBy res:org-uit ;
+    eur:requiresPriorContact true .
+
+res:service-EUREMAP_010 a eur:Service ;
+    dct:description "This service includes extraction of culture media at scales of up to 20 L."@en ;
+    dct:identifier "EUREMAP_010" ;
+    dct:source <https://services.euremap.eu/service/euremap_010/> ;
+    dct:title "Extraction of culture media at scales of up to 20 L"@en ;
+    dcat:landingPage <https://services.euremap.eu/service/euremap_010/> ;
+    foaf:page <https://www.medinadiscovery.com/services_groups_l3/natural-products-chemistry/> ;
+    eur:acceptsInput res:mat-culture-broth ;
+    eur:accessConditions "Please contact us by email before each service request. Fee-for-service conditions apply."@en ;
+    eur:atPipelineStep res:step-chemical-extraction ;
+    eur:deliveredByUnit res:unit-medina-fundaci-n-medina ;
+    eur:hasAccessMode res:access-remote ;
+    eur:hasCapability res:cap-culture-medium-extraction ;
+    eur:hasCapacity res:capacity-EUREMAP_010-1 ;
+    eur:hasFeeModel res:fee-for-service ;
+    eur:listedIn res:catalogue-euremap ;
+    eur:offeredThrough res:ri-eu-openscreen ;
+    eur:providedBy res:org-medina ;
+    eur:requiresPriorContact true .
+
+res:service-EUREMAP_011 a eur:Service ;
+    dct:description "This service includes extraction of culture media at scales of up to 5 L."@en ;
+    dct:identifier "EUREMAP_011" ;
+    dct:source <https://services.euremap.eu/service/euremap_011/> ;
+    dct:title "Extraction of culture media at scales of up to 5 L"@en ;
+    dcat:landingPage <https://services.euremap.eu/service/euremap_011/> ;
+    foaf:page <https://milan35.wixsite.com/tau-porifera> ;
+    eur:acceptsInput res:mat-culture-broth ;
+    eur:accessConditions "Please contact us by email before each service request. Fee-for-service conditions apply."@en ;
+    eur:atPipelineStep res:step-chemical-extraction ;
+    eur:deliveredByUnit res:unit-tau-porifera-sponges-research-group ;
+    eur:hasAccessMode res:access-remote ;
+    eur:hasCapability res:cap-culture-medium-extraction ;
+    eur:hasCapacity res:capacity-EUREMAP_011-1 ;
+    eur:hasFeeModel res:fee-for-service ;
+    eur:listedIn res:catalogue-euremap ;
+    eur:offeredThrough res:ri-embrc ;
+    eur:providedBy res:org-tau ;
+    eur:requiresPriorContact true .
+
+res:service-EUREMAP_012 a eur:Service ;
+    dct:description "This service includes extraction of biomass and culture media at scales of up to 5 L."@en ;
+    dct:identifier "EUREMAP_012" ;
+    dct:source <https://services.euremap.eu/service/euremap_012/> ;
+    dct:title "Extraction of biomass and culture media at scales of up to 5 L"@en ;
+    dcat:landingPage <https://services.euremap.eu/service/euremap_012/> ;
+    foaf:page <https://www.szn.it> ;
+    eur:acceptsInput res:mat-biomass,
+        res:mat-culture-broth ;
+    eur:accessConditions "Please contact us by email before each service request. Fee-for-service conditions apply."@en ;
+    eur:atPipelineStep res:step-chemical-extraction ;
+    eur:deliveredByUnit res:unit-szn-ecosustainable-marine-biotechnology-department ;
+    eur:hasAccessMode res:access-physical ;
+    eur:hasCapability res:cap-biomass-extraction,
+        res:cap-culture-medium-extraction ;
+    eur:hasCapacity res:capacity-EUREMAP_012-1 ;
+    eur:hasFeeModel res:fee-for-service ;
+    eur:listedIn res:catalogue-euremap ;
+    eur:offeredThrough res:ri-embrc ;
+    eur:providedBy res:org-szn ;
+    eur:requiresPriorContact true .
+
+res:service-EUREMAP_013 a eur:Service ;
+    dct:description "This service includes extraction of biomass and culture media at scales of up to 5 L. The service can be customised according to client demand. Pellet and culture media can be extracted separately or combined using organis or aqueous solvents."@en ;
+    dct:identifier "EUREMAP_013" ;
+    dct:source <https://services.euremap.eu/service/euremap_013/> ;
+    dct:title "Extraction of biomass and culture media at scales of up to 5 L"@en ;
+    dcat:landingPage <https://services.euremap.eu/service/euremap_013/> ;
+    foaf:page <https://ccmar.ualg.pt/en/our-services> ;
+    eur:acceptsInput res:mat-biomass,
+        res:mat-culture-broth ;
+    eur:accessConditions "Please contact us by email before each service request. Fee-for-service conditions apply."@en ;
+    eur:atPipelineStep res:step-chemical-extraction ;
+    eur:deliveredByUnit res:unit-ccmar-protein-chemistry-platform-marine-resources-cts ;
+    eur:hasAccessMode res:access-physical ;
+    eur:hasCapability res:cap-biomass-extraction,
+        res:cap-culture-medium-extraction ;
+    eur:hasCapacity res:capacity-EUREMAP_013-1 ;
+    eur:hasFeeModel res:fee-for-service ;
+    eur:listedIn res:catalogue-euremap ;
+    eur:offeredThrough res:ri-embrc ;
+    eur:providedBy res:org-ccmar ;
+    eur:requiresPriorContact true .
+
+res:service-EUREMAP_014 a eur:Service ;
+    dct:description "This service includes extraction of cell pellets from cultures of up to 40 L."@en ;
+    dct:identifier "EUREMAP_014" ;
+    dct:source <https://services.euremap.eu/service/euremap_014/> ;
+    dct:title "Extraction of cell pellets from cultures of up to 40 L"@en ;
+    dcat:landingPage <https://services.euremap.eu/service/euremap_014/> ;
+    foaf:page <https://www.sintef.no/en/explore-our-services/> ;
+    eur:acceptsInput res:mat-biomass ;
+    eur:accessConditions "Please contact us by email before each service request. Fee-for-service conditions apply."@en ;
+    eur:atPipelineStep res:step-chemical-extraction ;
+    eur:deliveredByUnit res:unit-sintef-department-of-biotechnology-and-nanomedicine-at-sintef-indus ;
+    eur:hasAccessMode res:access-remote ;
+    eur:hasCapability res:cap-cell-pellet-extraction ;
+    eur:hasCapacity res:capacity-EUREMAP_014-1 ;
+    eur:hasFeeModel res:fee-for-service ;
+    eur:listedIn res:catalogue-euremap ;
+    eur:offeredThrough res:ri-eu-openscreen ;
+    eur:providedBy res:org-sintef ;
+    eur:requiresPriorContact true .
+
+res:service-EUREMAP_015 a eur:Service ;
+    dct:description "This service includes extraction of culture media at scales of up to 10 g."@en ;
+    dct:identifier "EUREMAP_015" ;
+    dct:source <https://services.euremap.eu/service/euremap_015/> ;
+    dct:title "Extraction of culture media at scales of up to 10 g"@en ;
+    dcat:landingPage <https://services.euremap.eu/service/euremap_015/> ;
+    foaf:page <https://www.icb.cnr.it/> ;
+    eur:acceptsInput res:mat-culture-broth ;
+    eur:accessConditions "Please contact us by email before each service request. Fee-for-service conditions apply."@en ;
+    eur:atPipelineStep res:step-chemical-extraction ;
+    eur:deliveredByUnit res:unit-cnr-cnr-institute-of-biomolecular-chemistry-icb ;
+    eur:hasAccessMode res:access-remote ;
+    eur:hasCapability res:cap-culture-medium-extraction ;
+    eur:hasCapacity res:capacity-EUREMAP_015-1 ;
+    eur:hasFeeModel res:fee-for-service ;
+    eur:listedIn res:catalogue-euremap ;
+    eur:offeredThrough res:ri-eu-openscreen ;
+    eur:providedBy res:org-cnr ;
+    eur:requiresPriorContact true .
+
+res:service-EUREMAP_016 a eur:Service ;
+    dct:description "This service includes extraction of culture media at scales of up to 5 L."@en ;
+    dct:identifier "EUREMAP_016" ;
+    dct:source <https://services.euremap.eu/service/euremap_016/> ;
+    dct:title "Extraction of culture media at scales of up to 5 L"@en ;
+    dcat:landingPage <https://services.euremap.eu/service/euremap_016/> ;
+    foaf:page <https://www.embrc-france.fr/en/nos-services/plate-formes-technologiques/culture-and-biomass> ;
+    eur:acceptsInput res:mat-culture-broth ;
+    eur:accessConditions "Please contact us by email before each service request. Fee-for-service conditions apply."@en ;
+    eur:atPipelineStep res:step-chemical-extraction ;
+    eur:deliveredByUnit res:unit-su-bio2mar-platform-sorbonne-universit-observatoire-oc-anologiq ;
+    eur:hasAccessMode res:access-physical ;
+    eur:hasCapability res:cap-culture-medium-extraction ;
+    eur:hasCapacity res:capacity-EUREMAP_016-1 ;
+    eur:hasFeeModel res:fee-for-service ;
+    eur:listedIn res:catalogue-euremap ;
+    eur:offeredThrough res:ri-embrc ;
+    eur:providedBy res:org-su ;
+    eur:requiresPriorContact true .
+
+res:service-EUREMAP_017 a eur:Service ;
+    dct:description "This service includes bioactivity screening for antimicrobial, anticancer, immunomodulatory and antioxidant activities. Required sample amount for testing is 500 µg of extract per assay or a purified compound."@en ;
+    dct:identifier "EUREMAP_017" ;
+    dct:source <https://services.euremap.eu/service/euremap_017/> ;
+    dct:title "Screening for antimicrobial, anticancer, immunomodulatory and antioxidant activities"@en ;
+    dcat:landingPage <https://services.euremap.eu/service/euremap_017/> ;
+    foaf:page <https://en.uit.no/forskning/forskningsgrupper/sub?p_document_id=380005&sub_id=602146> ;
+    eur:acceptsInput res:mat-crude-extract,
+        res:mat-pure-compound ;
+    eur:accessConditions "Please contact us by email before each service request. Fee-for-service conditions apply."@en ;
+    eur:atPipelineStep res:step-bioassays ;
+    eur:deliveredByUnit res:unit-uit-marbio-faculty-of-biosciences-fisheries-and-economics ;
+    eur:hasAccessMode res:access-remote ;
+    eur:hasCapability res:cap-anticancer-assay,
+        res:cap-antimicrobial-assay,
+        res:cap-antioxidant-assay,
+        res:cap-immunomodulatory-assay ;
+    eur:hasCapacity res:capacity-EUREMAP_017-1 ;
+    eur:hasFeeModel res:fee-for-service ;
+    eur:listedIn res:catalogue-euremap ;
+    eur:offeredThrough res:ri-eu-openscreen ;
+    eur:providedBy res:org-uit ;
+    eur:requiresPriorContact true .
+
+res:service-EUREMAP_018 a eur:Service ;
+    dct:description "This service includes bioactivity screening for antimicrobial, anticancer, immunomodulatory and antioxidant activities, as well as agriculture and crop assays, enzyme assays, protein-protein interaction assays and ADMET profiling"@en ;
+    dct:identifier "EUREMAP_018" ;
+    dct:source <https://services.euremap.eu/service/euremap_018/> ;
+    dct:title "Screening for antimicrobial, anticancer, immunomodulatory, antioxidant, agriculture and crop, enzyme, protein-protein interaction and ADMET activities"@en ;
+    dcat:landingPage <https://services.euremap.eu/service/euremap_018/> ;
+    foaf:page <https://www.medinadiscovery.com/services_groups/screening-services/> ;
+    eur:accessConditions "Please contact us by email before each service request. Fee-for-service conditions apply."@en ;
+    eur:atPipelineStep res:step-bioassays ;
+    eur:deliveredByUnit res:unit-medina-fundaci-n-medina ;
+    eur:hasAccessMode res:access-remote ;
+    eur:hasCapability res:cap-admet,
+        res:cap-agri-crop-assay,
+        res:cap-anticancer-assay,
+        res:cap-antimicrobial-assay,
+        res:cap-antioxidant-assay,
+        res:cap-enzyme-assay,
+        res:cap-immunomodulatory-assay,
+        res:cap-ppi-assay ;
+    eur:hasFeeModel res:fee-for-service ;
+    eur:listedIn res:catalogue-euremap ;
+    eur:offeredThrough res:ri-eu-openscreen ;
+    eur:providedBy res:org-medina ;
+    eur:requiresPriorContact true .
+
+res:service-EUREMAP_019 a eur:Service ;
+    dct:description "This service includes evaluation of antifouling activity for marine and aquatic environments."@en ;
+    dct:identifier "EUREMAP_019" ;
+    dct:source <https://services.euremap.eu/service/euremap_019/> ;
+    dct:title "Evaluation of antifouling activity for marine and aquatic environments"@en ;
+    dcat:landingPage <https://services.euremap.eu/service/euremap_019/> ;
+    foaf:page <https://www.ugent.be/marine/en/research-facilities> ;
+    eur:accessConditions "Please contact us by email before each service request. Fee-for-service conditions apply."@en ;
+    eur:atPipelineStep res:step-bioassays ;
+    eur:deliveredByUnit res:unit-ugent-marine-ugent ;
+    eur:hasAccessMode res:access-remote ;
+    eur:hasCapability res:cap-antifouling-assay ;
+    eur:hasFeeModel res:fee-for-service ;
+    eur:listedIn res:catalogue-euremap ;
+    eur:offeredThrough res:ri-embrc ;
+    eur:providedBy res:org-ugent ;
+    eur:requiresPriorContact true .
+
+res:service-EUREMAP_020 a eur:Service ;
+    dct:description "This service includes evaluation of antimicrobial and antibiofilm activity of extracts or compounds for human health."@en ;
+    dct:identifier "EUREMAP_020" ;
+    dct:source <https://services.euremap.eu/service/euremap_020/> ;
+    dct:title "Evaluation of antimicrobial (antibacterial and antifungal) and antibiofilm activity of extracts or compounds for human health"@en ;
+    dcat:landingPage <https://services.euremap.eu/service/euremap_020/> ;
+    foaf:page <https://www.ugent.be/fw/pharmaceutical-analysis/en/research/micro/contractwork> ;
+    eur:acceptsInput res:mat-crude-extract,
+        res:mat-pure-compound ;
+    eur:accessConditions "Please contact us by email before each service request. Fee-for-service conditions apply."@en ;
+    eur:atPipelineStep res:step-bioassays ;
+    eur:deliveredByUnit res:unit-ugent-laboratory-of-pharmaceutical-microbiology-lpm ;
+    eur:hasAccessMode res:access-remote ;
+    eur:hasCapability res:cap-antibacterial-assay,
+        res:cap-antibiofilm-assay,
+        res:cap-antifungal-assay,
+        res:cap-antimicrobial-assay ;
+    eur:hasFeeModel res:fee-for-service ;
+    eur:listedIn res:catalogue-euremap ;
+    eur:offeredThrough res:ri-embrc ;
+    eur:providedBy res:org-ugent ;
+    eur:requiresPriorContact true .
+
+res:service-EUREMAP_021 a eur:Service ;
+    dct:description "This service includes antimicrobial bioassays."@en ;
+    dct:identifier "EUREMAP_021" ;
+    dct:source <https://services.euremap.eu/service/euremap_021/> ;
+    dct:title "Screening for antimicrobial activity (antibacterial)"@en ;
+    dcat:landingPage <https://services.euremap.eu/service/euremap_021/> ;
+    foaf:page <https://milan35.wixsite.com/tau-porifera> ;
+    eur:accessConditions "Please contact us by email before each service request. Fee-for-service conditions apply."@en ;
+    eur:atPipelineStep res:step-bioassays ;
+    eur:deliveredByUnit res:unit-tau-porifera-sponges-research-group ;
+    eur:hasAccessMode res:access-remote ;
+    eur:hasCapability res:cap-antibacterial-assay,
+        res:cap-antimicrobial-assay ;
+    eur:hasFeeModel res:fee-for-service ;
+    eur:listedIn res:catalogue-euremap ;
+    eur:offeredThrough res:ri-embrc ;
+    eur:providedBy res:org-tau ;
+    eur:requiresPriorContact true .
+
+res:service-EUREMAP_022 a eur:Service ;
+    dct:description "This service includes bioactivity screening for antimicrobial, anticancer and antioxidant activities. Required sample amount is 1-10 mg of extract"@en ;
+    dct:identifier "EUREMAP_022" ;
+    dct:source <https://services.euremap.eu/service/euremap_022/> ;
+    dct:title "Screening for antimicrobial, anticancer and antioxidant activities"@en ;
+    dcat:landingPage <https://services.euremap.eu/service/euremap_022/> ;
+    foaf:page <https://www.szn.it> ;
+    eur:acceptsInput res:mat-crude-extract ;
+    eur:accessConditions "Please contact us by email before each service request. Fee-for-service conditions apply."@en ;
+    eur:atPipelineStep res:step-bioassays ;
+    eur:deliveredByUnit res:unit-szn-ecosustainable-marine-biotechnology-department ;
+    eur:hasAccessMode res:access-physical,
+        res:access-remote ;
+    eur:hasCapability res:cap-anticancer-assay,
+        res:cap-antimicrobial-assay,
+        res:cap-antioxidant-assay ;
+    eur:hasCapacity res:capacity-EUREMAP_022-1 ;
+    eur:hasFeeModel res:fee-for-service ;
+    eur:listedIn res:catalogue-euremap ;
+    eur:offeredThrough res:ri-embrc ;
+    eur:providedBy res:org-szn ;
+    eur:requiresPriorContact true .
+
+res:service-EUREMAP_023 a eur:Service ;
+    dct:description "This service includes ECIS-based measurement of TEER, proliferation, toxicity, wound healing and cell migration"@en ;
+    dct:identifier "EUREMAP_023" ;
+    dct:source <https://services.euremap.eu/service/euremap_023/> ;
+    dct:title "ECIS (electric cell-substrate impedance sensing)-based measurement of TEER, proliferation, toxicity, wound healing and cell migration"@en ;
+    dcat:landingPage <https://services.euremap.eu/service/euremap_023/> ;
+    foaf:page <https://ccmar.ualg.pt/en/our-services> ;
+    eur:accessConditions "Please contact us by email before each service request. Fee-for-service conditions apply."@en ;
+    eur:atPipelineStep res:step-bioassays ;
+    eur:deliveredByUnit res:unit-ccmar-protein-platform-marine-resources-cts ;
+    eur:hasAccessMode res:access-physical,
+        res:access-remote ;
+    eur:hasCapability res:cap-cell-migration-assay,
+        res:cap-cell-viability-assay,
+        res:cap-human-cell-toxicity,
+        res:cap-impedance-cell-assay ;
+    eur:hasFeeModel res:fee-for-service ;
+    eur:listedIn res:catalogue-euremap ;
+    eur:offeredThrough res:ri-embrc ;
+    eur:providedBy res:org-ccmar ;
+    eur:requiresPriorContact true .
+
+res:service-EUREMAP_024 a eur:Service ;
+    dct:description "This service includes dose-response toxicity assessment in human cell lines, including liver, monocyte, macrophage, astrocytes, neurones, colon, lung, and kidney models. Mouse and rate cell lines."@en ;
+    dct:identifier "EUREMAP_024" ;
+    dct:source <https://services.euremap.eu/service/euremap_024/> ;
+    dct:title "MTT Cell Metabolic Activity Assay"@en ;
+    dcat:landingPage <https://services.euremap.eu/service/euremap_024/> ;
+    foaf:page <https://ccmar.ualg.pt/en/our-services> ;
+    eur:accessConditions "Please contact us by email before each service request. Fee-for-service conditions apply."@en ;
+    eur:atPipelineStep res:step-bioassays ;
+    eur:deliveredByUnit res:unit-ccmar-protein-platform-marine-resources-cts ;
+    eur:hasAccessMode res:access-physical,
+        res:access-remote ;
+    eur:hasCapability res:cap-cell-viability-assay,
+        res:cap-dose-response,
+        res:cap-human-cell-toxicity ;
+    eur:hasFeeModel res:fee-for-service ;
+    eur:listedIn res:catalogue-euremap ;
+    eur:offeredThrough res:ri-embrc ;
+    eur:providedBy res:org-ccmar ;
+    eur:requiresPriorContact true .
+
+res:service-EUREMAP_025 a eur:Service ;
+    dct:description "Standard ligand GPCR screening can be performed, dose response kinetics with cell lines stably expressing invertebrate and vertebrate GPCRs. The service can be customised according to client needs."@en ;
+    dct:identifier "EUREMAP_025" ;
+    dct:source <https://services.euremap.eu/service/euremap_025/> ;
+    dct:title "Screening of chemicals/drugs eliciting cell signalling linked to receptor activation, customisable to user requirements"@en ;
+    dcat:landingPage <https://services.euremap.eu/service/euremap_025/> ;
+    foaf:page <https://ccmar.ualg.pt/en/our-services> ;
+    eur:accessConditions "Please contact us by email before each service request. Fee-for-service conditions apply."@en ;
+    eur:atPipelineStep res:step-bioassays ;
+    eur:deliveredByUnit res:unit-ccmar-protein-platform-marine-resources-cts ;
+    eur:hasAccessMode res:access-physical,
+        res:access-remote ;
+    eur:hasCapability res:cap-receptor-signalling-assay ;
+    eur:hasFeeModel res:fee-for-service ;
+    eur:listedIn res:catalogue-euremap ;
+    eur:offeredThrough res:ri-embrc ;
+    eur:providedBy res:org-ccmar ;
+    eur:requiresPriorContact true .
+
+res:service-EUREMAP_026 a eur:Service ;
+    dct:description "This service consists of low throughput (few samples) to 96 well throughput screening for bioactivity either with bacteria/fungi or extracts. Screening scope can be customised. Require bacterial or fungal isolate or extract (100 ul or less if only part of the screening panel is used)."@en ;
+    dct:identifier "EUREMAP_026" ;
+    dct:source <https://services.euremap.eu/service/euremap_026/> ;
+    dct:title "Screening for antimicrobial, antifungal, lipase, chitinase, collaginase, proteinase, cellulase, amylase, antioxidant activities"@en ;
+    dcat:landingPage <https://services.euremap.eu/service/euremap_026/> ;
+    foaf:page <https://ccmar.ualg.pt/en/our-services> ;
+    eur:acceptsInput res:mat-crude-extract ;
+    eur:accessConditions "Please contact us by email before each service request. Fee-for-service conditions apply."@en ;
+    eur:atPipelineStep res:step-bioassays ;
+    eur:deliveredByUnit res:unit-ccmar-protein-platform-marine-resources-cts ;
+    eur:hasAccessMode res:access-physical,
+        res:access-remote ;
+    eur:hasCapability res:cap-antifungal-assay,
+        res:cap-antimicrobial-assay,
+        res:cap-antioxidant-assay,
+        res:cap-enzyme-assay,
+        res:cap-hydrolase-assay ;
+    eur:hasFeeModel res:fee-for-service ;
+    eur:listedIn res:catalogue-euremap ;
+    eur:offeredThrough res:ri-embrc ;
+    eur:providedBy res:org-ccmar ;
+    eur:requiresPriorContact true .
+
+res:service-EUREMAP_027 a eur:Service ;
+    dct:description "This service includes bioactivity screening for antimicrobial, anticancer, antiviral, immunomodulatory and antioxidant activities. Some enzyme assays are established and new assays can be established on request."@en ;
+    dct:identifier "EUREMAP_027" ;
+    dct:source <https://services.euremap.eu/service/euremap_027/> ;
+    dct:title "Screening for antimicrobial, anticancer, antiviral, immunomodulatory and antioxidant bioactivities"@en ;
+    dcat:landingPage <https://services.euremap.eu/service/euremap_027/> ;
+    foaf:page <https://www.sintef.no/en/all-laboratories/high-throughput-screening-facility-trondheim/> ;
+    eur:accessConditions "Please contact us by email before each service request. Fee-for-service conditions apply."@en ;
+    eur:atPipelineStep res:step-bioassays ;
+    eur:deliveredByUnit res:unit-sintef-department-of-biotechnology-and-nanomedicine-at-sintef-indus ;
+    eur:hasAccessMode res:access-remote ;
+    eur:hasCapability res:cap-anticancer-assay,
+        res:cap-antimicrobial-assay,
+        res:cap-antioxidant-assay,
+        res:cap-antiviral-assay,
+        res:cap-enzyme-assay,
+        res:cap-immunomodulatory-assay ;
+    eur:hasFeeModel res:fee-for-service ;
+    eur:listedIn res:catalogue-euremap ;
+    eur:offeredThrough res:ri-eu-openscreen ;
+    eur:providedBy res:org-sintef ;
+    eur:requiresPriorContact true .
+
+res:service-EUREMAP_028 a eur:Service ;
+    dct:description "This service includes kinase enzymatic assays. Required sample amount for testing is 250 µg of extract per assay or purified compounds"@en ;
+    dct:identifier "EUREMAP_028" ;
+    dct:source <https://services.euremap.eu/service/euremap_028/> ;
+    dct:title "Kinase enzymatic assays requiring 250 µg of extract per assay or purified compounds"@en ;
+    dcat:landingPage <https://services.euremap.eu/service/euremap_028/> ;
+    foaf:page <https://www.sb-roscoff.fr/fr/station-biologique-de-roscoff/services/plateformes-technologiques/kissf-plate-forme-de-criblage-d-inhibiteurs-de-proteines-kinases> ;
+    eur:acceptsInput res:mat-crude-extract,
+        res:mat-pure-compound ;
+    eur:accessConditions "Please contact us by email before each service request. Fee-for-service conditions apply."@en ;
+    eur:atPipelineStep res:step-bioassays ;
+    eur:deliveredByUnit res:unit-su-kissf-kinase-inhibition-specialized-screening-facility ;
+    eur:hasAccessMode res:access-physical,
+        res:access-remote ;
+    eur:hasCapability res:cap-enzyme-assay,
+        res:cap-kinase-assay ;
+    eur:hasCapacity res:capacity-EUREMAP_028-1 ;
+    eur:hasFeeModel res:fee-for-service ;
+    eur:listedIn res:catalogue-euremap ;
+    eur:offeredThrough res:ri-embrc ;
+    eur:providedBy res:org-su ;
+    eur:requiresPriorContact true .
+
+res:service-EUREMAP_029 a eur:Service ;
+    dct:description "This service includes target fishing and mode-of-action analysis by chemoproteomics."@en ;
+    dct:identifier "EUREMAP_029" ;
+    dct:source <https://services.euremap.eu/service/euremap_029/> ;
+    dct:title "Target fishing and mode-of-action analysis by chemoproteomics"@en ;
+    dcat:landingPage <https://services.euremap.eu/service/euremap_029/> ;
+    foaf:page <https://www.helmholtz-hzi.de/en/research/research-groups/details/chemical-biology/> ;
+    eur:accessConditions "Please contact us by email before each service request. Fee-for-service conditions apply."@en ;
+    eur:atPipelineStep res:step-bioassays ;
+    eur:deliveredByUnit res:unit-hzi-department-of-chemical-biology-cbio ;
+    eur:hasAccessMode res:access-remote ;
+    eur:hasCapability res:cap-target-identification ;
+    eur:hasFeeModel res:fee-for-service ;
+    eur:listedIn res:catalogue-euremap ;
+    eur:offeredThrough res:ri-eu-openscreen ;
+    eur:providedBy res:org-hzi ;
+    eur:requiresPriorContact true .
+
+res:service-EUREMAP_030 a eur:Service ;
+    dct:description "This service includes dose-response toxicity assessment in human, mouse and rat cell lines."@en ;
+    dct:identifier "EUREMAP_030" ;
+    dct:source <https://services.euremap.eu/service/euremap_030/> ;
+    dct:title "Dose-response safety assessment in human cell lines, including lung, liver, colon, monocyte, neurone, astrocytes and kidney models"@en ;
+    dcat:landingPage <https://services.euremap.eu/service/euremap_030/> ;
+    foaf:page <https://ccmar.ualg.pt/en/our-services> ;
+    eur:accessConditions "Please contact us by email before each service request. Fee-for-service conditions apply."@en ;
+    eur:atPipelineStep res:step-bioassays ;
+    eur:deliveredByUnit res:unit-ccmar-protein-platform-marine-resources-cts ;
+    eur:hasAccessMode res:access-physical,
+        res:access-remote ;
+    eur:hasCapability res:cap-dose-response,
+        res:cap-human-cell-toxicity ;
+    eur:hasFeeModel res:fee-for-service ;
+    eur:listedIn res:catalogue-euremap ;
+    eur:offeredThrough res:ri-embrc ;
+    eur:providedBy res:org-ccmar ;
+    eur:requiresPriorContact true .
+
+res:service-EUREMAP_031 a eur:Service ;
+    dct:description "Dose-response assessment using a minimum inhibitory concentration (MIC) assay for bacteria or viability assay for cancer cell lines. We use 96, 384, and 1536 well formate."@en ;
+    dct:identifier "EUREMAP_031" ;
+    dct:source <https://services.euremap.eu/service/euremap_031/> ;
+    dct:title "Dose-response bioactivity assays (MIC70 and anticancer cell viability assays)"@en ;
+    dcat:landingPage <https://services.euremap.eu/service/euremap_031/> ;
+    foaf:page <https://www.sintef.no/en/all-laboratories/high-throughput-screening-facility-trondheim/> ;
+    eur:accessConditions "Please contact us by email before each service request. Fee-for-service conditions apply."@en ;
+    eur:atPipelineStep res:step-bioassays ;
+    eur:deliveredByUnit res:unit-sintef-department-of-biotechnology-and-nanomedicine-at-sintef-indus ;
+    eur:hasAccessMode res:access-remote ;
+    eur:hasCapability res:cap-anticancer-assay,
+        res:cap-antimicrobial-assay,
+        res:cap-cell-viability-assay,
+        res:cap-dose-response ;
+    eur:hasFeeModel res:fee-for-service ;
+    eur:listedIn res:catalogue-euremap ;
+    eur:offeredThrough res:ri-eu-openscreen ;
+    eur:providedBy res:org-sintef ;
+    eur:requiresPriorContact true .
+
+res:service-EUREMAP_032 a eur:Service ;
+    dct:description "In vitro safety assessments in a 384-well format, including dose-response toxicity testing in human liver and porcine kidney cell models. Ecotoxicity assessment includes viability testing of rainbow trout gill cells (RTgill) and determination of LD50 values in marine and terrestrial invertebrate models including crustacean nauplii and green algae. We offer in vitro ADMET testing using the HepG2 (liver) cell line to support early-stage evaluation of hepatotoxicity, cellular uptake, and metabolic effects to aid compound selection and optimization."@en ;
+    dct:identifier "EUREMAP_032" ;
+    dct:source <https://services.euremap.eu/service/euremap_032/> ;
+    dct:title "Dose-response assay for human safety and ecotox assessment"@en ;
+    dcat:landingPage <https://services.euremap.eu/service/euremap_032/> ;
+    foaf:page <https://www.sintef.no/en/explore-our-services/> ;
+    eur:accessConditions "Please contact us by email before each service request. Fee-for-service conditions apply."@en ;
+    eur:atPipelineStep res:step-safety-toxicity ;
+    eur:deliveredByUnit res:unit-sintef-department-of-biotechnology-and-nanomedicine-at-sintef-indus ;
+    eur:hasAccessMode res:access-remote ;
+    eur:hasCapability res:cap-admet,
+        res:cap-cell-viability-assay,
+        res:cap-dose-response,
+        res:cap-ecotoxicity,
+        res:cap-human-cell-toxicity ;
+    eur:hasFeeModel res:fee-for-service ;
+    eur:listedIn res:catalogue-euremap ;
+    eur:offeredThrough res:ri-eu-openscreen ;
+    eur:providedBy res:org-sintef ;
+    eur:requiresPriorContact true .
+
+res:service-EUREMAP_033 a eur:Service ;
+    dct:description "In vivo safety assessment in mice, including dose-ranging studies, determination of maximum tolerated and lethal doses, and measurement of compound concentrations in blood and selected organs."@en ;
+    dct:identifier "EUREMAP_033" ;
+    dct:source <https://services.euremap.eu/service/euremap_033/> ;
+    dct:title "In vivo safety assessment in mice, including compound concentration in blood and selected organs"@en ;
+    dcat:landingPage <https://services.euremap.eu/service/euremap_033/> ;
+    foaf:page <https://www.sintef.no/en/explore-our-services/> ;
+    eur:accessConditions "Please contact us by email before each service request. Fee-for-service conditions apply."@en ;
+    eur:atPipelineStep res:step-safety-toxicity ;
+    eur:deliveredByUnit res:unit-sintef-department-of-biotechnology-and-nanomedicine-at-sintef-indus ;
+    eur:hasAccessMode res:access-remote ;
+    eur:hasCapability res:cap-biodistribution,
+        res:cap-in-vivo-safety ;
+    eur:hasFeeModel res:fee-for-service ;
+    eur:listedIn res:catalogue-euremap ;
+    eur:offeredThrough res:ri-eu-openscreen ;
+    eur:providedBy res:org-sintef ;
+    eur:requiresPriorContact true .
+
+res:service-EUREMAP_034 a eur:Service ;
+    dct:description "This service includes dose-response toxicity assessment in human cell lines, including lung, liver and gut models, together with transcriptomic analysis to investigate off-target toxicity or an unknown mode of action."@en ;
+    dct:identifier "EUREMAP_034" ;
+    dct:source <https://services.euremap.eu/service/euremap_034/> ;
+    dct:title "Dose-response toxicity assessment in human cell lines, with transcriptomic analysis for off-target toxicity and unknown mode of action"@en ;
+    dcat:landingPage <https://services.euremap.eu/service/euremap_034/> ;
+    foaf:page <https://www.ugent.be/marine/en/research-facilities> ;
+    eur:accessConditions "Please contact us by email before each service request. Fee-for-service conditions apply."@en ;
+    eur:atPipelineStep res:step-safety-toxicity ;
+    eur:deliveredByUnit res:unit-ugent-marine-ugent ;
+    eur:hasAccessMode res:access-remote ;
+    eur:hasCapability res:cap-dose-response,
+        res:cap-human-cell-toxicity,
+        res:cap-target-identification,
+        res:cap-toxicotranscriptomics ;
+    eur:hasFeeModel res:fee-for-service ;
+    eur:listedIn res:catalogue-euremap ;
+    eur:offeredThrough res:ri-embrc ;
+    eur:providedBy res:org-ugent ;
+    eur:requiresPriorContact true .
+
+res:service-EUREMAP_035 a eur:Service ;
+    dct:description "This service includes dose-response toxicity assessment in freshwater and marine non-vertebrate model organisms."@en ;
+    dct:identifier "EUREMAP_035" ;
+    dct:source <https://services.euremap.eu/service/euremap_035/> ;
+    dct:title "Dose-response toxicity assessment in freshwater and marine non-vertebrate model organisms"@en ;
+    dcat:landingPage <https://services.euremap.eu/service/euremap_035/> ;
+    foaf:page <https://www.ugent.be/marine/en/research-facilities> ;
+    eur:accessConditions "Please contact us by email before each service request. Fee-for-service conditions apply."@en ;
+    eur:atPipelineStep res:step-safety-toxicity ;
+    eur:deliveredByUnit res:unit-ugent-marine-ugent ;
+    eur:hasAccessMode res:access-remote ;
+    eur:hasCapability res:cap-dose-response,
+        res:cap-ecotoxicity,
+        res:cap-human-cell-toxicity ;
+    eur:hasFeeModel res:fee-for-service ;
+    eur:listedIn res:catalogue-euremap ;
+    eur:offeredThrough res:ri-embrc ;
+    eur:providedBy res:org-ugent ;
+    eur:requiresPriorContact true .
+
+res:service-EUREMAP_036 a eur:Service ;
+    dct:description "This service includes data acquisition and interpretation using UHPLC-IMS-DAD-HR-MS2 for chemical profiling."@en ;
+    dct:identifier "EUREMAP_036" ;
+    dct:source <https://services.euremap.eu/service/euremap_036/> ;
+    dct:title "Chemical profiling using UHPLC-IMS-DAD-HR-MS2 with data acquisition and interpretation"@en ;
+    dcat:landingPage <https://services.euremap.eu/service/euremap_036/> ;
+    foaf:page <https://en.uit.no/forskning/forskningsgrupper/sub?p_document_id=380005&sub_id=602146> ;
+    eur:accessConditions "Please contact us by email before each service request. Fee-for-service conditions apply."@en ;
+    eur:atPipelineStep res:step-chemical-profiling ;
+    eur:deliveredByUnit res:unit-uit-marbio-faculty-of-biosciences-fisheries-and-economics ;
+    eur:hasAccessMode res:access-remote ;
+    eur:hasCapability res:cap-dad-uv,
+        res:cap-hplc,
+        res:cap-hrms,
+        res:cap-ion-mobility,
+        res:cap-lc-ms,
+        res:cap-mass-spectrometry,
+        res:cap-tandem-ms,
+        res:cap-uhplc ;
+    eur:hasFeeModel res:fee-for-service ;
+    eur:listedIn res:catalogue-euremap ;
+    eur:offeredThrough res:ri-eu-openscreen ;
+    eur:providedBy res:org-uit ;
+    eur:requiresPriorContact true .
+
+res:service-EUREMAP_037 a eur:Service ;
+    dct:description "This service includes data acquisition and interpretation using UHPLC-HR-MS, UHPLC-HR-MSn and 500 MHz NMR for chemical profiling."@en ;
+    dct:identifier "EUREMAP_037" ;
+    dct:source <https://services.euremap.eu/service/euremap_037/> ;
+    dct:title "Chemical profiling using UHPLC-HR-MS, UHPLC-HR-MSn and 500 MHz NMR with data acquisition and interpretation"@en ;
+    dcat:landingPage <https://services.euremap.eu/service/euremap_037/> ;
+    foaf:page <https://www.medinadiscovery.com/services_groups_l3/natural-products-chemistry/> ;
+    eur:accessConditions "Please contact us by email before each service request. Fee-for-service conditions apply."@en ;
+    eur:atPipelineStep res:step-chemical-profiling ;
+    eur:deliveredByUnit res:unit-medina-fundaci-n-medina ;
+    eur:hasAccessMode res:access-remote ;
+    eur:hasCapability res:cap-hplc,
+        res:cap-hrms,
+        res:cap-lc-ms,
+        res:cap-mass-spectrometry,
+        res:cap-nmr,
+        res:cap-tandem-ms,
+        res:cap-uhplc ;
+    eur:hasCapacity res:capacity-EUREMAP_037-1 ;
+    eur:hasFeeModel res:fee-for-service ;
+    eur:listedIn res:catalogue-euremap ;
+    eur:offeredThrough res:ri-eu-openscreen ;
+    eur:providedBy res:org-medina ;
+    eur:requiresPriorContact true .
+
+res:service-EUREMAP_038 a eur:Service ;
+    dct:description "This service includes data acquisition and interpretation using HPLC-HR-MS/MS2 for chemical profiling."@en ;
+    dct:identifier "EUREMAP_038" ;
+    dct:source <https://services.euremap.eu/service/euremap_038/> ;
+    dct:title "Chemical profiling using HPLC-HR-MS/MS2 with data acquisition and interpretation"@en ;
+    dcat:landingPage <https://services.euremap.eu/service/euremap_038/> ;
+    foaf:page <https://www.szn.it> ;
+    eur:accessConditions "Please contact us by email before each service request. Fee-for-service conditions apply."@en ;
+    eur:atPipelineStep res:step-chemical-profiling ;
+    eur:deliveredByUnit res:unit-szn-ecosustainable-marine-biotechnology-department ;
+    eur:hasAccessMode res:access-physical ;
+    eur:hasCapability res:cap-hplc,
+        res:cap-hrms,
+        res:cap-lc-ms,
+        res:cap-mass-spectrometry,
+        res:cap-tandem-ms ;
+    eur:hasFeeModel res:fee-for-service ;
+    eur:listedIn res:catalogue-euremap ;
+    eur:offeredThrough res:ri-embrc ;
+    eur:providedBy res:org-szn ;
+    eur:requiresPriorContact true .
+
+res:service-EUREMAP_039 a eur:Service ;
+    dct:description "This service includes chemical profiling using HR-MS, HR-MSn and ion mobility spectrometry (IMS)."@en ;
+    dct:identifier "EUREMAP_039" ;
+    dct:source <https://services.euremap.eu/service/euremap_039/> ;
+    dct:title "Chemical profiling using HR-MS, HR-MSn and IMS"@en ;
+    dcat:landingPage <https://services.euremap.eu/service/euremap_039/> ;
+    foaf:page <https://www.helmholtz-hzi.de/en/research/research-groups/details/chemical-biology/> ;
+    eur:accessConditions "Please contact us by email before each service request. Fee-for-service conditions apply."@en ;
+    eur:atPipelineStep res:step-chemical-profiling ;
+    eur:deliveredByUnit res:unit-hzi-department-of-chemical-biology-cbio ;
+    eur:hasAccessMode res:access-remote ;
+    eur:hasCapability res:cap-hrms,
+        res:cap-ion-mobility,
+        res:cap-mass-spectrometry,
+        res:cap-tandem-ms ;
+    eur:hasFeeModel res:fee-for-service ;
+    eur:listedIn res:catalogue-euremap ;
+    eur:offeredThrough res:ri-eu-openscreen ;
+    eur:providedBy res:org-hzi ;
+    eur:requiresPriorContact true .
+
+res:service-EUREMAP_040 a eur:Service ;
+    dct:description "This service includes chemical profiling using HPLC/UHPLC, RapidFire, DAD, QTOF, QQQ, FT-ICR-MS, MALDI and GC platforms."@en ;
+    dct:identifier "EUREMAP_040" ;
+    dct:source <https://services.euremap.eu/service/euremap_040/> ;
+    dct:title "Chemical profiling using HPLC/UHPLC, RapidFire, DAD, QTOF, QQQ, FT-ICR-MS, MALDI and GC"@en ;
+    dcat:landingPage <https://services.euremap.eu/service/euremap_040/> ;
+    foaf:page <https://www.sintef.no/en/all-laboratories/advanced-research-based-analyses/> ;
+    eur:accessConditions "Please contact us by email before each service request. Fee-for-service conditions apply."@en ;
+    eur:atPipelineStep res:step-chemical-profiling ;
+    eur:deliveredByUnit res:unit-sintef-department-of-biotechnology-and-nanomedicine-at-sintef-indus ;
+    eur:hasAccessMode res:access-remote ;
+    eur:hasCapability res:cap-dad-uv,
+        res:cap-ft-icr-ms,
+        res:cap-gc,
+        res:cap-hplc,
+        res:cap-hrms,
+        res:cap-maldi-ms,
+        res:cap-mass-spectrometry,
+        res:cap-qqq-ms,
+        res:cap-qtof-ms,
+        res:cap-rapidfire-ms,
+        res:cap-uhplc ;
+    eur:hasFeeModel res:fee-for-service ;
+    eur:listedIn res:catalogue-euremap ;
+    eur:offeredThrough res:ri-eu-openscreen ;
+    eur:providedBy res:org-sintef ;
+    eur:requiresPriorContact true .
+
+res:service-EUREMAP_041 a eur:Service ;
+    dct:description "This service includes chemical profiling using UHPLC-MS, UHPLC-MSn, GC-MS, infrared spectroscopy (IR) and circular dichroism (CD). Data is made available and annotation can be provided if agreed in the scope of the service."@en ;
+    dct:identifier "EUREMAP_041" ;
+    dct:source <https://services.euremap.eu/service/euremap_041/> ;
+    dct:title "Chemical profiling using UHPLC-HR-MS, UHPLC-HR-MSn, GC-HR-MS, 500 MHz NMR, IR and CD"@en ;
+    dcat:landingPage <https://services.euremap.eu/service/euremap_041/> ;
+    foaf:page <https://ccmar.ualg.pt/en/our-services> ;
+    eur:accessConditions "Please contact us by email before each service request. Fee-for-service conditions apply."@en ;
+    eur:atPipelineStep res:step-chemical-profiling ;
+    eur:deliveredByUnit res:unit-ccmar-chemistry-platform-cts ;
+    eur:hasAccessMode res:access-physical,
+        res:access-remote ;
+    eur:hasCapability res:cap-cd,
+        res:cap-feature-annotation,
+        res:cap-gc,
+        res:cap-gc-ms,
+        res:cap-hplc,
+        res:cap-hrms,
+        res:cap-ir,
+        res:cap-lc-ms,
+        res:cap-mass-spectrometry,
+        res:cap-nmr,
+        res:cap-tandem-ms,
+        res:cap-uhplc ;
+    eur:hasCapacity res:capacity-EUREMAP_041-1 ;
+    eur:hasFeeModel res:fee-for-service ;
+    eur:listedIn res:catalogue-euremap ;
+    eur:offeredThrough res:ri-embrc ;
+    eur:providedBy res:org-ccmar ;
+    eur:requiresPriorContact true .
+
+res:service-EUREMAP_042 a eur:Service ;
+    dct:description "This service includes chemical profiling by UHPLC-HRMS2. Profile extraction is provided as a pivot table of entities, or ions, per sample. Statistical analyses and annotation may also be performed, depending on the agreed scope of the service."@en ;
+    dct:identifier "EUREMAP_042" ;
+    dct:source <https://services.euremap.eu/service/euremap_042/> ;
+    dct:title "UHPLC-HRMS2-based chemical profiling with feature extraction, and optional statistical analysis and annotation"@en ;
+    dcat:landingPage <https://services.euremap.eu/service/euremap_042/> ;
+    foaf:page <https://www.embrc-france.fr/en/nos-services/plate-formes-technologiques/culture-and-biomass> ;
+    eur:accessConditions "Please contact us by email before each service request. Fee-for-service conditions apply."@en ;
+    eur:atPipelineStep res:step-chemical-profiling ;
+    eur:deliveredByUnit res:unit-su-lbbm-sorbonne-universit-observatoire-oc-anologique-de-banyul ;
+    eur:hasAccessMode res:access-physical,
+        res:access-remote ;
+    eur:hasCapability res:cap-feature-annotation,
+        res:cap-hplc,
+        res:cap-hrms,
+        res:cap-lc-ms,
+        res:cap-mass-spectrometry,
+        res:cap-tandem-ms,
+        res:cap-uhplc ;
+    eur:hasFeeModel res:fee-for-service ;
+    eur:listedIn res:catalogue-euremap ;
+    eur:offeredThrough res:ri-embrc ;
+    eur:providedBy res:org-su ;
+    eur:requiresPriorContact true .
+
+res:service-EUREMAP_043 a eur:Service ;
+    dct:description "This service includes large-scale fractionation using column chromatography, flash chromatography and preparative HPLC. Purification is supported for 1-30 mg from 20 g of extract, with automation triggered by MS, time and UV/VIS."@en ;
+    dct:identifier "EUREMAP_043" ;
+    dct:source <https://services.euremap.eu/service/euremap_043/> ;
+    dct:title "Large-scale fractionation using column chromatography, flash chromatography and preparative HPLC"@en ;
+    dcat:landingPage <https://services.euremap.eu/service/euremap_043/> ;
+    foaf:page <https://en.uit.no/forskning/forskningsgrupper/sub?p_document_id=380005&sub_id=602146> ;
+    eur:acceptsInput res:mat-crude-extract ;
+    eur:accessConditions "Please contact us by email before each service request. Fee-for-service conditions apply."@en ;
+    eur:atPipelineStep res:step-chromatography ;
+    eur:deliveredByUnit res:unit-uit-marbio-faculty-of-biosciences-fisheries-and-economics ;
+    eur:hasAccessMode res:access-physical ;
+    eur:hasCapability res:cap-column-chromatography,
+        res:cap-dad-uv,
+        res:cap-flash-chromatography,
+        res:cap-fractionation,
+        res:cap-hplc,
+        res:cap-mass-spectrometry,
+        res:cap-ms-triggered-purification,
+        res:cap-preparative-hplc,
+        res:cap-purification ;
+    eur:hasCapacity res:capacity-EUREMAP_043-1,
+        res:capacity-EUREMAP_043-2 ;
+    eur:hasFeeModel res:fee-for-service ;
+    eur:listedIn res:catalogue-euremap ;
+    eur:offeredThrough res:ri-eu-openscreen ;
+    eur:providedBy res:org-uit ;
+    eur:requiresPriorContact true .
+
+res:service-EUREMAP_044 a eur:Service ;
+    dct:description "This service includes fractionation and purification of extracts to obtain pure compounds."@en ;
+    dct:identifier "EUREMAP_044" ;
+    dct:source <https://services.euremap.eu/service/euremap_044/> ;
+    dct:title "Fractionation and purification of extracts to obtain pure compounds"@en ;
+    dcat:landingPage <https://services.euremap.eu/service/euremap_044/> ;
+    foaf:page <https://www.medinadiscovery.com/services_groups_l3/natural-products-chemistry/> ;
+    eur:acceptsInput res:mat-crude-extract ;
+    eur:accessConditions "Please contact us by email before each service request. Fee-for-service conditions apply."@en ;
+    eur:atPipelineStep res:step-chromatography ;
+    eur:deliveredByUnit res:unit-medina-fundaci-n-medina ;
+    eur:hasAccessMode res:access-remote ;
+    eur:hasCapability res:cap-fractionation,
+        res:cap-purification ;
+    eur:hasFeeModel res:fee-for-service ;
+    eur:listedIn res:catalogue-euremap ;
+    eur:offeredThrough res:ri-eu-openscreen ;
+    eur:providedBy res:org-medina ;
+    eur:requiresPriorContact true .
+
+res:service-EUREMAP_045 a eur:Service ;
+    dct:description "This service includes semi-preparative fractionation and preparative UV-based HPLC purification. The process is controlled remotely and supports purification of up to 100 mg of pure compound."@en ;
+    dct:identifier "EUREMAP_045" ;
+    dct:source <https://services.euremap.eu/service/euremap_045/> ;
+    dct:title "Semi-preparative fractionation and preparative UV-based HPLC purification, with remote process control"@en ;
+    dcat:landingPage <https://services.euremap.eu/service/euremap_045/> ;
+    foaf:page <https://milan35.wixsite.com/tau-porifera> ;
+    eur:accessConditions "Please contact us by email before each service request. Fee-for-service conditions apply."@en ;
+    eur:atPipelineStep res:step-chromatography ;
+    eur:deliveredByUnit res:unit-tau-porifera-sponges-research-group ;
+    eur:hasAccessMode res:access-remote ;
+    eur:hasCapability res:cap-dad-uv,
+        res:cap-fractionation,
+        res:cap-hplc,
+        res:cap-preparative-hplc,
+        res:cap-purification,
+        res:cap-remote-process-control ;
+    eur:hasCapacity res:capacity-EUREMAP_045-1 ;
+    eur:hasFeeModel res:fee-for-service ;
+    eur:listedIn res:catalogue-euremap ;
+    eur:offeredThrough res:ri-embrc ;
+    eur:providedBy res:org-tau ;
+    eur:requiresPriorContact true .
+
+res:service-EUREMAP_046 a eur:Service ;
+    dct:description "This service includes fractionation of raw extracts through to pure compounds, depending on the needs of the user"@en ;
+    dct:identifier "EUREMAP_046" ;
+    dct:source <https://services.euremap.eu/service/euremap_046/> ;
+    dct:title "Fractionation of raw extracts to obtain pure compounds according to user needs"@en ;
+    dcat:landingPage <https://services.euremap.eu/service/euremap_046/> ;
+    foaf:page <https://www.szn.it> ;
+    eur:acceptsInput res:mat-crude-extract ;
+    eur:accessConditions "Please contact us by email before each service request. Fee-for-service conditions apply."@en ;
+    eur:atPipelineStep res:step-chromatography ;
+    eur:deliveredByUnit res:unit-szn-ecosustainable-marine-biotechnology-department ;
+    eur:hasAccessMode res:access-physical ;
+    eur:hasCapability res:cap-fractionation,
+        res:cap-purification ;
+    eur:hasFeeModel res:fee-for-service ;
+    eur:listedIn res:catalogue-euremap ;
+    eur:offeredThrough res:ri-embrc ;
+    eur:providedBy res:org-szn ;
+    eur:requiresPriorContact true .
+
+res:service-EUREMAP_047 a eur:Service ;
+    dct:description "This service includes fractionation and purification of raw extracts to isolate pure compounds. Compounds are separated on LC columns through organic solvent gradients and fractioned based on their UV absorption or at set time scales."@en ;
+    dct:identifier "EUREMAP_047" ;
+    dct:source <https://services.euremap.eu/service/euremap_047/> ;
+    dct:title "Small- or medium-scale fractionation and purification"@en ;
+    dcat:landingPage <https://services.euremap.eu/service/euremap_047/> ;
+    foaf:page <https://www.helmholtz-hzi.de/en/research/research-groups/details/chemical-biology/> ;
+    eur:acceptsInput res:mat-crude-extract ;
+    eur:accessConditions "Please contact us by email before each service request. Fee-for-service conditions apply."@en ;
+    eur:atPipelineStep res:step-chromatography ;
+    eur:deliveredByUnit res:unit-hzi-department-of-chemical-biology-cbio ;
+    eur:hasAccessMode res:access-remote ;
+    eur:hasCapability res:cap-dad-uv,
+        res:cap-fractionation,
+        res:cap-purification ;
+    eur:hasFeeModel res:fee-for-service ;
+    eur:listedIn res:catalogue-euremap ;
+    eur:offeredThrough res:ri-eu-openscreen ;
+    eur:providedBy res:org-hzi ;
+    eur:requiresPriorContact true .
+
+res:service-EUREMAP_048 a eur:Service ;
+    dct:description "Semi-preparative fractionation and preparative UV-guided HPLC purification. Remote operation is supported, allowing isolation of up to 100 mg of purified compound."@en ;
+    dct:identifier "EUREMAP_048" ;
+    dct:source <https://services.euremap.eu/service/euremap_048/> ;
+    dct:title "Small-, medium- or large-scale fractionation and purification"@en ;
+    dcat:landingPage <https://services.euremap.eu/service/euremap_048/> ;
+    foaf:page <https://www.sintef.no/en/explore-our-services/> ;
+    eur:acceptsInput res:mat-pure-compound ;
+    eur:accessConditions "Please contact us by email before each service request. Fee-for-service conditions apply."@en ;
+    eur:atPipelineStep res:step-chromatography ;
+    eur:deliveredByUnit res:unit-sintef-department-of-biotechnology-and-nanomedicine-at-sintef-indus ;
+    eur:hasAccessMode res:access-remote ;
+    eur:hasCapability res:cap-dad-uv,
+        res:cap-fractionation,
+        res:cap-hplc,
+        res:cap-preparative-hplc,
+        res:cap-purification,
+        res:cap-remote-process-control ;
+    eur:hasCapacity res:capacity-EUREMAP_048-1 ;
+    eur:hasFeeModel res:fee-for-service ;
+    eur:listedIn res:catalogue-euremap ;
+    eur:offeredThrough res:ri-eu-openscreen ;
+    eur:providedBy res:org-sintef ;
+    eur:requiresPriorContact true .
+
+res:service-EUREMAP_049 a eur:Service ;
+    dct:description "This service includes fractionationof raw or partially fractionated extracts. Analytical or preparative UV/IR-based UHPLC purification. Scale and purity of compounds depend on user needs."@en ;
+    dct:identifier "EUREMAP_049" ;
+    dct:source <https://services.euremap.eu/service/euremap_049/> ;
+    dct:title "Small-, medium- or large-scale fractionation and purification"@en ;
+    dcat:landingPage <https://services.euremap.eu/service/euremap_049/> ;
+    foaf:page <https://ccmar.ualg.pt/en/our-services> ;
+    eur:acceptsInput res:mat-crude-extract ;
+    eur:accessConditions "Please contact us by email before each service request. Fee-for-service conditions apply."@en ;
+    eur:atPipelineStep res:step-chromatography ;
+    eur:deliveredByUnit res:unit-ccmar-chemistry-platform-cts ;
+    eur:hasAccessMode res:access-physical,
+        res:access-remote ;
+    eur:hasCapability res:cap-dad-uv,
+        res:cap-fractionation,
+        res:cap-hplc,
+        res:cap-ir,
+        res:cap-preparative-hplc,
+        res:cap-purification,
+        res:cap-uhplc ;
+    eur:hasFeeModel res:fee-for-service ;
+    eur:listedIn res:catalogue-euremap ;
+    eur:offeredThrough res:ri-embrc ;
+    eur:providedBy res:org-ccmar ;
+    eur:requiresPriorContact true .
+
+res:service-EUREMAP_050 a eur:Service ;
+    dct:description "This service includes fractionation of raw or partially fractionated extracts. Analytical or preparative UV/IR-based UHPLC purification. Scale and purity of compounds depend on user needs."@en ;
+    dct:identifier "EUREMAP_050" ;
+    dct:source <https://services.euremap.eu/service/euremap_050/> ;
+    dct:title "Small-, medium- or large-scale fractionation and purification"@en ;
+    dcat:landingPage <https://services.euremap.eu/service/euremap_050/> ;
+    foaf:page <https://www.icb.cnr.it/> ;
+    eur:acceptsInput res:mat-crude-extract ;
+    eur:accessConditions "Please contact us by email before each service request. Fee-for-service conditions apply."@en ;
+    eur:atPipelineStep res:step-chromatography ;
+    eur:deliveredByUnit res:unit-cnr-cnr-institute-of-biomolecular-chemistry-icb ;
+    eur:hasAccessMode res:access-remote ;
+    eur:hasCapability res:cap-dad-uv,
+        res:cap-fractionation,
+        res:cap-hplc,
+        res:cap-ir,
+        res:cap-preparative-hplc,
+        res:cap-purification,
+        res:cap-uhplc ;
+    eur:hasFeeModel res:fee-for-service ;
+    eur:listedIn res:catalogue-euremap ;
+    eur:offeredThrough res:ri-eu-openscreen ;
+    eur:providedBy res:org-cnr ;
+    eur:requiresPriorContact true .
+
+res:service-EUREMAP_051 a eur:Service ;
+    dct:description "This service includes fractionation of raw extracts through to pure compounds, depending on the needs of the user and the inherent possibilities due to extract complexity."@en ;
+    dct:identifier "EUREMAP_051" ;
+    dct:source <https://services.euremap.eu/service/euremap_051/> ;
+    dct:title "Small-, medium- or large-scale fractionation and purification"@en ;
+    dcat:landingPage <https://services.euremap.eu/service/euremap_051/> ;
+    foaf:page <https://www.embrc-france.fr/en/nos-services/plate-formes-technologiques/culture-and-biomass> ;
+    eur:acceptsInput res:mat-crude-extract ;
+    eur:accessConditions "Please contact us by email before each service request. Fee-for-service conditions apply."@en ;
+    eur:atPipelineStep res:step-chromatography ;
+    eur:deliveredByUnit res:unit-su-bio2mar-platform-sorbonne-universit-observatoire-oc-anologiq ;
+    eur:hasAccessMode res:access-physical ;
+    eur:hasCapability res:cap-fractionation,
+        res:cap-purification ;
+    eur:hasFeeModel res:fee-for-service ;
+    eur:listedIn res:catalogue-euremap ;
+    eur:offeredThrough res:ri-embrc ;
+    eur:providedBy res:org-su ;
+    eur:requiresPriorContact true .
+
+res:service-EUREMAP_052 a eur:Service ;
+    dct:description "This service includes data acquisition and interpretation for structure elucidation using LC-MS and LC-HRMS."@en ;
+    dct:identifier "EUREMAP_052" ;
+    dct:source <https://services.euremap.eu/service/euremap_052/> ;
+    dct:title "Structure elucidation using LC-MS, LC-HRMS and IMS"@en ;
+    dcat:landingPage <https://services.euremap.eu/service/euremap_052/> ;
+    foaf:page <https://en.uit.no/forskning/forskningsgrupper/sub?p_document_id=380005&sub_id=602146> ;
+    eur:accessConditions "Please contact us by email before each service request. Fee-for-service conditions apply."@en ;
+    eur:atPipelineStep res:step-structure-elucidation ;
+    eur:deliveredByUnit res:unit-uit-marbio-faculty-of-biosciences-fisheries-and-economics ;
+    eur:hasAccessMode res:access-remote ;
+    eur:hasCapability res:cap-hrms,
+        res:cap-ion-mobility,
+        res:cap-lc-ms,
+        res:cap-mass-spectrometry ;
+    eur:hasFeeModel res:fee-for-service ;
+    eur:listedIn res:catalogue-euremap ;
+    eur:offeredThrough res:ri-eu-openscreen ;
+    eur:providedBy res:org-uit ;
+    eur:requiresPriorContact true .
+
+res:service-EUREMAP_053 a eur:Service ;
+    dct:description "This service includes data acquisition and interpretation for structure elucidation using LC-MS, LC-HRMS, NMR cryoprobe, IR, polarimetry and UV."@en ;
+    dct:identifier "EUREMAP_053" ;
+    dct:source <https://services.euremap.eu/service/euremap_053/> ;
+    dct:title "Structure elucidation using LC-MS, LC-HRMS, NMR cryoprobe, IR, polarimetry and UV"@en ;
+    dcat:landingPage <https://services.euremap.eu/service/euremap_053/> ;
+    foaf:page <https://www.medinadiscovery.com/services_groups_l3/natural-products-chemistry/> ;
+    eur:accessConditions "Please contact us by email before each service request. Fee-for-service conditions apply."@en ;
+    eur:atPipelineStep res:step-structure-elucidation ;
+    eur:deliveredByUnit res:unit-medina-fundaci-n-medina ;
+    eur:hasAccessMode res:access-remote ;
+    eur:hasCapability res:cap-dad-uv,
+        res:cap-hrms,
+        res:cap-ir,
+        res:cap-lc-ms,
+        res:cap-mass-spectrometry,
+        res:cap-nmr,
+        res:cap-nmr-cryoprobe,
+        res:cap-polarimetry ;
+    eur:hasFeeModel res:fee-for-service ;
+    eur:listedIn res:catalogue-euremap ;
+    eur:offeredThrough res:ri-eu-openscreen ;
+    eur:providedBy res:org-medina ;
+    eur:requiresPriorContact true .
+
+res:service-EUREMAP_054 a eur:Service ;
+    dct:description "This service includes data acquisition and interpretation for structure elucidation using LC-MS and NMR."@en ;
+    dct:identifier "EUREMAP_054" ;
+    dct:source <https://services.euremap.eu/service/euremap_054/> ;
+    dct:title "Structure elucidation using LC-MS and NMR"@en ;
+    dcat:landingPage <https://services.euremap.eu/service/euremap_054/> ;
+    foaf:page <https://milan35.wixsite.com/tau-porifera> ;
+    eur:accessConditions "Please contact us by email before each service request. Fee-for-service conditions apply."@en ;
+    eur:atPipelineStep res:step-structure-elucidation ;
+    eur:deliveredByUnit res:unit-tau-porifera-sponges-research-group ;
+    eur:hasAccessMode res:access-remote ;
+    eur:hasCapability res:cap-lc-ms,
+        res:cap-mass-spectrometry,
+        res:cap-nmr ;
+    eur:hasFeeModel res:fee-for-service ;
+    eur:listedIn res:catalogue-euremap ;
+    eur:offeredThrough res:ri-embrc ;
+    eur:providedBy res:org-tau ;
+    eur:requiresPriorContact true .
+
+res:service-EUREMAP_055 a eur:Service ;
+    dct:description "This service includes data acquisition and interpretation for structure elucidation using LC-MS, LC-HRMS and UV."@en ;
+    dct:identifier "EUREMAP_055" ;
+    dct:source <https://services.euremap.eu/service/euremap_055/> ;
+    dct:title "Structure elucidation using LC-MS, LC-HRMS and UV"@en ;
+    dcat:landingPage <https://services.euremap.eu/service/euremap_055/> ;
+    foaf:page <https://www.szn.it> ;
+    eur:accessConditions "Please contact us by email before each service request. Fee-for-service conditions apply."@en ;
+    eur:atPipelineStep res:step-structure-elucidation ;
+    eur:deliveredByUnit res:unit-szn-ecosustainable-marine-biotechnology-department ;
+    eur:hasAccessMode res:access-physical ;
+    eur:hasCapability res:cap-dad-uv,
+        res:cap-hrms,
+        res:cap-lc-ms,
+        res:cap-mass-spectrometry ;
+    eur:hasFeeModel res:fee-for-service ;
+    eur:listedIn res:catalogue-euremap ;
+    eur:offeredThrough res:ri-embrc ;
+    eur:providedBy res:org-szn ;
+    eur:requiresPriorContact true .
+
+res:service-EUREMAP_056 a eur:Service ;
+    dct:description "This service includes data acquisition and interpretation for structure elucidation using LC-HRMS, IMS, UV-Vis and NMR"@en ;
+    dct:identifier "EUREMAP_056" ;
+    dct:source <https://services.euremap.eu/service/euremap_056/> ;
+    dct:title "Structure elucidation using LC-MS and LC-HRMS"@en ;
+    dcat:landingPage <https://services.euremap.eu/service/euremap_056/> ;
+    foaf:page <https://www.helmholtz-hzi.de/en/research/research-groups/details/chemical-biology/> ;
+    eur:accessConditions "Please contact us by email before each service request. Fee-for-service conditions apply."@en ;
+    eur:atPipelineStep res:step-structure-elucidation ;
+    eur:deliveredByUnit res:unit-hzi-department-of-chemical-biology-cbio ;
+    eur:hasAccessMode res:access-remote ;
+    eur:hasCapability res:cap-dad-uv,
+        res:cap-hrms,
+        res:cap-ion-mobility,
+        res:cap-lc-ms,
+        res:cap-mass-spectrometry,
+        res:cap-nmr ;
+    eur:hasFeeModel res:fee-for-service ;
+    eur:listedIn res:catalogue-euremap ;
+    eur:offeredThrough res:ri-eu-openscreen ;
+    eur:providedBy res:org-hzi ;
+    eur:requiresPriorContact true .
+
+res:service-EUREMAP_057 a eur:Service ;
+    dct:description "This service includes data acquisition and interpretation for structure elucidation using LC-MS, LC-HRMS-MS/MS, MALDI-ESI and NMR."@en ;
+    dct:identifier "EUREMAP_057" ;
+    dct:source <https://services.euremap.eu/service/euremap_057/> ;
+    dct:title "Structure elucidation using LC-MS, LC-HRMS-MS/MS, MALDI-ESI and NMR"@en ;
+    dcat:landingPage <https://services.euremap.eu/service/euremap_057/> ;
+    foaf:page <https://www.sintef.no/en/all-laboratories/advanced-research-based-analyses/> ;
+    eur:accessConditions "Please contact us by email before each service request. Fee-for-service conditions apply."@en ;
+    eur:atPipelineStep res:step-structure-elucidation ;
+    eur:deliveredByUnit res:unit-sintef-department-of-biotechnology-and-nanomedicine-at-sintef-indus ;
+    eur:hasAccessMode res:access-remote ;
+    eur:hasCapability res:cap-esi-ms,
+        res:cap-hrms,
+        res:cap-lc-ms,
+        res:cap-maldi-ms,
+        res:cap-mass-spectrometry,
+        res:cap-nmr,
+        res:cap-tandem-ms ;
+    eur:hasFeeModel res:fee-for-service ;
+    eur:listedIn res:catalogue-euremap ;
+    eur:offeredThrough res:ri-eu-openscreen ;
+    eur:providedBy res:org-sintef ;
+    eur:requiresPriorContact true .
+
+res:service-EUREMAP_058 a eur:Service ;
+    dct:description "This service includes data acquisition and interpretation for structure elucidation using LC-MS, LC-HRMS, IMS, NMR, IR, polarimetry and circular dichroism (CD)."@en ;
+    dct:identifier "EUREMAP_058" ;
+    dct:source <https://services.euremap.eu/service/euremap_058/> ;
+    dct:title "Structure elucidation using LC-MS, LC-HRMS, IMS, NMR, IR, polarimetry and CD"@en ;
+    dcat:landingPage <https://services.euremap.eu/service/euremap_058/> ;
+    foaf:page <https://ccmar.ualg.pt/en/our-services> ;
+    eur:accessConditions "Please contact us by email before each service request. Fee-for-service conditions apply."@en ;
+    eur:atPipelineStep res:step-structure-elucidation ;
+    eur:deliveredByUnit res:unit-ccmar-chemistry-platform-cts ;
+    eur:hasAccessMode res:access-physical,
+        res:access-remote ;
+    eur:hasCapability res:cap-cd,
+        res:cap-hrms,
+        res:cap-ion-mobility,
+        res:cap-ir,
+        res:cap-lc-ms,
+        res:cap-mass-spectrometry,
+        res:cap-nmr,
+        res:cap-polarimetry ;
+    eur:hasFeeModel res:fee-for-service ;
+    eur:listedIn res:catalogue-euremap ;
+    eur:offeredThrough res:ri-embrc ;
+    eur:providedBy res:org-ccmar ;
+    eur:requiresPriorContact true .
+
+res:service-EUREMAP_059 a eur:Service ;
+    dct:description "This service includes data acquisition and interpretation for structure elucidation using NMR, GC-MS, LC-HRMS, LC-MS/MS, IMS, IR, CD, UV and polarimetry."@en ;
+    dct:identifier "EUREMAP_059" ;
+    dct:source <https://services.euremap.eu/service/euremap_059/> ;
+    dct:title "Multi-technique structure elucidation using NMR, GC-MS, LC-HRMS, LC-MS/MS, IMS, IR, CD, UV and polarimetry"@en ;
+    dcat:landingPage <https://services.euremap.eu/service/euremap_059/> ;
+    foaf:page <https://www.icb.cnr.it/> ;
+    eur:accessConditions "Please contact us by email before each service request. Fee-for-service conditions apply."@en ;
+    eur:atPipelineStep res:step-structure-elucidation ;
+    eur:deliveredByUnit res:unit-cnr-cnr-institute-of-biomolecular-chemistry-icb ;
+    eur:hasAccessMode res:access-remote ;
+    eur:hasCapability res:cap-cd,
+        res:cap-dad-uv,
+        res:cap-gc,
+        res:cap-gc-ms,
+        res:cap-hrms,
+        res:cap-ion-mobility,
+        res:cap-ir,
+        res:cap-lc-ms,
+        res:cap-mass-spectrometry,
+        res:cap-nmr,
+        res:cap-polarimetry,
+        res:cap-tandem-ms ;
+    eur:hasFeeModel res:fee-for-service ;
+    eur:listedIn res:catalogue-euremap ;
+    eur:offeredThrough res:ri-eu-openscreen ;
+    eur:providedBy res:org-cnr ;
+    eur:requiresPriorContact true .
+
+res:service-EUREMAP_060 a eur:Service ;
+    dct:description "This service includes data acquisition and interpretation for structure elucidation using LC-HRMS and MS/MS."@en ;
+    dct:identifier "EUREMAP_060" ;
+    dct:source <https://services.euremap.eu/service/euremap_060/> ;
+    dct:title "Structure elucidation using LC-HRMS and MS/MS. Expertise on NMR analyses"@en ;
+    dcat:landingPage <https://services.euremap.eu/service/euremap_060/> ;
+    foaf:page <https://usr3579.obs-banyuls.fr/fr/personnel/chercheurs_contractuels/didier_stien2.html> ;
+    eur:accessConditions "Please contact us by email before each service request. Fee-for-service conditions apply."@en ;
+    eur:atPipelineStep res:step-structure-elucidation ;
+    eur:deliveredByUnit res:unit-su-lbbm-sorbonne-universit-observatoire-oc-anologique-de-banyul ;
+    eur:hasAccessMode res:access-remote ;
+    eur:hasCapability res:cap-hrms,
+        res:cap-lc-ms,
+        res:cap-mass-spectrometry,
+        res:cap-nmr,
+        res:cap-tandem-ms ;
+    eur:hasFeeModel res:fee-for-service ;
+    eur:listedIn res:catalogue-euremap ;
+    eur:offeredThrough res:ri-embrc ;
+    eur:providedBy res:org-su ;
+    eur:requiresPriorContact true .
+
+res:service-EUREMAP_061 a eur:Service ;
+    dct:description "This service includes stereochemistry and chiral analysis using chemical methods (CM) and computational methods (CMP), including Mosher/Marfey, CChr and GD."@en ;
+    dct:identifier "EUREMAP_061" ;
+    dct:source <https://services.euremap.eu/service/euremap_061/> ;
+    dct:title "Structure elucidation by interpretation of 1D and 2D NMR data"@en ;
+    dcat:landingPage <https://services.euremap.eu/service/euremap_061/> ;
+    foaf:page <https://www.medinadiscovery.com/services_groups/chemistry-services/> ;
+    eur:accessConditions "Please contact us by email before each service request. Fee-for-service conditions apply."@en ;
+    eur:atPipelineStep res:step-structure-elucidation ;
+    eur:deliveredByUnit res:unit-medina-fundaci-n-medina ;
+    eur:hasAccessMode res:access-remote ;
+    eur:hasCapability res:cap-chiral-analysis,
+        res:cap-computational-stereo,
+        res:cap-mosher-marfey,
+        res:cap-nmr,
+        res:cap-nmr-2d ;
+    eur:hasFeeModel res:fee-for-service ;
+    eur:listedIn res:catalogue-euremap ;
+    eur:offeredThrough res:ri-eu-openscreen ;
+    eur:providedBy res:org-medina ;
+    eur:requiresPriorContact true .
+
+res:service-EUREMAP_062 a eur:Service ;
+    dct:description "This service includes stereochemistry and chiral analysis using chemical methods (CM) and computational methods (CMP), including Mosher/Marfey, CChr and GD."@en ;
+    dct:identifier "EUREMAP_062" ;
+    dct:source <https://services.euremap.eu/service/euremap_062/> ;
+    dct:title "Stereochemistry and chiral analysis using chemical and computational methods, including Mosher/Marfey"@en ;
+    dcat:landingPage <https://services.euremap.eu/service/euremap_062/> ;
+    foaf:page <https://www.helmholtz-hzi.de/en/research/research-groups/details/chemical-biology/> ;
+    eur:accessConditions "Please contact us by email before each service request. Fee-for-service conditions apply."@en ;
+    eur:atPipelineStep res:step-structure-elucidation ;
+    eur:deliveredByUnit res:unit-hzi-department-of-chemical-biology-cbio ;
+    eur:hasAccessMode res:access-remote ;
+    eur:hasCapability res:cap-chiral-analysis,
+        res:cap-computational-stereo,
+        res:cap-mosher-marfey ;
+    eur:hasFeeModel res:fee-for-service ;
+    eur:listedIn res:catalogue-euremap ;
+    eur:offeredThrough res:ri-eu-openscreen ;
+    eur:providedBy res:org-hzi ;
+    eur:requiresPriorContact true .
+
+res:service-EUREMAP_063 a eur:Service ;
+    dct:description "This service includes stereochemistry and chiral analysis using chemical methods (CM) and computational methods (CMP), including CO (optical rotation) and CChr."@en ;
+    dct:identifier "EUREMAP_063" ;
+    dct:source <https://services.euremap.eu/service/euremap_063/> ;
+    dct:title "Stereochemistry and chiral analysis using chemical methods, optical rotation and chiral methods"@en ;
+    dcat:landingPage <https://services.euremap.eu/service/euremap_063/> ;
+    foaf:page <https://ccmar.ualg.pt/en/our-services> ;
+    eur:accessConditions "Please contact us by email before each service request. Fee-for-service conditions apply."@en ;
+    eur:atPipelineStep res:step-structure-elucidation ;
+    eur:deliveredByUnit res:unit-ccmar-chemistry-platform-cts ;
+    eur:hasAccessMode res:access-remote ;
+    eur:hasCapability res:cap-chiral-analysis,
+        res:cap-computational-stereo,
+        res:cap-polarimetry ;
+    eur:hasFeeModel res:fee-for-service ;
+    eur:listedIn res:catalogue-euremap ;
+    eur:offeredThrough res:ri-embrc ;
+    eur:providedBy res:org-ccmar ;
+    eur:requiresPriorContact true .
+
+res:service-EUREMAP_064 a eur:Service ;
+    dct:description "This service includes stereochemistry assessment and chiral analysis using CM, CMP, CChr."@en ;
+    dct:identifier "EUREMAP_064" ;
+    dct:source <https://services.euremap.eu/service/euremap_064/> ;
+    dct:title "Stereochemistry and chiral analysis using chemical and computational methods"@en ;
+    dcat:landingPage <https://services.euremap.eu/service/euremap_064/> ;
+    foaf:page <https://www.icb.cnr.it/> ;
+    eur:accessConditions "Please contact us by email before each service request. Fee-for-service conditions apply."@en ;
+    eur:atPipelineStep res:step-structure-elucidation ;
+    eur:deliveredByUnit res:unit-cnr-cnr-institute-of-biomolecular-chemistry-icb ;
+    eur:hasAccessMode res:access-remote ;
+    eur:hasCapability res:cap-chiral-analysis,
+        res:cap-computational-stereo ;
+    eur:hasFeeModel res:fee-for-service ;
+    eur:listedIn res:catalogue-euremap ;
+    eur:offeredThrough res:ri-eu-openscreen ;
+    eur:providedBy res:org-cnr ;
+    eur:requiresPriorContact true .
+
+res:service-EUREMAP_065 a eur:Service ;
+    dct:description "This service includes full synthesis (FS), fluorescent analogues (FA) and click chemistry."@en ;
+    dct:identifier "EUREMAP_065" ;
+    dct:source <https://services.euremap.eu/service/euremap_065/> ;
+    dct:title "Full synthesis, fluorescent analogues and click chemistry"@en ;
+    dcat:landingPage <https://services.euremap.eu/service/euremap_065/> ;
+    foaf:page <https://www.helmholtz-hzi.de/en/research/research-groups/details/chemical-biology/> ;
+    eur:accessConditions "Please contact us by email before each service request. Fee-for-service conditions apply."@en ;
+    eur:atPipelineStep res:step-synthesis ;
+    eur:deliveredByUnit res:unit-hzi-department-of-chemical-biology-cbio ;
+    eur:hasAccessMode res:access-remote ;
+    eur:hasCapability res:cap-analogue-synthesis,
+        res:cap-click-chemistry,
+        res:cap-fluorescent-analogues,
+        res:cap-total-synthesis ;
+    eur:hasFeeModel res:fee-for-service ;
+    eur:listedIn res:catalogue-euremap ;
+    eur:offeredThrough res:ri-eu-openscreen ;
+    eur:providedBy res:org-hzi ;
+    eur:requiresPriorContact true .
+
+res:service-EUREMAP_066 a eur:Service ;
+    dct:description "Expert chemical modification of natural compounds to improve their pharmaceutical properties — transforming promising bioactive molecules into viable drug candidates through tailored derivatization strategies, coupled with assessment of druggability potential including solubility, stability, and bioactivity profiling of key derivatives."@en ;
+    dct:identifier "EUREMAP_066" ;
+    dct:source <https://services.euremap.eu/service/euremap_066/> ;
+    dct:title "Chemical modification of natural compounds to improve their pharmaceutical properties"@en ;
+    dcat:landingPage <https://services.euremap.eu/service/euremap_066/> ;
+    foaf:page <https://www.sintef.no/en/explore-our-services/> ;
+    eur:acceptsInput res:mat-pure-compound ;
+    eur:accessConditions "Please contact us by email before each service request. Fee-for-service conditions apply."@en ;
+    eur:atPipelineStep res:step-synthesis ;
+    eur:deliveredByUnit res:unit-sintef-department-of-biotechnology-and-nanomedicine-at-sintef-indus ;
+    eur:hasAccessMode res:access-remote ;
+    eur:hasCapability res:cap-semi-synthesis ;
+    eur:hasFeeModel res:fee-for-service ;
+    eur:listedIn res:catalogue-euremap ;
+    eur:offeredThrough res:ri-eu-openscreen ;
+    eur:providedBy res:org-sintef ;
+    eur:requiresPriorContact true .
+
+res:service-EUREMAP_067 a eur:Service ;
+    dct:description "Synthesis project evaluation, compund synthesis, purificaiton and validation, Fluorescently labelled analogs."@en ;
+    dct:identifier "EUREMAP_067" ;
+    dct:source <https://services.euremap.eu/service/euremap_067/> ;
+    dct:title "Assessment of synthesis target and success probability; proposed alternatives. Synthesis of analogues and Fluorescent analogues"@en ;
+    dcat:landingPage <https://services.euremap.eu/service/euremap_067/> ;
+    foaf:page <https://ccmar.ualg.pt/en/our-services> ;
+    eur:accessConditions "Please contact us by email before each service request. Fee-for-service conditions apply."@en ;
+    eur:atPipelineStep res:step-synthesis ;
+    eur:deliveredByUnit res:unit-ccmar-chemistry-platform-cts ;
+    eur:hasAccessMode res:access-remote ;
+    eur:hasCapability res:cap-analogue-synthesis,
+        res:cap-fluorescent-analogues,
+        res:cap-synthesis-feasibility ;
+    eur:hasFeeModel res:fee-for-service ;
+    eur:listedIn res:catalogue-euremap ;
+    eur:offeredThrough res:ri-embrc ;
+    eur:providedBy res:org-ccmar ;
+    eur:requiresPriorContact true .
+
+res:service-EUREMAP_068 a eur:Service ;
+    dct:description "This service includes full synthesis (FS), fluorescent analogues (FA) and isotope-labelled compounds (IL)."@en ;
+    dct:identifier "EUREMAP_068" ;
+    dct:source <https://services.euremap.eu/service/euremap_068/> ;
+    dct:title "Full synthesis, fluorescent analogues and isotope-labelled compounds"@en ;
+    dcat:landingPage <https://services.euremap.eu/service/euremap_068/> ;
+    foaf:page <https://www.icb.cnr.it/> ;
+    eur:accessConditions "Please contact us by email before each service request. Fee-for-service conditions apply."@en ;
+    eur:atPipelineStep res:step-synthesis ;
+    eur:deliveredByUnit res:unit-cnr-cnr-institute-of-biomolecular-chemistry-icb ;
+    eur:hasAccessMode res:access-remote ;
+    eur:hasCapability res:cap-analogue-synthesis,
+        res:cap-fluorescent-analogues,
+        res:cap-isotope-labelling,
+        res:cap-total-synthesis ;
+    eur:hasFeeModel res:fee-for-service ;
+    eur:listedIn res:catalogue-euremap ;
+    eur:offeredThrough res:ri-eu-openscreen ;
+    eur:providedBy res:org-cnr ;
+    eur:requiresPriorContact true .
+
+res:service-EUREMAP_069 a eur:Service ;
+    dct:description "This service includes molecular docking."@en ;
+    dct:identifier "EUREMAP_069" ;
+    dct:source <https://services.euremap.eu/service/euremap_069/> ;
+    dct:title "Molecular docking"@en ;
+    dcat:landingPage <https://services.euremap.eu/service/euremap_069/> ;
+    foaf:page <https://www.helmholtz-hzi.de/en/research/research-groups/details/chemical-biology/> ;
+    eur:accessConditions "Please contact us by email before each service request. Fee-for-service conditions apply."@en ;
+    eur:atPipelineStep res:step-synthesis ;
+    eur:deliveredByUnit res:unit-hzi-department-of-chemical-biology-cbio ;
+    eur:hasAccessMode res:access-remote ;
+    eur:hasCapability res:cap-molecular-docking ;
+    eur:hasFeeModel res:fee-for-service ;
+    eur:listedIn res:catalogue-euremap ;
+    eur:offeredThrough res:ri-eu-openscreen ;
+    eur:providedBy res:org-hzi ;
+    eur:requiresPriorContact true .
+
+res:service-EUREMAP_070 a eur:Service ;
+    dct:description "Chemical modeling (CM); molecular docking (MD); virtual screening for lead compunds; QSAR"@en ;
+    dct:identifier "EUREMAP_070" ;
+    dct:source <https://services.euremap.eu/service/euremap_070/> ;
+    dct:title "Chemical modelling using bioinformatics, chemical libraries, molecular docking and QSAR"@en ;
+    dcat:landingPage <https://services.euremap.eu/service/euremap_070/> ;
+    foaf:page <https://ccmar.ualg.pt/en/our-services> ;
+    eur:accessConditions "Please contact us by email before each service request. Fee-for-service conditions apply."@en ;
+    eur:atPipelineStep res:step-synthesis ;
+    eur:deliveredByUnit res:unit-ccmar-chemistry-platform-cts ;
+    eur:hasAccessMode res:access-remote ;
+    eur:hasCapability res:cap-chemical-modelling,
+        res:cap-cheminformatics-libraries,
+        res:cap-molecular-docking,
+        res:cap-qsar ;
+    eur:hasFeeModel res:fee-for-service ;
+    eur:listedIn res:catalogue-euremap ;
+    eur:offeredThrough res:ri-embrc ;
+    eur:providedBy res:org-ccmar ;
+    eur:requiresPriorContact true .
+
+res:service-EUREMAP_071 a eur:Service ;
+    dct:description "This service includes chemical modelling, using bioinformatics, chemical libraries, and molecular networking"@en ;
+    dct:identifier "EUREMAP_071" ;
+    dct:source <https://services.euremap.eu/service/euremap_071/> ;
+    dct:title "Chemical modelling"@en ;
+    dcat:landingPage <https://services.euremap.eu/service/euremap_071/> ;
+    foaf:page <https://www.icb.cnr.it/> ;
+    eur:accessConditions "Please contact us by email before each service request. Fee-for-service conditions apply."@en ;
+    eur:atPipelineStep res:step-synthesis ;
+    eur:deliveredByUnit res:unit-cnr-cnr-institute-of-biomolecular-chemistry-icb ;
+    eur:hasAccessMode res:access-remote ;
+    eur:hasCapability res:cap-chemical-modelling,
+        res:cap-cheminformatics-libraries,
+        res:cap-molecular-networking ;
+    eur:hasFeeModel res:fee-for-service ;
+    eur:listedIn res:catalogue-euremap ;
+    eur:offeredThrough res:ri-eu-openscreen ;
+    eur:providedBy res:org-cnr ;
+    eur:requiresPriorContact true .
+
+res:step-fair-data a eur:PipelineStep ;
+    rdfs:seeAlso <https://euremap.eu/service-pipeline/> ;
+    skos:definition "Cross-cutting data management: access procedures, repositories, standards and data-management policies. Listed on the EUREMAP service-pipeline page; no catalogue services are attached to it in the 2026-11-19 snapshot."@en ;
+    skos:inScheme res:scheme-pipeline ;
+    skos:prefLabel "FAIR data"@en .
+
+<https://w3id.org/euremap/ontology> a owl:Ontology ;
+    dct:created "2026-09-15"^^xsd:date ;
+    dct:description """Schema for describing the EUREMAP marine natural-product
+bioprospecting service pipeline as a knowledge graph: who offers which service,
+at which pipeline step, through which research infrastructure, in which country,
+with which techniques, what it consumes and what it produces. It acts as the
+semantic control plane for service discovery, routing and governance; it does
+not store scientific payload data."""@en ;
+    dct:license <https://creativecommons.org/licenses/by/4.0/> ;
+    dct:modified "2026-11-19"^^xsd:date ;
+    dct:title "EUREMAP Ontology"@en ;
+    vann:preferredNamespacePrefix "eur" ;
+    vann:preferredNamespaceUri "https://w3id.org/euremap/ontology/" ;
+    rdfs:seeAlso <https://euremap.eu/service-pipeline/>,
+        <https://services.euremap.eu/> ;
+    owl:versionIRI eur:0.2.0 ;
+    owl:versionInfo "0.2.0" .
+
+eur:locatedInCountry a owl:ObjectProperty ;
+    rdfs:label "located in country"@en ;
+    rdfs:range eur:Country ;
+    rdfs:subPropertyOf schema:location .
+
+eur:precedes a owl:ObjectProperty,
+        owl:TransitiveProperty ;
+    rdfs:label "precedes (catalogue order)"@en ;
+    rdfs:domain eur:PipelineStep ;
+    rdfs:range eur:PipelineStep .
+
+eur:previousStep a owl:ObjectProperty ;
+    rdfs:label "previous step"@en .
+
+eur:providedBy a owl:FunctionalProperty,
+        owl:ObjectProperty ;
+    rdfs:label "provided by"@en ;
+    rdfs:domain eur:Service ;
+    rdfs:range eur:Institution ;
+    rdfs:subPropertyOf schema:provider .
+
+res:capacity-EUREMAP_007-1 a eur:Capacity ;
+    rdfs:comment "1 mL – 50 L cultivation scale"@en ;
+    schema:maxValue 50.0 ;
+    schema:minValue 0.001 ;
+    schema:unitCode "LTR" ;
+    eur:quantityKind res:qk-culture-volume .
+
+res:capacity-EUREMAP_008-1 a eur:Capacity ;
+    rdfs:comment "0.5–2 L bioreactors; scale-up to 10 L"@en ;
+    schema:maxValue 10.0 ;
+    schema:minValue 0.5 ;
+    schema:unitCode "LTR" ;
+    eur:quantityKind res:qk-culture-volume .
+
+res:capacity-EUREMAP_009-1 a eur:Capacity ;
+    rdfs:comment "up to 5 L"@en ;
+    schema:maxValue 5.0 ;
+    schema:unitCode "LTR" ;
+    eur:quantityKind res:qk-culture-volume .
+
+res:capacity-EUREMAP_009-2 a eur:Capacity ;
+    rdfs:comment "up to 100 g"@en ;
+    schema:maxValue 100.0 ;
+    schema:unitCode "GRM" ;
+    eur:quantityKind res:qk-extraction-mass .
+
+res:capacity-EUREMAP_010-1 a eur:Capacity ;
+    rdfs:comment "up to 20 L"@en ;
+    schema:maxValue 20.0 ;
+    schema:unitCode "LTR" ;
+    eur:quantityKind res:qk-culture-volume .
+
+res:capacity-EUREMAP_011-1 a eur:Capacity ;
+    rdfs:comment "up to 5 L"@en ;
+    schema:maxValue 5.0 ;
+    schema:unitCode "LTR" ;
+    eur:quantityKind res:qk-culture-volume .
+
+res:capacity-EUREMAP_012-1 a eur:Capacity ;
+    rdfs:comment "up to 5 L"@en ;
+    schema:maxValue 5.0 ;
+    schema:unitCode "LTR" ;
+    eur:quantityKind res:qk-culture-volume .
+
+res:capacity-EUREMAP_013-1 a eur:Capacity ;
+    rdfs:comment "up to 5 L"@en ;
+    schema:maxValue 5.0 ;
+    schema:unitCode "LTR" ;
+    eur:quantityKind res:qk-culture-volume .
+
+res:capacity-EUREMAP_014-1 a eur:Capacity ;
+    rdfs:comment "cell pellets from cultures up to 40 L"@en ;
+    schema:maxValue 40.0 ;
+    schema:unitCode "LTR" ;
+    eur:quantityKind res:qk-culture-volume .
+
+res:capacity-EUREMAP_015-1 a eur:Capacity ;
+    rdfs:comment "up to 10 g"@en ;
+    schema:maxValue 10.0 ;
+    schema:unitCode "GRM" ;
+    eur:quantityKind res:qk-extraction-mass .
+
+res:capacity-EUREMAP_016-1 a eur:Capacity ;
+    rdfs:comment "up to 5 L"@en ;
+    schema:maxValue 5.0 ;
+    schema:unitCode "LTR" ;
+    eur:quantityKind res:qk-culture-volume .
+
+res:capacity-EUREMAP_017-1 a eur:Capacity ;
+    rdfs:comment "500 µg extract per assay"@en ;
+    schema:maxValue 0.5 ;
+    schema:unitCode "MGM" ;
+    eur:quantityKind res:qk-sample-requirement .
+
+res:capacity-EUREMAP_022-1 a eur:Capacity ;
+    rdfs:comment "1–10 mg extract"@en ;
+    schema:maxValue 10.0 ;
+    schema:minValue 1.0 ;
+    schema:unitCode "MGM" ;
+    eur:quantityKind res:qk-sample-requirement .
+
+res:capacity-EUREMAP_028-1 a eur:Capacity ;
+    rdfs:comment "250 µg extract per assay"@en ;
+    schema:maxValue 0.25 ;
+    schema:unitCode "MGM" ;
+    eur:quantityKind res:qk-sample-requirement .
+
+res:capacity-EUREMAP_037-1 a eur:Capacity ;
+    rdfs:comment "500 MHz NMR"@en ;
+    schema:maxValue 500.0 ;
+    schema:unitCode "A56" ;
+    eur:quantityKind res:qk-nmr-field .
+
+res:capacity-EUREMAP_041-1 a eur:Capacity ;
+    rdfs:comment "500 MHz NMR"@en ;
+    schema:maxValue 500.0 ;
+    schema:unitCode "A56" ;
+    eur:quantityKind res:qk-nmr-field .
+
+res:capacity-EUREMAP_043-1 a eur:Capacity ;
+    rdfs:comment "1–30 mg pure compound"@en ;
+    schema:maxValue 30.0 ;
+    schema:minValue 1.0 ;
+    schema:unitCode "MGM" ;
+    eur:quantityKind res:qk-purification-yield .
+
+res:capacity-EUREMAP_043-2 a eur:Capacity ;
+    rdfs:comment "from 20 g extract"@en ;
+    schema:maxValue 20.0 ;
+    schema:unitCode "GRM" ;
+    eur:quantityKind res:qk-input-extract-mass .
+
+res:capacity-EUREMAP_045-1 a eur:Capacity ;
+    rdfs:comment "up to 100 mg pure compound"@en ;
+    schema:maxValue 100.0 ;
+    schema:unitCode "MGM" ;
+    eur:quantityKind res:qk-purification-yield .
+
+res:capacity-EUREMAP_048-1 a eur:Capacity ;
+    rdfs:comment "up to 100 mg purified compound"@en ;
+    schema:maxValue 100.0 ;
+    schema:unitCode "MGM" ;
+    eur:quantityKind res:qk-purification-yield .
+
+res:fee-on-request a eur:FeeModel ;
+    skos:inScheme res:scheme-fees ;
+    skos:prefLabel "Cost on request (depends on material)"@en .
+
+res:mat-bgc-prediction a eur:DigitalDataType,
+        eur:MaterialOrDataType ;
+    skos:inScheme res:scheme-materials ;
+    skos:prefLabel "Biosynthetic gene cluster prediction"@en .
+
+res:mat-bioactivity-data a eur:DigitalDataType,
+        eur:MaterialOrDataType ;
+    skos:inScheme res:scheme-materials ;
+    skos:prefLabel "Bioactivity data"@en .
+
+res:mat-chemical-profile-data a eur:DigitalDataType,
+        eur:MaterialOrDataType ;
+    skos:inScheme res:scheme-materials ;
+    skos:prefLabel "Chemical profile data (MS/NMR)"@en .
+
+res:mat-environmental-sample a eur:MaterialOrDataType,
+        eur:PhysicalMaterialType ;
+    skos:inScheme res:scheme-materials ;
+    skos:prefLabel "Environmental or biological sample"@en .
+
+res:mat-in-silico-model a eur:DigitalDataType,
+        eur:MaterialOrDataType ;
+    skos:inScheme res:scheme-materials ;
+    skos:prefLabel "In silico model (docking/QSAR)"@en .
+
+res:mat-mag a eur:DigitalDataType,
+        eur:MaterialOrDataType ;
+    skos:inScheme res:scheme-materials ;
+    skos:prefLabel "Metagenome-assembled genome (MAG)"@en .
+
+res:mat-metagenome-assembly a eur:DigitalDataType,
+        eur:MaterialOrDataType ;
+    skos:closeMatch edam:data_0925 ;
+    skos:inScheme res:scheme-materials ;
+    skos:prefLabel "Metagenome or genome assembly"@en .
+
+res:mat-microbial-strain a eur:MaterialOrDataType,
+        eur:PhysicalMaterialType ;
+    skos:inScheme res:scheme-materials ;
+    skos:prefLabel "Microbial strain or culture"@en .
+
+res:mat-safety-data a eur:DigitalDataType,
+        eur:MaterialOrDataType ;
+    skos:inScheme res:scheme-materials ;
+    skos:prefLabel "Safety and toxicity data"@en .
+
+res:mat-taxonomic-functional-profile a eur:DigitalDataType,
+        eur:MaterialOrDataType ;
+    skos:inScheme res:scheme-materials ;
+    skos:prefLabel "Taxonomic and functional profile"@en .
+
+res:node-embl-GB a eur:NationalNode ;
+    skos:prefLabel "EMBL – United Kingdom"@en ;
+    prov:wasDerivedFrom res:catalogue-euremap ;
+    eur:locatedInCountry res:country-GB ;
+    eur:nodeMember res:org-embl-ebi ;
+    eur:nodeOf res:ri-embl .
+
+res:node-embrc-BE a eur:NationalNode ;
+    skos:prefLabel "EMBRC – Belgium"@en ;
+    prov:wasDerivedFrom res:catalogue-euremap ;
+    eur:locatedInCountry res:country-BE ;
+    eur:nodeMember res:org-ugent ;
+    eur:nodeOf res:ri-embrc .
+
+res:node-embrc-FR a eur:NationalNode ;
+    skos:prefLabel "EMBRC – France"@en ;
+    prov:wasDerivedFrom res:catalogue-euremap ;
+    eur:locatedInCountry res:country-FR ;
+    eur:nodeMember res:org-su ;
+    eur:nodeOf res:ri-embrc .
+
+res:node-embrc-IL a eur:NationalNode ;
+    skos:prefLabel "EMBRC – Israel"@en ;
+    prov:wasDerivedFrom res:catalogue-euremap ;
+    eur:locatedInCountry res:country-IL ;
+    eur:nodeMember res:org-tau ;
+    eur:nodeOf res:ri-embrc .
+
+res:node-embrc-IT a eur:NationalNode ;
+    skos:prefLabel "EMBRC – Italy"@en ;
+    prov:wasDerivedFrom res:catalogue-euremap ;
+    eur:locatedInCountry res:country-IT ;
+    eur:nodeMember res:org-szn ;
+    eur:nodeOf res:ri-embrc .
+
+res:node-embrc-PT a eur:NationalNode ;
+    skos:prefLabel "EMBRC – Portugal"@en ;
+    prov:wasDerivedFrom res:catalogue-euremap ;
+    eur:locatedInCountry res:country-PT ;
+    eur:nodeMember res:org-ccmar ;
+    eur:nodeOf res:ri-embrc .
+
+res:node-eu-openscreen-DE a eur:NationalNode ;
+    skos:prefLabel "EU-OPENSCREEN – Germany"@en ;
+    prov:wasDerivedFrom res:catalogue-euremap ;
+    eur:locatedInCountry res:country-DE ;
+    eur:nodeMember res:org-hzi ;
+    eur:nodeOf res:ri-eu-openscreen .
+
+res:node-eu-openscreen-ES a eur:NationalNode ;
+    skos:prefLabel "EU-OPENSCREEN – Spain"@en ;
+    prov:wasDerivedFrom res:catalogue-euremap ;
+    eur:locatedInCountry res:country-ES ;
+    eur:nodeMember res:org-medina ;
+    eur:nodeOf res:ri-eu-openscreen .
+
+res:node-eu-openscreen-IT a eur:NationalNode ;
+    skos:prefLabel "EU-OPENSCREEN – Italy"@en ;
+    prov:wasDerivedFrom res:catalogue-euremap ;
+    eur:locatedInCountry res:country-IT ;
+    eur:nodeMember res:org-cnr ;
+    eur:nodeOf res:ri-eu-openscreen .
+
+res:node-eu-openscreen-NO a eur:NationalNode ;
+    skos:prefLabel "EU-OPENSCREEN – Norway"@en ;
+    prov:wasDerivedFrom res:catalogue-euremap ;
+    eur:locatedInCountry res:country-NO ;
+    eur:nodeMember res:org-sintef,
+        res:org-uit ;
+    eur:nodeOf res:ri-eu-openscreen .
+
+res:project-euremap a foaf:Project ;
+    rdfs:label "EUREMAP"@en ;
+    foaf:homepage <https://euremap.eu/> .
+
+res:qk-input-extract-mass a eur:QuantityKind ;
+    skos:inScheme res:scheme-quantities ;
+    skos:prefLabel "Input extract mass"@en .
+
+res:sw-antismash a eur:SoftwareTool ;
+    rdfs:label "antiSMASH"@en ;
+    skos:exactMatch biotools:antismash .
+
+res:sw-big-scape a eur:SoftwareTool ;
+    rdfs:label "BiG-SCAPE"@en ;
+    skos:exactMatch biotools:big-scape .
+
+res:sw-nextflow a eur:SoftwareTool ;
+    rdfs:label "Nextflow"@en ;
+    skos:exactMatch biotools:nextflow .
+
+res:sw-sanntis a eur:SoftwareTool ;
+    rdfs:label "SanntiS"@en ;
+    skos:exactMatch biotools:sanntis .
+
+eur:Repository a owl:Class ;
+    rdfs:label "Data repository"@en ;
+    rdfs:subClassOf dcat:Catalog .
+
+eur:ServiceCatalogue a owl:Class ;
+    rdfs:label "Service catalogue"@en ;
+    rdfs:subClassOf dcat:Catalog .
+
+res:cap-agri-crop-assay a eur:Capability ;
+    skos:broader res:cap-bioassay ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "Agriculture and crop-protection assay"@en .
+
+res:cap-anaerobic-cultivation a eur:Capability ;
+    skos:broader res:cap-cultivation ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "Anaerobic cultivation"@en .
+
+res:cap-antibiofilm-assay a eur:Capability ;
+    skos:broader res:cap-antimicrobial-assay ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "Antibiofilm assay"@en .
+
+res:cap-antifouling-assay a eur:Capability ;
+    skos:broader res:cap-bioassay ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "Antifouling assay"@en .
+
+res:cap-antiviral-assay a eur:Capability ;
+    skos:broader res:cap-bioassay ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "Antiviral assay"@en .
+
+res:cap-biodistribution a eur:Capability ;
+    skos:broader res:cap-safety-assessment ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "Compound biodistribution / exposure"@en .
+
+res:cap-cell-migration-assay a eur:Capability ;
+    skos:broader res:cap-bioassay ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "Cell migration and wound-healing assay"@en .
+
+res:cap-cell-pellet-extraction a eur:Capability ;
+    skos:broader res:cap-extraction ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "Cell-pellet extraction"@en .
+
+res:cap-click-chemistry a eur:Capability ;
+    skos:broader res:cap-synthesis ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "Click chemistry"@en .
+
+res:cap-column-chromatography a eur:Capability ;
+    skos:broader res:cap-separation ;
+    skos:exactMatch obo:CHMO_0001001 ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "Column chromatography"@en .
+
+res:cap-esi-ms a eur:Capability ;
+    skos:broader res:cap-mass-spectrometry ;
+    skos:exactMatch obo:CHMO_0000482 ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "Electrospray ionisation MS"@en .
+
+res:cap-flash-chromatography a eur:Capability ;
+    skos:broader res:cap-separation ;
+    skos:exactMatch obo:CHMO_0002582 ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "Flash chromatography"@en .
+
+res:cap-ft-icr-ms a eur:Capability ;
+    skos:broader res:cap-hrms ;
+    skos:exactMatch obo:CHMO_0000502 ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "FT-ICR mass spectrometry"@en .
+
+res:cap-fungal-cultivation a eur:Capability ;
+    skos:broader res:cap-cultivation ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "Fungal cultivation"@en .
+
+res:cap-gene-prediction a eur:Capability ;
+    skos:broader res:cap-genomic-analysis ;
+    skos:exactMatch edam:operation_2454 ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "Gene prediction"@en .
+
+res:cap-hydrolase-assay a eur:Capability ;
+    skos:broader res:cap-enzyme-assay ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "Hydrolytic enzyme activity screening"@en .
+
+res:cap-illumina-sequencing a eur:Capability ;
+    skos:broadMatch edam:topic_3168 ;
+    skos:broader res:cap-genomic-analysis ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "Illumina short-read sequencing"@en .
+
+res:cap-impedance-cell-assay a eur:Capability ;
+    skos:broader res:cap-bioassay ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "Impedance-based cell assay (ECIS/TEER)"@en .
+
+res:cap-in-vivo-safety a eur:Capability ;
+    skos:broader res:cap-safety-assessment ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "In vivo safety (mouse)"@en .
+
+res:cap-isotope-labelling a eur:Capability ;
+    skos:broader res:cap-synthesis ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "Isotope labelling"@en .
+
+res:cap-kinase-assay a eur:Capability ;
+    skos:broader res:cap-enzyme-assay ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "Kinase inhibition assay"@en .
+
+res:cap-molecular-networking a eur:Capability ;
+    skos:broader res:cap-computational-chemistry ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "Molecular networking"@en .
+
+res:cap-ms-triggered-purification a eur:Capability ;
+    skos:broader res:cap-separation ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "MS-/UV-triggered automated purification"@en .
+
+res:cap-nanopore-sequencing a eur:Capability ;
+    skos:broadMatch edam:topic_3168 ;
+    skos:broader res:cap-genomic-analysis ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "Oxford Nanopore long-read sequencing"@en .
+
+res:cap-nmr-2d a eur:Capability ;
+    skos:broader res:cap-nmr ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "1D/2D NMR interpretation"@en .
+
+res:cap-nmr-cryoprobe a eur:Capability ;
+    skos:broader res:cap-nmr ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "Cryoprobe NMR"@en .
+
+res:cap-photobioreactor a eur:Capability ;
+    skos:broader res:cap-bioreactor-cultivation ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "Photobioreactor cultivation"@en .
+
+res:cap-ppi-assay a eur:Capability ;
+    skos:broader res:cap-bioassay ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "Protein–protein interaction assay"@en ;
+    skos:relatedMatch edam:topic_0128 .
+
+res:cap-qqq-ms a eur:Capability ;
+    skos:broader res:cap-mass-spectrometry ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "Triple-quadrupole mass spectrometry"@en ;
+    skos:relatedMatch obo:CHMO_0002021 .
+
+res:cap-qsar a eur:Capability ;
+    skos:broader res:cap-computational-chemistry ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "QSAR modelling"@en .
+
+res:cap-qtof-ms a eur:Capability ;
+    skos:broader res:cap-hrms ;
+    skos:exactMatch obo:CHMO_0002719 ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "Q-TOF mass spectrometry"@en .
+
+res:cap-rapidfire-ms a eur:Capability ;
+    skos:broader res:cap-mass-spectrometry ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "RapidFire high-throughput MS"@en .
+
+res:cap-receptor-signalling-assay a eur:Capability ;
+    skos:broader res:cap-bioassay ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "Receptor-activation / cell-signalling assay"@en .
+
+res:cap-semi-synthesis a eur:Capability ;
+    skos:broader res:cap-synthesis ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "Semi-synthesis / chemical modification"@en .
+
+res:cap-synthesis-feasibility a eur:Capability ;
+    skos:broader res:cap-synthesis ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "Synthesis feasibility assessment"@en .
+
+res:cap-toxicotranscriptomics a eur:Capability ;
+    skos:broader res:cap-safety-assessment ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "Transcriptomics for off-target toxicity"@en ;
+    skos:relatedMatch edam:topic_3308 .
+
+res:cap-workflow-automation a eur:Capability ;
+    skos:broader res:cap-genomic-analysis ;
+    skos:closeMatch edam:topic_0769 ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "Automated workflow execution"@en .
+
+res:country-BE a eur:Country ;
+    skos:exactMatch euc:BEL,
+        wd:Q31 ;
+    skos:prefLabel "Belgium"@en ;
+    eur:iso3166Alpha2 "BE" .
+
+res:country-DE a eur:Country ;
+    skos:exactMatch euc:DEU,
+        wd:Q183 ;
+    skos:prefLabel "Germany"@en ;
+    eur:iso3166Alpha2 "DE" .
+
+res:country-ES a eur:Country ;
+    skos:exactMatch euc:ESP,
+        wd:Q29 ;
+    skos:prefLabel "Spain"@en ;
+    eur:iso3166Alpha2 "ES" .
+
+res:country-FR a eur:Country ;
+    skos:exactMatch euc:FRA,
+        wd:Q142 ;
+    skos:prefLabel "France"@en ;
+    eur:iso3166Alpha2 "FR" .
+
+res:country-GB a eur:Country ;
+    skos:exactMatch euc:GBR,
+        wd:Q145 ;
+    skos:prefLabel "United Kingdom"@en ;
+    eur:iso3166Alpha2 "GB" .
+
+res:country-IL a eur:Country ;
+    skos:exactMatch euc:ISR,
+        wd:Q801 ;
+    skos:prefLabel "Israel"@en ;
+    eur:iso3166Alpha2 "IL" .
+
+res:country-PT a eur:Country ;
+    skos:exactMatch euc:PRT,
+        wd:Q45 ;
+    skos:prefLabel "Portugal"@en ;
+    eur:iso3166Alpha2 "PT" .
+
+res:mat-chemical-structure a eur:DigitalDataType,
+        eur:MaterialOrDataType ;
+    skos:inScheme res:scheme-materials ;
+    skos:prefLabel "Elucidated chemical structure"@en .
+
+res:phase-bioactivity a eur:PipelinePhase ;
+    skos:inScheme res:scheme-phases ;
+    skos:notation "3" ;
+    skos:prefLabel "Bioactivity & safety"@en ;
+    skos:topConceptOf res:scheme-phases .
+
+res:phase-genomic a eur:PipelinePhase ;
+    skos:inScheme res:scheme-phases ;
+    skos:notation "1" ;
+    skos:prefLabel "Genomic & biological resources"@en ;
+    skos:topConceptOf res:scheme-phases .
+
+res:qk-extraction-mass a eur:QuantityKind ;
+    skos:inScheme res:scheme-quantities ;
+    skos:prefLabel "Processing mass"@en .
+
+res:qk-nmr-field a eur:QuantityKind ;
+    skos:inScheme res:scheme-quantities ;
+    skos:prefLabel "NMR field strength"@en .
+
+res:unit-ccmar-protein-chemistry-platform-marine-resources-cts a eur:OrganisationalUnit ;
+    skos:prefLabel "Protein/Chemistry Platform - Marine Resources - CTS"@en ;
+    org:unitOf res:org-ccmar .
+
+res:unit-su-kissf-kinase-inhibition-specialized-screening-facility a eur:OrganisationalUnit ;
+    skos:prefLabel "KISSf: Kinase Inhibition Specialized Screening facility"@en ;
+    org:unitOf res:org-su .
+
+res:unit-ugent-laboratory-of-pharmaceutical-microbiology-lpm a eur:OrganisationalUnit ;
+    skos:prefLabel "Laboratory of Pharmaceutical Microbiology (LPM)"@en ;
+    org:unitOf res:org-ugent ;
+    eur:catalogueLabel "Laboratory of Pharmaceutical Microbiology (LPM)"@en .
+
+res:access-virtual a eur:AccessMode ;
+    skos:definition "Free, open, online access to data resources or analysis services without selection of individual users."@en ;
+    skos:inScheme res:scheme-access ;
+    skos:prefLabel "Virtual access"@en .
+
+res:cap-admet a eur:Capability ;
+    skos:broader res:cap-bioassay ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "ADMET profiling"@en .
+
+res:cap-antibacterial-assay a eur:Capability ;
+    skos:broader res:cap-antimicrobial-assay ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "Antibacterial assay"@en .
+
+res:cap-antifungal-assay a eur:Capability ;
+    skos:broader res:cap-antimicrobial-assay ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "Antifungal assay"@en .
+
+res:cap-bacterial-cultivation a eur:Capability ;
+    skos:broader res:cap-cultivation ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "Bacterial cultivation"@en .
+
+res:cap-bgc-mining a eur:Capability ;
+    skos:broader res:cap-genomic-analysis ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "Biosynthetic gene cluster mining"@en ;
+    skos:relatedMatch edam:operation_3803 .
+
+res:cap-biomass-extraction a eur:Capability ;
+    skos:broader res:cap-extraction ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "Biomass extraction"@en .
+
+res:cap-chemical-modelling a eur:Capability ;
+    skos:broader res:cap-computational-chemistry ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "Chemical modelling"@en .
+
+res:cap-cheminformatics-libraries a eur:Capability ;
+    skos:broader res:cap-computational-chemistry ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "Chemical libraries / cheminformatics"@en .
+
+res:cap-ecotoxicity a eur:Capability ;
+    skos:broader res:cap-safety-assessment ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "Ecotoxicity"@en .
+
+res:cap-extraction a eur:Capability ;
+    skos:broadMatch obo:CHMO_0001598 ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:narrower res:cap-biomass-extraction,
+        res:cap-cell-pellet-extraction,
+        res:cap-culture-medium-extraction ;
+    skos:prefLabel "Chemical extraction"@en ;
+    skos:topConceptOf res:scheme-capabilities .
+
+res:cap-feature-annotation a eur:Capability ;
+    skos:broader res:cap-analytical-technique ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "Metabolomics feature extraction and annotation"@en .
+
+res:cap-functional-annotation a eur:Capability ;
+    skos:broader res:cap-genomic-analysis ;
+    skos:closeMatch edam:operation_3672 ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "Functional annotation"@en .
+
+res:cap-gc-ms a eur:Capability ;
+    skos:broader res:cap-mass-spectrometry ;
+    skos:exactMatch obo:CHMO_0000497 ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "Gas chromatography–mass spectrometry"@en .
+
+res:cap-mag-binning a eur:Capability ;
+    skos:broader res:cap-genomic-analysis ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "MAG recovery and quality assessment"@en .
+
+res:cap-maldi-ms a eur:Capability ;
+    skos:broader res:cap-mass-spectrometry ;
+    skos:closeMatch obo:CHMO_0000519 ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "MALDI mass spectrometry"@en .
+
+res:cap-molecular-docking a eur:Capability ;
+    skos:broader res:cap-computational-chemistry ;
+    skos:exactMatch edam:operation_0478 ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "Molecular docking"@en .
+
+res:cap-mosher-marfey a eur:Capability ;
+    skos:broader res:cap-stereochemistry ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "Mosher/Marfey derivatisation"@en .
+
+res:cap-remote-process-control a eur:Capability ;
+    skos:broader res:cap-separation ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "Remotely controlled purification"@en .
+
+res:cap-stereochemistry a eur:Capability ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:narrower res:cap-chiral-analysis,
+        res:cap-computational-stereo,
+        res:cap-mosher-marfey ;
+    skos:prefLabel "Stereochemical analysis"@en ;
+    skos:topConceptOf res:scheme-capabilities .
+
+res:cap-target-identification a eur:Capability ;
+    skos:broader res:cap-bioassay ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "Target identification and mode of action (chemoproteomics)"@en .
+
+res:cap-total-synthesis a eur:Capability ;
+    skos:broader res:cap-synthesis ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "Total synthesis"@en .
+
+res:country-NO a eur:Country ;
+    skos:exactMatch euc:NOR,
+        wd:Q20 ;
+    skos:prefLabel "Norway"@en ;
+    eur:iso3166Alpha2 "NO" .
+
+res:fee-free a eur:FeeModel ;
+    skos:inScheme res:scheme-fees ;
+    skos:prefLabel "Free of charge"@en .
+
+res:mat-synthetic-analogue a eur:MaterialOrDataType,
+        eur:PhysicalMaterialType ;
+    skos:inScheme res:scheme-materials ;
+    skos:prefLabel "Synthetic or semi-synthetic analogue"@en .
+
+res:qk-purification-yield a eur:QuantityKind ;
+    skos:inScheme res:scheme-quantities ;
+    skos:prefLabel "Purified compound yield"@en .
+
+res:qk-sample-requirement a eur:QuantityKind ;
+    skos:inScheme res:scheme-quantities ;
+    skos:prefLabel "Sample amount required per assay"@en .
+
+res:repo-ena a eur:Repository ;
+    dct:publisher res:org-embl-ebi ;
+    skos:prefLabel "European Nucleotide Archive (ENA)"@en ;
+    foaf:homepage <https://www.ebi.ac.uk/ena/browser/> .
+
+res:scheme-access a skos:ConceptScheme ;
+    skos:prefLabel "EUREMAP access modes"@en .
+
+res:scheme-fees a skos:ConceptScheme ;
+    skos:prefLabel "EUREMAP fee models"@en .
+
+res:step-biomass-production a eur:PipelineStep ;
+    skos:definition "Cultivation and scale-up of microorganisms to produce biomass and conditioned culture media."@en ;
+    skos:inScheme res:scheme-pipeline ;
+    skos:notation "02" ;
+    skos:prefLabel "Biomass production"@en ;
+    eur:catalogueLabel "Biomass production"@en ;
+    eur:inPhase res:phase-genomic ;
+    eur:nextStep res:step-chemical-extraction ;
+    eur:stepOrder 2 ;
+    eur:typicalInput res:mat-microbial-strain ;
+    eur:typicalOutput res:mat-biomass,
+        res:mat-culture-broth .
+
+res:sw-mgnify a eur:SoftwareTool ;
+    rdfs:label "MGnify"@en ;
+    skos:exactMatch biotools:mgnify .
+
+res:unit-su-lbbm-sorbonne-universit-observatoire-oc-anologique-de-banyul a eur:OrganisationalUnit ;
+    skos:prefLabel "LBBM, Sorbonne Université, Observatoire Océanologique de Banyuls"@en ;
+    org:unitOf res:org-su .
+
+eur:FeeModel a owl:Class ;
+    rdfs:label "Fee model"@en ;
+    rdfs:subClassOf skos:Concept .
+
+eur:PipelinePhase a owl:Class ;
+    rdfs:label "Pipeline phase"@en ;
+    rdfs:subClassOf skos:Concept ;
+    skos:definition "A grouping of pipeline steps by scientific domain: genomic & biological resources, chemistry, or bioactivity & safety."@en .
+
+res:cap-bioreactor-cultivation a eur:Capability ;
+    skos:broader res:cap-cultivation ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:narrower res:cap-photobioreactor ;
+    skos:prefLabel "Bioreactor cultivation and scale-up"@en .
+
+res:cap-cd a eur:Capability ;
+    skos:broader res:cap-analytical-technique ;
+    skos:exactMatch obo:CHMO_0000323 ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "Circular dichroism"@en .
+
+res:cap-cultivation a eur:Capability ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:narrower res:cap-anaerobic-cultivation,
+        res:cap-bacterial-cultivation,
+        res:cap-bioreactor-cultivation,
+        res:cap-fungal-cultivation ;
+    skos:prefLabel "Microbial cultivation"@en ;
+    skos:topConceptOf res:scheme-capabilities .
+
+res:cap-fluorescent-analogues a eur:Capability ;
+    skos:broader res:cap-analogue-synthesis ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "Fluorescent analogues"@en .
+
+res:cap-gc a eur:Capability ;
+    skos:broader res:cap-analytical-technique ;
+    skos:exactMatch obo:CHMO_0001002 ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "Gas chromatography"@en .
+
+res:cap-immunomodulatory-assay a eur:Capability ;
+    skos:broader res:cap-bioassay ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "Immunomodulatory assay"@en .
+
+res:cap-taxonomic-classification a eur:Capability ;
+    skos:broader res:cap-genomic-analysis ;
+    skos:exactMatch edam:operation_3460 ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "Taxonomic classification"@en .
+
+res:country-IT a eur:Country ;
+    skos:exactMatch euc:ITA,
+        wd:Q38 ;
+    skos:prefLabel "Italy"@en ;
+    eur:iso3166Alpha2 "IT" .
+
+res:mat-raw-reads a eur:DigitalDataType,
+        eur:MaterialOrDataType ;
+    skos:closeMatch edam:data_3494 ;
+    skos:inScheme res:scheme-materials ;
+    skos:prefLabel "Raw sequencing reads"@en .
+
+res:unit-embl-ebi-mgnify-at-embl-ebi a eur:OrganisationalUnit ;
+    skos:prefLabel "MGnify at EMBL-EBI"@en ;
+    org:unitOf res:org-embl-ebi .
+
+res:unit-su-bio2mar-platform-sorbonne-universit-observatoire-oc-anologiq a eur:OrganisationalUnit ;
+    skos:prefLabel "Bio2Mar platform, Sorbonne Université, Observatoire Océanologique de Banyuls"@en ;
+    org:unitOf res:org-su ;
+    eur:catalogueLabel "Bio2Mar, Sorbonne Université, Observatoire Océanologique de Banyuls"@en .
+
+res:unit-ugent-marine-ugent a eur:OrganisationalUnit ;
+    skos:prefLabel "Marine@UGent"@en ;
+    org:unitOf res:org-ugent .
+
+eur:AccessMode a owl:Class ;
+    rdfs:label "Access mode"@en ;
+    rdfs:subClassOf skos:Concept ;
+    skos:definition "How a user accesses a service: physical (on-site), remote (samples shipped, provider operates) or virtual (online, open access)."@en .
+
+eur:ResearchInfrastructure a owl:Class ;
+    rdfs:label "Research infrastructure"@en ;
+    rdfs:subClassOf org:FormalOrganization,
+        schema:Organization ;
+    skos:definition "A pan-European research infrastructure (e.g. EMBRC, EU-OPENSCREEN, EMBL) through which services are offered."@en .
+
+res:cap-analogue-synthesis a eur:Capability ;
+    skos:broader res:cap-synthesis ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:narrower res:cap-fluorescent-analogues ;
+    skos:prefLabel "Analogue synthesis"@en .
+
+res:cap-cell-viability-assay a eur:Capability ;
+    skos:broader res:cap-bioassay ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "Cell viability / metabolic activity assay"@en .
+
+res:cap-chiral-analysis a eur:Capability ;
+    skos:broader res:cap-stereochemistry ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "Chiral analysis"@en .
+
+res:cap-computational-chemistry a eur:Capability ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:narrower res:cap-chemical-modelling,
+        res:cap-cheminformatics-libraries,
+        res:cap-molecular-docking,
+        res:cap-molecular-networking,
+        res:cap-qsar ;
+    skos:prefLabel "Computational chemistry"@en ;
+    skos:topConceptOf res:scheme-capabilities .
+
+res:cap-computational-stereo a eur:Capability ;
+    skos:broader res:cap-stereochemistry ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "Computational stereochemistry"@en .
+
+res:cap-polarimetry a eur:Capability ;
+    skos:broader res:cap-analytical-technique ;
+    skos:exactMatch obo:CHMO_0000779 ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "Polarimetry / optical rotation"@en .
+
+res:cap-safety-assessment a eur:Capability ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:narrower res:cap-biodistribution,
+        res:cap-ecotoxicity,
+        res:cap-human-cell-toxicity,
+        res:cap-in-vivo-safety,
+        res:cap-toxicotranscriptomics ;
+    skos:prefLabel "Safety and toxicity assessment"@en ;
+    skos:topConceptOf res:scheme-capabilities .
+
+res:mat-biomass a eur:MaterialOrDataType,
+        eur:PhysicalMaterialType ;
+    skos:inScheme res:scheme-materials ;
+    skos:prefLabel "Microbial biomass / cell pellet"@en .
+
+res:mat-fraction a eur:MaterialOrDataType,
+        eur:PhysicalMaterialType ;
+    skos:inScheme res:scheme-materials ;
+    skos:prefLabel "Chromatographic fraction"@en .
+
+res:phase-chemistry a eur:PipelinePhase ;
+    skos:inScheme res:scheme-phases ;
+    skos:notation "2" ;
+    skos:prefLabel "Chemistry"@en ;
+    skos:topConceptOf res:scheme-phases .
+
+res:ri-embl a eur:ResearchInfrastructure ;
+    owl:sameAs <https://ror.org/03mstc592> ;
+    skos:altLabel "EMBL"@en ;
+    skos:prefLabel "European Molecular Biology Laboratory"@en ;
+    org:hasUnit res:node-embl-GB ;
+    foaf:homepage <https://www.embl.org/> ;
+    eur:rorId "03mstc592" .
+
+res:step-safety-toxicity a eur:PipelineStep ;
+    skos:definition "Dose-response human-safety, ecotoxicity and in vivo safety assessment."@en ;
+    skos:inScheme res:scheme-pipeline ;
+    skos:notation "05" ;
+    skos:prefLabel "Safety and toxicity profiling"@en ;
+    eur:catalogueLabel "Safety & toxicity"@en ;
+    eur:inPhase res:phase-bioactivity ;
+    eur:nextStep res:step-chemical-profiling ;
+    eur:stepOrder 5 ;
+    eur:typicalInput res:mat-fraction,
+        res:mat-pure-compound,
+        res:mat-synthetic-analogue ;
+    eur:typicalOutput res:mat-safety-data .
+
+res:unit-tau-porifera-sponges-research-group a eur:OrganisationalUnit ;
+    skos:prefLabel "Porifera (Sponges) Research Group"@en ;
+    org:unitOf res:org-tau .
+
+eur:SoftwareTool a owl:Class ;
+    rdfs:label "Software tool"@en ;
+    rdfs:subClassOf prov:SoftwareAgent,
+        schema:SoftwareApplication .
+
+res:cap-anticancer-assay a eur:Capability ;
+    skos:broader res:cap-bioassay ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "Anticancer assay"@en .
+
+res:cap-antioxidant-assay a eur:Capability ;
+    skos:broader res:cap-bioassay ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "Antioxidant assay"@en .
+
+res:cap-metagenome-assembly a eur:Capability ;
+    skos:broader res:cap-genomic-analysis ;
+    skos:closeMatch edam:operation_0310 ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "(Meta)genome assembly"@en ;
+    skos:relatedMatch edam:topic_3174 .
+
+res:cap-preparative-hplc a eur:Capability ;
+    skos:broadMatch obo:CHMO_0001009 ;
+    skos:broader res:cap-separation ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "(Semi-)preparative HPLC"@en .
+
+res:cap-synthesis a eur:Capability ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:narrower res:cap-analogue-synthesis,
+        res:cap-click-chemistry,
+        res:cap-isotope-labelling,
+        res:cap-semi-synthesis,
+        res:cap-synthesis-feasibility,
+        res:cap-total-synthesis ;
+    skos:prefLabel "Chemical synthesis"@en ;
+    skos:topConceptOf res:scheme-capabilities .
+
+res:org-embl-ebi a eur:Institution ;
+    owl:sameAs <https://ror.org/02catss52> ;
+    skos:altLabel "EMBL-EBI"@en ;
+    skos:prefLabel "EMBL's European Bioinformatics Institute"@en ;
+    org:hasUnit res:unit-embl-ebi-mgnify-at-embl-ebi ;
+    org:subOrganizationOf res:ri-embl ;
+    eur:locatedInCountry res:country-GB ;
+    eur:rorId "02catss52" .
+
+res:org-tau a eur:Institution ;
+    owl:sameAs <https://ror.org/04mhzgx49> ;
+    skos:altLabel "TAU"@en ;
+    skos:prefLabel "Tel Aviv University"@en ;
+    org:hasUnit res:unit-tau-porifera-sponges-research-group ;
+    eur:locatedInCountry res:country-IL ;
+    eur:rorId "04mhzgx49" .
+
+res:scheme-phases a skos:ConceptScheme ;
+    skos:prefLabel "EUREMAP pipeline phases"@en .
+
+res:scheme-quantities a skos:ConceptScheme ;
+    skos:prefLabel "EUREMAP quantity kinds"@en .
+
+res:step-genomics a eur:PipelineStep ;
+    skos:definition "Sequencing, assembly, binning and annotation of (meta)genomes, including mining for biosynthetic gene clusters."@en ;
+    skos:inScheme res:scheme-pipeline ;
+    skos:notation "01" ;
+    skos:prefLabel "Genomics"@en ;
+    eur:catalogueLabel "Genomics"@en ;
+    eur:inPhase res:phase-genomic ;
+    eur:nextStep res:step-biomass-production ;
+    eur:stepOrder 1 ;
+    eur:typicalInput res:mat-environmental-sample,
+        res:mat-raw-reads ;
+    eur:typicalOutput res:mat-bgc-prediction,
+        res:mat-mag,
+        res:mat-metagenome-assembly,
+        res:mat-taxonomic-functional-profile .
+
+res:unit-ccmar-protein-platform-marine-resources-cts a eur:OrganisationalUnit ;
+    skos:prefLabel "Protein Platform - Marine Resources - CTS"@en ;
+    org:unitOf res:org-ccmar .
+
+res:unit-szn-ecosustainable-marine-biotechnology-department a eur:OrganisationalUnit ;
+    skos:prefLabel "Ecosustainable Marine Biotechnology Department"@en ;
+    org:unitOf res:org-szn ;
+    eur:catalogueLabel "Ecostustainable Marine Biotechnology Department"@en .
+
+res:unit-uit-marbio-faculty-of-biosciences-fisheries-and-economics a eur:OrganisationalUnit ;
+    skos:prefLabel "Marbio, Faculty of Biosciences, Fisheries and Economics"@en ;
+    org:unitOf res:org-uit ;
+    eur:catalogueLabel "Marbio , Faculty of Biosciences, fisheries & economics"@en .
+
+eur:QuantityKind a owl:Class ;
+    rdfs:label "Quantity kind"@en ;
+    rdfs:subClassOf skos:Concept .
+
+res:cap-dose-response a eur:Capability ;
+    skos:broader res:cap-bioassay ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "Dose-response assay"@en .
+
+res:cap-enzyme-assay a eur:Capability ;
+    skos:broader res:cap-bioassay ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:narrower res:cap-hydrolase-assay,
+        res:cap-kinase-assay ;
+    skos:prefLabel "Enzyme activity / inhibition assay"@en .
+
+res:cap-human-cell-toxicity a eur:Capability ;
+    skos:broader res:cap-safety-assessment ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "Human cell-line toxicity"@en .
+
+res:cap-ion-mobility a eur:Capability ;
+    skos:broader res:cap-analytical-technique ;
+    skos:closeMatch obo:CHMO_0000430 ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "Ion mobility spectrometry"@en .
+
+res:cap-ir a eur:Capability ;
+    skos:broader res:cap-analytical-technique ;
+    skos:closeMatch obo:CHMO_0000630 ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "Infrared spectroscopy"@en .
+
+res:cap-separation a eur:Capability ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:narrower res:cap-column-chromatography,
+        res:cap-flash-chromatography,
+        res:cap-fractionation,
+        res:cap-ms-triggered-purification,
+        res:cap-preparative-hplc,
+        res:cap-purification,
+        res:cap-remote-process-control ;
+    skos:prefLabel "Separation and purification"@en ;
+    skos:topConceptOf res:scheme-capabilities .
+
+res:org-szn a eur:Institution ;
+    owl:sameAs <https://ror.org/03v5jj203> ;
+    skos:altLabel "SZN"@en ;
+    skos:prefLabel "Stazione Zoologica Anton Dohrn"@en ;
+    org:hasUnit res:unit-szn-ecosustainable-marine-biotechnology-department ;
+    eur:catalogueLabel "Stazione Zoologica Anton Dohrn Napoli"@en ;
+    eur:locatedInCountry res:country-IT ;
+    eur:rorId "03v5jj203" .
+
+res:org-ugent a eur:Institution ;
+    owl:sameAs <https://ror.org/00cv9y106> ;
+    skos:altLabel "UGent"@en ;
+    skos:prefLabel "Ghent University"@en ;
+    org:hasUnit res:unit-ugent-laboratory-of-pharmaceutical-microbiology-lpm,
+        res:unit-ugent-marine-ugent ;
+    eur:locatedInCountry res:country-BE ;
+    eur:rorId "00cv9y106" .
+
+res:org-uit a eur:Institution ;
+    owl:sameAs <https://ror.org/00wge5k78> ;
+    skos:altLabel "UiT"@en ;
+    skos:prefLabel "UiT The Arctic University of Norway"@en ;
+    org:hasUnit res:unit-uit-marbio-faculty-of-biosciences-fisheries-and-economics ;
+    eur:catalogueLabel "UiT The Artic University of Norway"@en ;
+    eur:locatedInCountry res:country-NO ;
+    eur:rorId "00wge5k78" .
+
+res:unit-ccmar-chemistry-platform-cts a eur:OrganisationalUnit ;
+    skos:prefLabel "Chemistry Platform - CTS"@en ;
+    org:unitOf res:org-ccmar .
+
+res:unit-cnr-cnr-institute-of-biomolecular-chemistry-icb a eur:OrganisationalUnit ;
+    owl:sameAs <https://ror.org/03wyf0g15> ;
+    skos:prefLabel "CNR-Institute of Biomolecular Chemistry (ICB)"@en ;
+    org:unitOf res:org-cnr ;
+    eur:rorId "03wyf0g15" .
+
+res:unit-medina-fundaci-n-medina a eur:OrganisationalUnit ;
+    skos:prefLabel "Fundación MEDINA"@en ;
+    org:unitOf res:org-medina .
+
+eur:PhysicalMaterialType a owl:Class ;
+    rdfs:label "Physical material type"@en ;
+    rdfs:subClassOf eur:MaterialOrDataType .
+
+res:cap-culture-medium-extraction a eur:Capability ;
+    skos:broader res:cap-extraction ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "Culture-medium extraction"@en .
+
+res:cap-uhplc a eur:Capability ;
+    skos:broader res:cap-hplc ;
+    skos:exactMatch obo:CHMO_0000795 ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "UHPLC"@en .
+
+res:org-cnr a eur:Institution ;
+    owl:sameAs <https://ror.org/04zaypm56> ;
+    skos:altLabel "CNR"@en ;
+    skos:prefLabel "Consiglio Nazionale delle Ricerche"@en ;
+    org:hasUnit res:unit-cnr-cnr-institute-of-biomolecular-chemistry-icb ;
+    eur:catalogueLabel "CNR"@en ;
+    eur:locatedInCountry res:country-IT ;
+    eur:rorId "04zaypm56" .
+
+res:org-medina a eur:Institution ;
+    owl:sameAs <https://ror.org/042dh5y83> ;
+    skos:altLabel "MEDINA"@en ;
+    skos:prefLabel "Fundación MEDINA"@en ;
+    org:hasUnit res:unit-medina-fundaci-n-medina ;
+    eur:catalogueLabel "MEDINA"@en ;
+    eur:locatedInCountry res:country-ES ;
+    eur:rorId "042dh5y83" .
+
+res:step-chemical-profiling a eur:PipelineStep ;
+    skos:definition "Untargeted/targeted chemical characterisation (LC-MS, NMR etc.) supporting dereplication and prioritisation."@en ;
+    skos:inScheme res:scheme-pipeline ;
+    skos:notation "06" ;
+    skos:prefLabel "Chemical profiling"@en ;
+    eur:catalogueLabel "Chemical profiling"@en ;
+    eur:inPhase res:phase-chemistry ;
+    eur:nextStep res:step-chromatography ;
+    eur:stepOrder 6 ;
+    eur:typicalInput res:mat-crude-extract,
+        res:mat-fraction ;
+    eur:typicalOutput res:mat-chemical-profile-data .
+
+res:step-synthesis a eur:PipelineStep ;
+    skos:definition "Total synthesis, semi-synthesis, analogue design and computational chemistry."@en ;
+    skos:inScheme res:scheme-pipeline ;
+    skos:notation "09" ;
+    skos:prefLabel "Synthesis & semi-synthesis"@en ;
+    eur:catalogueLabel "Synthesis"@en ;
+    eur:inPhase res:phase-chemistry ;
+    eur:stepOrder 9 ;
+    eur:typicalInput res:mat-chemical-structure,
+        res:mat-pure-compound ;
+    eur:typicalOutput res:mat-in-silico-model,
+        res:mat-synthetic-analogue .
+
+res:unit-hzi-department-of-chemical-biology-cbio a eur:OrganisationalUnit ;
+    skos:prefLabel "Department of Chemical Biology (CBIO)"@en ;
+    org:unitOf res:org-hzi .
+
+res:cap-genomic-analysis a eur:Capability ;
+    skos:closeMatch edam:operation_3918 ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:narrower res:cap-bgc-mining,
+        res:cap-functional-annotation,
+        res:cap-gene-prediction,
+        res:cap-illumina-sequencing,
+        res:cap-mag-binning,
+        res:cap-metagenome-assembly,
+        res:cap-nanopore-sequencing,
+        res:cap-taxonomic-classification,
+        res:cap-workflow-automation ;
+    skos:prefLabel "Genomic analysis"@en ;
+    skos:topConceptOf res:scheme-capabilities .
+
+res:mat-culture-broth a eur:MaterialOrDataType,
+        eur:PhysicalMaterialType ;
+    skos:inScheme res:scheme-materials ;
+    skos:prefLabel "Culture medium (broth)"@en .
+
+res:org-hzi a eur:Institution ;
+    owl:sameAs <https://ror.org/03d0p2685> ;
+    skos:altLabel "HZI"@en ;
+    skos:prefLabel "Helmholtz Centre for Infection Research"@en ;
+    org:hasUnit res:unit-hzi-department-of-chemical-biology-cbio ;
+    eur:locatedInCountry res:country-DE ;
+    eur:rorId "03d0p2685" .
+
+res:qk-culture-volume a eur:QuantityKind ;
+    skos:inScheme res:scheme-quantities ;
+    skos:prefLabel "Culture / processing volume"@en .
+
+res:step-chemical-extraction a eur:PipelineStep ;
+    skos:definition "Extraction of metabolites from biomass, cell pellets or culture media to yield crude extracts."@en ;
+    skos:inScheme res:scheme-pipeline ;
+    skos:notation "03" ;
+    skos:prefLabel "Chemical extraction"@en ;
+    eur:catalogueLabel "Chemical Extraction"@en ;
+    eur:inPhase res:phase-chemistry ;
+    eur:nextStep res:step-bioassays ;
+    eur:stepOrder 3 ;
+    eur:typicalInput res:mat-biomass,
+        res:mat-culture-broth ;
+    eur:typicalOutput res:mat-crude-extract .
+
+eur:DigitalDataType a owl:Class ;
+    rdfs:label "Digital data type"@en ;
+    rdfs:subClassOf eur:MaterialOrDataType .
+
+res:cap-analytical-technique a eur:Capability ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:narrower res:cap-cd,
+        res:cap-dad-uv,
+        res:cap-feature-annotation,
+        res:cap-gc,
+        res:cap-hplc,
+        res:cap-ion-mobility,
+        res:cap-ir,
+        res:cap-mass-spectrometry,
+        res:cap-nmr,
+        res:cap-polarimetry ;
+    skos:prefLabel "Analytical technique"@en ;
+    skos:topConceptOf res:scheme-capabilities .
+
+res:cap-fractionation a eur:Capability ;
+    skos:broader res:cap-separation ;
+    skos:exactMatch obo:CHMO_0001625 ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "Fractionation"@en .
+
+res:cap-purification a eur:Capability ;
+    skos:broader res:cap-separation ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "Compound purification"@en .
+
+res:cap-tandem-ms a eur:Capability ;
+    skos:broader res:cap-mass-spectrometry ;
+    skos:exactMatch obo:CHMO_0000575 ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "Tandem mass spectrometry (MS/MS, MSn)"@en .
+
+res:mat-pure-compound a eur:MaterialOrDataType,
+        eur:PhysicalMaterialType ;
+    skos:inScheme res:scheme-materials ;
+    skos:prefLabel "Purified compound"@en .
+
+res:org-su a eur:Institution ;
+    owl:sameAs <https://ror.org/02en5vm52> ;
+    skos:altLabel "SU"@en ;
+    skos:prefLabel "Sorbonne Université"@en ;
+    org:hasUnit res:unit-su-bio2mar-platform-sorbonne-universit-observatoire-oc-anologiq,
+        res:unit-su-kissf-kinase-inhibition-specialized-screening-facility,
+        res:unit-su-lbbm-sorbonne-universit-observatoire-oc-anologique-de-banyul ;
+    eur:locatedInCountry res:country-FR ;
+    eur:rorId "02en5vm52" .
+
+res:scheme-pipeline a skos:ConceptScheme ;
+    skos:prefLabel "EUREMAP pipeline steps"@en .
+
+res:step-chromatography a eur:PipelineStep ;
+    skos:definition "Fractionation and purification of extracts to obtain fractions and pure compounds."@en ;
+    skos:inScheme res:scheme-pipeline ;
+    skos:notation "07" ;
+    skos:prefLabel "Chromatography & purification"@en ;
+    eur:catalogueLabel "Chromatography"@en ;
+    eur:inPhase res:phase-chemistry ;
+    eur:nextStep res:step-structure-elucidation ;
+    eur:stepOrder 7 ;
+    eur:typicalInput res:mat-crude-extract,
+        res:mat-fraction ;
+    eur:typicalOutput res:mat-fraction,
+        res:mat-pure-compound .
+
+eur:NationalNode a owl:Class ;
+    rdfs:label "National node"@en ;
+    rdfs:subClassOf org:OrganizationalUnit ;
+    skos:definition "The presence of a research infrastructure in one country, i.e. the set of institutions in that country that offer EUREMAP services under that infrastructure. In this graph nodes are derived from catalogue affiliations and are not official membership statements."@en .
+
+res:cap-antimicrobial-assay a eur:Capability ;
+    skos:broader res:cap-bioassay ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:narrower res:cap-antibacterial-assay,
+        res:cap-antibiofilm-assay,
+        res:cap-antifungal-assay ;
+    skos:prefLabel "Antimicrobial assay"@en .
+
+eur:Country a owl:Class ;
+    rdfs:label "Country"@en ;
+    rdfs:subClassOf dct:Location,
+        skos:Concept,
+        schema:Country .
+
+res:cap-dad-uv a eur:Capability ;
+    skos:broader res:cap-analytical-technique ;
+    skos:closeMatch obo:CHMO_0000292 ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "UV/DAD detection"@en .
+
+res:cap-hplc a eur:Capability ;
+    skos:broader res:cap-analytical-technique ;
+    skos:exactMatch obo:CHMO_0001009 ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:narrower res:cap-uhplc ;
+    skos:prefLabel "HPLC"@en .
+
+res:cap-nmr a eur:Capability ;
+    skos:broader res:cap-analytical-technique ;
+    skos:exactMatch obo:CHMO_0000591 ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:narrower res:cap-nmr-2d,
+        res:cap-nmr-cryoprobe ;
+    skos:prefLabel "NMR spectroscopy"@en .
+
+eur:Institution a owl:Class ;
+    rdfs:label "Institution"@en ;
+    rdfs:subClassOf org:FormalOrganization,
+        foaf:Organization,
+        schema:Organization ;
+    skos:definition "A legal entity (university, research centre, foundation) that provides EUREMAP services."@en .
+
+res:step-structure-elucidation a eur:PipelineStep ;
+    skos:definition "Determination of planar structure and stereochemistry of purified compounds."@en ;
+    skos:inScheme res:scheme-pipeline ;
+    skos:notation "08" ;
+    skos:prefLabel "Structure elucidation"@en ;
+    eur:catalogueLabel "Structure elucidation"@en ;
+    eur:inPhase res:phase-chemistry ;
+    eur:nextStep res:step-synthesis ;
+    eur:stepOrder 8 ;
+    eur:typicalInput res:mat-pure-compound ;
+    eur:typicalOutput res:mat-chemical-structure .
+
+res:unit-sintef-department-of-biotechnology-and-nanomedicine-at-sintef-indus a eur:OrganisationalUnit ;
+    skos:prefLabel "Department of Biotechnology and Nanomedicine at SINTEF Industry"@en ;
+    org:unitOf res:org-sintef .
+
+res:cap-lc-ms a eur:Capability ;
+    skos:broader res:cap-mass-spectrometry ;
+    skos:exactMatch obo:CHMO_0000524 ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:prefLabel "Liquid chromatography–mass spectrometry"@en .
+
+res:org-sintef a eur:Institution ;
+    owl:sameAs <https://ror.org/01f677e56> ;
+    skos:altLabel "SINTEF"@en ;
+    skos:prefLabel "SINTEF"@en ;
+    org:hasUnit res:unit-sintef-department-of-biotechnology-and-nanomedicine-at-sintef-indus ;
+    eur:locatedInCountry res:country-NO ;
+    eur:rorId "01f677e56" .
+
+res:cap-bioassay a eur:Capability ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:narrower res:cap-admet,
+        res:cap-agri-crop-assay,
+        res:cap-anticancer-assay,
+        res:cap-antifouling-assay,
+        res:cap-antimicrobial-assay,
+        res:cap-antioxidant-assay,
+        res:cap-antiviral-assay,
+        res:cap-cell-migration-assay,
+        res:cap-cell-viability-assay,
+        res:cap-dose-response,
+        res:cap-enzyme-assay,
+        res:cap-immunomodulatory-assay,
+        res:cap-impedance-cell-assay,
+        res:cap-ppi-assay,
+        res:cap-receptor-signalling-assay,
+        res:cap-target-identification ;
+    skos:prefLabel "Bioactivity assay"@en ;
+    skos:topConceptOf res:scheme-capabilities .
+
+res:mat-crude-extract a eur:MaterialOrDataType,
+        eur:PhysicalMaterialType ;
+    skos:inScheme res:scheme-materials ;
+    skos:prefLabel "Crude extract"@en .
+
+res:org-ccmar a eur:Institution ;
+    owl:sameAs <https://ror.org/00me37y22> ;
+    skos:altLabel "CCMAR"@en ;
+    skos:prefLabel "Centro de Ciências do Mar do Algarve"@en ;
+    org:hasUnit res:unit-ccmar-chemistry-platform-cts,
+        res:unit-ccmar-protein-chemistry-platform-marine-resources-cts,
+        res:unit-ccmar-protein-platform-marine-resources-cts ;
+    eur:locatedInCountry res:country-PT ;
+    eur:rorId "00me37y22" .
+
+res:step-bioassays a eur:PipelineStep ;
+    skos:definition "Screening and profiling of extracts, fractions and compounds for biological activities and mode of action."@en ;
+    skos:inScheme res:scheme-pipeline ;
+    skos:notation "04" ;
+    skos:prefLabel "Bioassays & bioprofiling"@en ;
+    eur:catalogueLabel "Bioassays & bioprofiling"@en ;
+    eur:inPhase res:phase-bioactivity ;
+    eur:nextStep res:step-safety-toxicity ;
+    eur:stepOrder 4 ;
+    eur:typicalInput res:mat-crude-extract,
+        res:mat-fraction,
+        res:mat-pure-compound,
+        res:mat-synthetic-analogue ;
+    eur:typicalOutput res:mat-bioactivity-data .
+
+eur:OrganisationalUnit a owl:Class ;
+    rdfs:label "Organisational unit"@en ;
+    rdfs:subClassOf org:OrganizationalUnit ;
+    skos:definition "A department, platform, facility or research group within an institution that actually delivers the service."@en .
+
+res:cap-hrms a eur:Capability ;
+    skos:broader res:cap-mass-spectrometry ;
+    skos:exactMatch obo:CHMO_0000498 ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:narrower res:cap-ft-icr-ms,
+        res:cap-qtof-ms ;
+    skos:prefLabel "High-resolution mass spectrometry"@en .
+
+res:scheme-materials a skos:ConceptScheme ;
+    skos:prefLabel "EUREMAP material and data types"@en .
+
+eur:PipelineStep a owl:Class ;
+    rdfs:label "Pipeline step"@en ;
+    rdfs:subClassOf skos:Concept ;
+    skos:definition "A stage of the marine natural-product discovery pipeline (e.g. Genomics, Chemical extraction, Bioassays & bioprofiling)."@en .
+
+res:access-physical a eur:AccessMode ;
+    skos:definition "The user (or user's samples and staff) works on-site at the provider's facility."@en ;
+    skos:inScheme res:scheme-access ;
+    skos:prefLabel "Physical access"@en .
+
+eur:Capacity a owl:Class ;
+    rdfs:label "Capacity or requirement"@en ;
+    rdfs:subClassOf schema:QuantitativeValue ;
+    skos:definition "A quantitative statement about a service: processing scale, sample amount required, purification yield, or instrument specification."@en .
+
+eur:MaterialOrDataType a owl:Class ;
+    rdfs:label "Material or data type"@en ;
+    rdfs:subClassOf skos:Concept ;
+    skos:definition "A type of physical material (e.g. crude extract, pure compound) or digital data (e.g. raw reads, BGC predictions) that a pipeline step or service consumes or produces."@en .
+
+res:cap-mass-spectrometry a eur:Capability ;
+    skos:broader res:cap-analytical-technique ;
+    skos:exactMatch obo:CHMO_0000470 ;
+    skos:inScheme res:scheme-capabilities ;
+    skos:narrower res:cap-esi-ms,
+        res:cap-gc-ms,
+        res:cap-hrms,
+        res:cap-lc-ms,
+        res:cap-maldi-ms,
+        res:cap-qqq-ms,
+        res:cap-rapidfire-ms,
+        res:cap-tandem-ms ;
+    skos:prefLabel "Mass spectrometry"@en .
+
+res:ri-embrc a eur:ResearchInfrastructure ;
+    owl:sameAs <https://ror.org/0038zss60> ;
+    skos:altLabel "EMBRC"@en ;
+    skos:prefLabel "European Marine Biological Resource Centre"@en ;
+    org:hasUnit res:node-embrc-BE,
+        res:node-embrc-FR,
+        res:node-embrc-IL,
+        res:node-embrc-IT,
+        res:node-embrc-PT ;
+    foaf:homepage <https://www.embrc.eu/> ;
+    eur:rorId "0038zss60" .
+
+res:ri-eu-openscreen a eur:ResearchInfrastructure ;
+    owl:sameAs <https://ror.org/055zp1089> ;
+    skos:altLabel "EU-OPENSCREEN"@en ;
+    skos:prefLabel "EU-OPENSCREEN"@en ;
+    org:hasUnit res:node-eu-openscreen-DE,
+        res:node-eu-openscreen-ES,
+        res:node-eu-openscreen-IT,
+        res:node-eu-openscreen-NO ;
+    foaf:homepage <https://www.eu-openscreen.eu/> ;
+    eur:rorId "055zp1089" .
+
+res:access-remote a eur:AccessMode ;
+    skos:definition "The user sends samples or requests; the provider performs the service and returns results."@en ;
+    skos:inScheme res:scheme-access ;
+    skos:prefLabel "Remote access"@en .
+
+res:fee-for-service a eur:FeeModel ;
+    skos:inScheme res:scheme-fees ;
+    skos:prefLabel "Fee-for-service"@en .
+
+res:catalogue-euremap a eur:ServiceCatalogue ;
+    dct:publisher res:project-euremap ;
+    dct:title "EUREMAP – Pipeline of Marine Bioprospecting Services Catalogue"@en ;
+    foaf:homepage <https://services.euremap.eu/> .
+
+eur:Service a owl:Class ;
+    rdfs:label "EUREMAP service"@en ;
+    rdfs:subClassOf dcat:Resource,
+        prov:Entity,
+        schema:Service ;
+    skos:definition "A specific offering listed in the EUREMAP catalogue under one identifier (EUREMAP_NNN), delivered by one institution at one pipeline step."@en .
+
+eur:Capability a owl:Class ;
+    rdfs:label "Capability"@en ;
+    rdfs:subClassOf skos:Concept ;
+    skos:definition "A technique, assay, method or analytical competence that a service can perform. Organised as a SKOS hierarchy and aligned to CHMO/EDAM where an equivalent exists."@en .
+
+res:scheme-capabilities a skos:ConceptScheme ;
+    skos:prefLabel "EUREMAP capabilities and techniques"@en .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( eur:Service eur:PipelineStep eur:Institution eur:Country eur:Capability eur:MaterialOrDataType eur:AccessMode ) .
+

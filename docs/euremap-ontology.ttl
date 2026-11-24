@@ -1,0 +1,308 @@
+# =============================================================================
+#  EUREMAP Ontology (EUREMAP-O) — v0.2.0
+#  Semantic schema for the EUREMAP Pipeline of Marine Bioprospecting Services
+#
+#  Scope   : services, pipeline steps & phases, institutions, organisational
+#            units, research infrastructures, national (country) nodes,
+#            capabilities/techniques, material & data types (I/O contracts),
+#            access modes, fee models and quantitative capacities.
+#  Source  : https://services.euremap.eu/ (catalogue snapshot 2026-11-19)
+#  Status  : DRAFT. The w3id.org/euremap namespace is provisional until the
+#            w3id.org redirect is registered.
+#  Reuses  : DCAT 3, W3C ORG, SKOS, Dublin Core Terms, PROV-O, Schema.org,
+#            FOAF; aligned to CHMO (analytical methods) and EDAM (bioinformatics).
+# =============================================================================
+
+@prefix eur:    <https://w3id.org/euremap/ontology/> .
+@prefix res:    <https://w3id.org/euremap/resource/> .
+@prefix owl:    <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:   <http://www.w3.org/2004/02/skos/core#> .
+@prefix dct:    <http://purl.org/dc/terms/> .
+@prefix dcat:   <http://www.w3.org/ns/dcat#> .
+@prefix org:    <http://www.w3.org/ns/org#> .
+@prefix prov:   <http://www.w3.org/ns/prov#> .
+@prefix schema: <https://schema.org/> .
+@prefix foaf:   <http://xmlns.com/foaf/0.1/> .
+@prefix vann:   <http://purl.org/vocab/vann/> .
+
+# -----------------------------------------------------------------------------
+#  Ontology header
+# -----------------------------------------------------------------------------
+<https://w3id.org/euremap/ontology>
+    a owl:Ontology ;
+    dct:title "EUREMAP Ontology"@en ;
+    dct:description """Schema for describing the EUREMAP marine natural-product
+bioprospecting service pipeline as a knowledge graph: who offers which service,
+at which pipeline step, through which research infrastructure, in which country,
+with which techniques, what it consumes and what it produces. It acts as the
+semantic control plane for service discovery, routing and governance; it does
+not store scientific payload data."""@en ;
+    owl:versionInfo "0.2.0" ;
+    owl:versionIRI <https://w3id.org/euremap/ontology/0.2.0> ;
+    dct:created "2026-09-15"^^xsd:date ;
+    dct:modified "2026-11-19"^^xsd:date ;
+    dct:license <https://creativecommons.org/licenses/by/4.0/> ;
+    vann:preferredNamespacePrefix "eur" ;
+    vann:preferredNamespaceUri "https://w3id.org/euremap/ontology/" ;
+    rdfs:seeAlso <https://services.euremap.eu/> , <https://euremap.eu/service-pipeline/> .
+
+# =============================================================================
+#  CLASSES
+# =============================================================================
+
+# ---- Service layer ----------------------------------------------------------
+eur:Service a owl:Class ;
+    rdfs:subClassOf schema:Service , dcat:Resource , prov:Entity ;
+    rdfs:label "EUREMAP service"@en ;
+    skos:definition "A specific offering listed in the EUREMAP catalogue under one identifier (EUREMAP_NNN), delivered by one institution at one pipeline step."@en .
+
+eur:ServiceCatalogue a owl:Class ;
+    rdfs:subClassOf dcat:Catalog ;
+    rdfs:label "Service catalogue"@en .
+
+# ---- Pipeline layer ---------------------------------------------------------
+eur:PipelineStep a owl:Class ;
+    rdfs:subClassOf skos:Concept ;
+    rdfs:label "Pipeline step"@en ;
+    skos:definition "A stage of the marine natural-product discovery pipeline (e.g. Genomics, Chemical extraction, Bioassays & bioprofiling)."@en .
+
+eur:PipelinePhase a owl:Class ;
+    rdfs:subClassOf skos:Concept ;
+    rdfs:label "Pipeline phase"@en ;
+    skos:definition "A grouping of pipeline steps by scientific domain: genomic & biological resources, chemistry, or bioactivity & safety."@en .
+
+# ---- Capability / technique layer ------------------------------------------
+eur:Capability a owl:Class ;
+    rdfs:subClassOf skos:Concept ;
+    rdfs:label "Capability"@en ;
+    skos:definition "A technique, assay, method or analytical competence that a service can perform. Organised as a SKOS hierarchy and aligned to CHMO/EDAM where an equivalent exists."@en .
+
+eur:SoftwareTool a owl:Class ;
+    rdfs:subClassOf schema:SoftwareApplication , prov:SoftwareAgent ;
+    rdfs:label "Software tool"@en .
+
+# ---- I/O contract layer -----------------------------------------------------
+eur:MaterialOrDataType a owl:Class ;
+    rdfs:subClassOf skos:Concept ;
+    rdfs:label "Material or data type"@en ;
+    skos:definition "A type of physical material (e.g. crude extract, pure compound) or digital data (e.g. raw reads, BGC predictions) that a pipeline step or service consumes or produces."@en .
+
+eur:PhysicalMaterialType a owl:Class ; rdfs:subClassOf eur:MaterialOrDataType ;
+    rdfs:label "Physical material type"@en .
+eur:DigitalDataType a owl:Class ; rdfs:subClassOf eur:MaterialOrDataType ;
+    rdfs:label "Digital data type"@en .
+
+# ---- Organisation layer -----------------------------------------------------
+eur:Institution a owl:Class ;
+    rdfs:subClassOf org:FormalOrganization , schema:Organization , foaf:Organization ;
+    rdfs:label "Institution"@en ;
+    skos:definition "A legal entity (university, research centre, foundation) that provides EUREMAP services."@en .
+
+eur:OrganisationalUnit a owl:Class ;
+    rdfs:subClassOf org:OrganizationalUnit ;
+    rdfs:label "Organisational unit"@en ;
+    skos:definition "A department, platform, facility or research group within an institution that actually delivers the service."@en .
+
+eur:ResearchInfrastructure a owl:Class ;
+    rdfs:subClassOf org:FormalOrganization , schema:Organization ;
+    rdfs:label "Research infrastructure"@en ;
+    skos:definition "A pan-European research infrastructure (e.g. EMBRC, EU-OPENSCREEN, EMBL) through which services are offered."@en .
+
+eur:NationalNode a owl:Class ;
+    rdfs:subClassOf org:OrganizationalUnit ;
+    rdfs:label "National node"@en ;
+    skos:definition "The presence of a research infrastructure in one country, i.e. the set of institutions in that country that offer EUREMAP services under that infrastructure. In this graph nodes are derived from catalogue affiliations and are not official membership statements."@en .
+
+eur:Country a owl:Class ;
+    rdfs:subClassOf dct:Location , schema:Country , skos:Concept ;
+    rdfs:label "Country"@en .
+
+eur:Repository a owl:Class ;
+    rdfs:subClassOf dcat:Catalog ;
+    rdfs:label "Data repository"@en .
+
+# ---- Access & conditions layer ---------------------------------------------
+eur:AccessMode a owl:Class ;
+    rdfs:subClassOf skos:Concept ;
+    rdfs:label "Access mode"@en ;
+    skos:definition "How a user accesses a service: physical (on-site), remote (samples shipped, provider operates) or virtual (online, open access)."@en .
+
+eur:FeeModel a owl:Class ;
+    rdfs:subClassOf skos:Concept ;
+    rdfs:label "Fee model"@en .
+
+eur:Capacity a owl:Class ;
+    rdfs:subClassOf schema:QuantitativeValue ;
+    rdfs:label "Capacity or requirement"@en ;
+    skos:definition "A quantitative statement about a service: processing scale, sample amount required, purification yield, or instrument specification."@en .
+
+eur:QuantityKind a owl:Class ;
+    rdfs:subClassOf skos:Concept ;
+    rdfs:label "Quantity kind"@en .
+
+# ---- Disjointness -----------------------------------------------------------
+[] a owl:AllDisjointClasses ;
+   owl:members ( eur:Service eur:PipelineStep eur:Institution eur:Country eur:Capability eur:MaterialOrDataType eur:AccessMode ) .
+
+# =============================================================================
+#  OBJECT PROPERTIES
+# =============================================================================
+
+# ---- Service → context ------------------------------------------------------
+eur:providedBy a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:subPropertyOf schema:provider ;
+    rdfs:domain eur:Service ; rdfs:range eur:Institution ;
+    rdfs:label "provided by"@en .
+
+eur:deliveredByUnit a owl:ObjectProperty ;
+    rdfs:domain eur:Service ; rdfs:range eur:OrganisationalUnit ;
+    rdfs:label "delivered by unit"@en .
+
+eur:atPipelineStep a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:subPropertyOf dct:subject ;
+    rdfs:domain eur:Service ; rdfs:range eur:PipelineStep ;
+    rdfs:label "at pipeline step"@en .
+
+eur:offeredThrough a owl:ObjectProperty ;
+    rdfs:domain eur:Service ; rdfs:range eur:ResearchInfrastructure ;
+    rdfs:label "offered through research infrastructure"@en .
+
+eur:hasAccessMode a owl:ObjectProperty ;
+    rdfs:domain eur:Service ; rdfs:range eur:AccessMode ;
+    rdfs:label "has access mode"@en .
+
+eur:hasFeeModel a owl:ObjectProperty ;
+    rdfs:domain eur:Service ; rdfs:range eur:FeeModel ;
+    rdfs:label "has fee model"@en .
+
+eur:hasCapability a owl:ObjectProperty ;
+    rdfs:domain eur:Service ; rdfs:range eur:Capability ;
+    rdfs:label "has capability"@en ;
+    rdfs:comment "Assigned from controlled keyword matching over the catalogue title and overview; see prov:wasGeneratedBy on the graph."@en .
+
+eur:usesSoftware a owl:ObjectProperty ;
+    rdfs:domain eur:Service ; rdfs:range eur:SoftwareTool ;
+    rdfs:label "uses software"@en .
+
+eur:hasCapacity a owl:ObjectProperty ;
+    rdfs:domain eur:Service ; rdfs:range eur:Capacity ;
+    rdfs:label "has capacity"@en .
+
+eur:quantityKind a owl:ObjectProperty ;
+    rdfs:domain eur:Capacity ; rdfs:range eur:QuantityKind ;
+    rdfs:label "quantity kind"@en .
+
+eur:requiresSubmissionTo a owl:ObjectProperty ;
+    rdfs:domain eur:Service ; rdfs:range eur:Repository ;
+    rdfs:label "requires data submission to"@en .
+
+eur:listedIn a owl:ObjectProperty ;
+    rdfs:subPropertyOf dct:isPartOf ;
+    rdfs:domain eur:Service ; rdfs:range eur:ServiceCatalogue ;
+    rdfs:label "listed in"@en .
+
+# Derived by property chain: Service → Institution → Country
+eur:offeredInCountry a owl:ObjectProperty ;
+    rdfs:domain eur:Service ; rdfs:range eur:Country ;
+    owl:propertyChainAxiom ( eur:providedBy eur:locatedInCountry ) ;
+    rdfs:label "offered in country"@en ;
+    rdfs:comment "Inferred by an OWL 2 RL reasoner; in plain SPARQL use the path eur:providedBy/eur:locatedInCountry."@en .
+
+# ---- I/O contracts ----------------------------------------------------------
+eur:typicalInput a owl:ObjectProperty ;
+    rdfs:domain eur:PipelineStep ; rdfs:range eur:MaterialOrDataType ;
+    rdfs:label "typical input"@en ;
+    rdfs:comment "Step-level default: what services at this step generally consume."@en .
+
+eur:typicalOutput a owl:ObjectProperty ;
+    rdfs:domain eur:PipelineStep ; rdfs:range eur:MaterialOrDataType ;
+    rdfs:label "typical output"@en .
+
+eur:acceptsInput a owl:ObjectProperty ;
+    rdfs:domain eur:Service ; rdfs:range eur:MaterialOrDataType ;
+    rdfs:label "accepts input"@en ;
+    rdfs:comment "Service-level statement, asserted only where the catalogue text states it explicitly."@en .
+
+eur:producesOutput a owl:ObjectProperty ;
+    rdfs:domain eur:Service ; rdfs:range eur:MaterialOrDataType ;
+    rdfs:label "produces output"@en .
+
+# ---- Pipeline structure -----------------------------------------------------
+eur:precedes a owl:ObjectProperty , owl:TransitiveProperty ;
+    rdfs:domain eur:PipelineStep ; rdfs:range eur:PipelineStep ;
+    rdfs:label "precedes (catalogue order)"@en .
+
+eur:nextStep a owl:ObjectProperty ;
+    rdfs:subPropertyOf eur:precedes ;
+    owl:inverseOf eur:previousStep ;
+    rdfs:label "next step (catalogue order)"@en ;
+    rdfs:comment "Linear presentation order of the catalogue. Real workflows are iterative (e.g. bioassay-guided fractionation); scientific routing should use eur:feedsInto, derived from I/O contracts."@en .
+
+eur:previousStep a owl:ObjectProperty ; rdfs:label "previous step"@en .
+
+eur:feedsInto a owl:ObjectProperty ;
+    rdfs:domain eur:PipelineStep ; rdfs:range eur:PipelineStep ;
+    rdfs:label "feeds into"@en ;
+    rdfs:comment "Step A feedsInto step B when a typical output of A is a typical input of B. Materialised by the CONSTRUCT query Q07."@en .
+
+eur:inPhase a owl:ObjectProperty ;
+    rdfs:subPropertyOf skos:broader ;
+    rdfs:domain eur:PipelineStep ; rdfs:range eur:PipelinePhase ;
+    rdfs:label "in phase"@en .
+
+# ---- Organisation structure -------------------------------------------------
+eur:locatedInCountry a owl:ObjectProperty ;
+    rdfs:subPropertyOf schema:location ;
+    rdfs:range eur:Country ;
+    rdfs:label "located in country"@en .
+
+eur:nodeOf a owl:ObjectProperty ;
+    rdfs:subPropertyOf org:unitOf ;
+    rdfs:domain eur:NationalNode ; rdfs:range eur:ResearchInfrastructure ;
+    rdfs:label "node of"@en .
+
+eur:nodeMember a owl:ObjectProperty ;
+    rdfs:subPropertyOf org:hasMember ;
+    rdfs:domain eur:NationalNode ; rdfs:range eur:Institution ;
+    rdfs:label "node member"@en .
+
+# =============================================================================
+#  DATATYPE PROPERTIES
+# =============================================================================
+eur:stepOrder a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain eur:PipelineStep ; rdfs:range xsd:integer ;
+    rdfs:label "step order"@en .
+
+eur:accessConditions a owl:DatatypeProperty ;
+    rdfs:domain eur:Service ; rdfs:range rdf:langString ;
+    rdfs:label "access conditions (verbatim)"@en .
+
+eur:requiresPriorContact a owl:DatatypeProperty ;
+    rdfs:domain eur:Service ; rdfs:range xsd:boolean ;
+    rdfs:label "requires prior contact"@en .
+
+eur:iso3166Alpha2 a owl:DatatypeProperty ;
+    rdfs:domain eur:Country ; rdfs:range xsd:string ;
+    rdfs:label "ISO 3166-1 alpha-2 code"@en .
+
+eur:rorId a owl:DatatypeProperty ;
+    rdfs:subPropertyOf dct:identifier ;
+    rdfs:label "ROR identifier"@en .
+
+eur:catalogueLabel a owl:DatatypeProperty ;
+    rdfs:subPropertyOf skos:hiddenLabel ;
+    rdfs:label "label as written in the catalogue"@en .
+
+# =============================================================================
+#  CONTROLLED VOCABULARIES (SKOS concept schemes; instances in data graph)
+# =============================================================================
+res:scheme-pipeline     a skos:ConceptScheme ; skos:prefLabel "EUREMAP pipeline steps"@en .
+res:scheme-phases       a skos:ConceptScheme ; skos:prefLabel "EUREMAP pipeline phases"@en .
+res:scheme-capabilities a skos:ConceptScheme ; skos:prefLabel "EUREMAP capabilities and techniques"@en .
+res:scheme-materials    a skos:ConceptScheme ; skos:prefLabel "EUREMAP material and data types"@en .
+res:scheme-access       a skos:ConceptScheme ; skos:prefLabel "EUREMAP access modes"@en .
+res:scheme-fees         a skos:ConceptScheme ; skos:prefLabel "EUREMAP fee models"@en .
+res:scheme-quantities   a skos:ConceptScheme ; skos:prefLabel "EUREMAP quantity kinds"@en .

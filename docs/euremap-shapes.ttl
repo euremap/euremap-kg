@@ -1,0 +1,56 @@
+# SHACL validation shapes for the EUREMAP knowledge graph (v0.2.0)
+@prefix sh:     <http://www.w3.org/ns/shacl#> .
+@prefix eur:    <https://w3id.org/euremap/ontology/> .
+@prefix res:    <https://w3id.org/euremap/resource/> .
+@prefix dct:    <http://purl.org/dc/terms/> .
+@prefix dcat:   <http://www.w3.org/ns/dcat#> .
+@prefix skos:   <http://www.w3.org/2004/02/skos/core#> .
+@prefix org:    <http://www.w3.org/ns/org#> .
+@prefix schema: <https://schema.org/> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+
+eur:ServiceShape a sh:NodeShape ;
+    sh:targetClass eur:Service ;
+    sh:property [ sh:path dct:identifier ; sh:minCount 1 ; sh:maxCount 1 ;
+                  sh:datatype xsd:string ; sh:pattern "^EUREMAP_[0-9]{3}$" ;
+                  sh:message "Each service needs exactly one identifier of the form EUREMAP_NNN." ] ;
+    sh:property [ sh:path dct:title ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype <http://www.w3.org/1999/02/22-rdf-syntax-ns#langString> ] ;
+    sh:property [ sh:path eur:providedBy ; sh:minCount 1 ; sh:maxCount 1 ; sh:class eur:Institution ] ;
+    sh:property [ sh:path eur:atPipelineStep ; sh:minCount 1 ; sh:maxCount 1 ; sh:class eur:PipelineStep ] ;
+    sh:property [ sh:path eur:hasAccessMode ; sh:minCount 1 ;
+                  sh:in ( res:access-physical res:access-remote res:access-virtual ) ] ;
+    sh:property [ sh:path eur:offeredThrough ; sh:minCount 1 ; sh:class eur:ResearchInfrastructure ] ;
+    sh:property [ sh:path eur:hasFeeModel ; sh:minCount 1 ; sh:maxCount 1 ; sh:class eur:FeeModel ] ;
+    sh:property [ sh:path dcat:landingPage ; sh:minCount 1 ; sh:nodeKind sh:IRI ;
+                  sh:pattern "^https://services\\.euremap\\.eu/service/euremap_[0-9]{3}/$" ] ;
+    sh:property [ sh:path eur:hasCapability ; sh:class eur:Capability ;
+                  sh:minCount 1 ; sh:severity sh:Warning ;
+                  sh:message "Service has no capability tag; curate manually." ] .
+
+eur:InstitutionShape a sh:NodeShape ;
+    sh:targetClass eur:Institution ;
+    sh:property [ sh:path skos:prefLabel ; sh:minCount 1 ] ;
+    sh:property [ sh:path eur:locatedInCountry ; sh:minCount 1 ; sh:maxCount 1 ; sh:class eur:Country ] ;
+    sh:property [ sh:path eur:rorId ; sh:minCount 1 ; sh:pattern "^0[a-z0-9]{6}[0-9]{2}$" ;
+                  sh:message "ROR identifiers are 9 characters starting with 0." ] .
+
+eur:CountryShape a sh:NodeShape ;
+    sh:targetClass eur:Country ;
+    sh:property [ sh:path eur:iso3166Alpha2 ; sh:minCount 1 ; sh:maxCount 1 ; sh:pattern "^[A-Z]{2}$" ] .
+
+eur:PipelineStepShape a sh:NodeShape ;
+    sh:targetClass eur:PipelineStep ;
+    sh:property [ sh:path skos:prefLabel ; sh:minCount 1 ] ;
+    sh:property [ sh:path eur:stepOrder ; sh:maxCount 1 ; sh:datatype xsd:integer ] .
+
+eur:CapacityShape a sh:NodeShape ;
+    sh:targetClass eur:Capacity ;
+    sh:property [ sh:path eur:quantityKind ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path schema:unitCode ; sh:minCount 1 ; sh:in ( "LTR" "GRM" "MGM" "A56" ) ] ;
+    sh:property [ sh:path schema:maxValue ; sh:minCount 1 ; sh:datatype xsd:decimal ] .
+
+eur:NationalNodeShape a sh:NodeShape ;
+    sh:targetClass eur:NationalNode ;
+    sh:property [ sh:path eur:nodeOf ; sh:minCount 1 ; sh:maxCount 1 ; sh:class eur:ResearchInfrastructure ] ;
+    sh:property [ sh:path eur:locatedInCountry ; sh:minCount 1 ; sh:maxCount 1 ; sh:class eur:Country ] ;
+    sh:property [ sh:path eur:nodeMember ; sh:minCount 1 ; sh:class eur:Institution ] .
