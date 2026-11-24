@@ -1,0 +1,20 @@
+@prefix eur: <https://w3id.org/euremap/ontology/> .
+@prefix res: <https://w3id.org/euremap/resource/> .
+
+res:step-biomass-production eur:feedsInto res:step-chemical-extraction .
+
+res:step-chemical-extraction eur:feedsInto res:step-bioassays,
+        res:step-chemical-profiling,
+        res:step-chromatography .
+
+res:step-chromatography eur:feedsInto res:step-bioassays,
+        res:step-chemical-profiling,
+        res:step-safety-toxicity,
+        res:step-structure-elucidation,
+        res:step-synthesis .
+
+res:step-structure-elucidation eur:feedsInto res:step-synthesis .
+
+res:step-synthesis eur:feedsInto res:step-bioassays,
+        res:step-safety-toxicity .
+
