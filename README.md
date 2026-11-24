@@ -2,6 +2,8 @@
 
 An RDF/OWL schema plus instance graph for the [EUREMAP Pipeline of Marine Bioprospecting Services Catalogue](https://services.euremap.eu/), with all 71 services, 9 pipeline steps, 11 institutions, 9 countries, 3 research infrastructures and 10 national nodes. It is designed as EUREMAP's semantic control plane: it describes and links services for discovery, routing and governance, and does not hold scientific data.
 
+Website: [https://euremap.github.io/euremap-kg](https://euremap.github.io/euremap-kg)
+
 Source: catalogue listing and the 71 service detail pages (e.g. [EUREMAP_021](https://services.euremap.eu/service/euremap_021/)), retrieved 2026-11-19.
 
 ## Package contents
