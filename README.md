@@ -100,6 +100,7 @@ Key design choices:
 | Q14 | Candidate route Genomics → Structure (NO/FR) | Provider options per step |
 | Q15 | Keyword search for a website search box | "kinase", "antifouling" → 028, 019 |
 | Q16 | Most common analytical techniques (CHMO) | MS 17, HRMS 15, LC-MS 14, NMR 10 services |
+| Q17 | Federated integration with Wikidata | Norway doing the heavy lifting providing services per 1million pop |
 
 Example (Q03), finding every antimicrobial sub-type through the SKOS hierarchy:
 
