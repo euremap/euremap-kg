@@ -455,3 +455,61 @@ Rows: 12
 | Infrared spectroscopy | obo:CHMO_0000630 | 6 | 3 |
 | Polarimetry / optical rotation | obo:CHMO_0000779 | 4 | 3 |
 | Circular dichroism | obo:CHMO_0000323 | 3 | 2 |
+
+## Q17_wikidata_federation.rq
+```sparql
+# Q17 — Federation: local EUREMAP KG joined to the live Wikidata SPARQL endpoint.
+#        Unlike Q01–Q16 this requires a federation-aware engine (Apache Jena arq), not rdflib.
+# Join key: eur:Country skos:exactMatch wd:Qxx (already present in euremap-kg-full.ttl).
+# Country names come from the LOCAL KG only (skos:prefLabel); Wikidata contributes population.
+# servicesPerMillion = service count per 1,000,000 inhabitants (latest non-deprecated P1082).
+PREFIX eur:      <https://w3id.org/euremap/ontology/>
+PREFIX skos:     <http://www.w3.org/2004/02/skos/core#>
+PREFIX p:        <http://www.wikidata.org/prop/>
+PREFIX ps:       <http://www.wikidata.org/prop/statement/>
+PREFIX wikibase: <http://wikiba.se/ontology#>
+
+SELECT ?countryLabel ?wdItem (MAX(?pop) AS ?population)
+       ?services ((?services * 1000000.0) / MAX(?pop) AS ?servicesPerMillion)
+WHERE {
+  # Local: number of EUREMAP services hosted in each country, plus name and WD crosswalk
+  {
+    SELECT ?country (COUNT(DISTINCT ?service) AS ?services)
+    WHERE {
+      ?service a eur:Service ;
+               eur:providedBy/eur:locatedInCountry ?country .
+    }
+    GROUP BY ?country
+  }
+  ?country skos:prefLabel ?countryLabel ;
+           skos:exactMatch ?wdItem .
+  FILTER(STRSTARTS(STR(?wdItem), "http://www.wikidata.org/entity/"))
+  FILTER(LANG(?countryLabel) = "en")
+
+  # Remote: population (P1082) from Wikidata, latest non-deprecated statement
+  SERVICE <https://query.wikidata.org/sparql> {
+    ?wdItem p:P1082 ?stmt .
+    ?stmt ps:P1082 ?pop .
+    ?stmt wikibase:rank ?rank .
+    FILTER(?rank != wikibase:DeprecatedRank)
+  }
+}
+GROUP BY ?countryLabel ?wdItem ?services
+ORDER BY DESC(?servicesPerMillion)
+```
+
+Population values are fetched live from Wikidata (retrieved 2026-11-25); servicesPerMillion rounded to 3 decimal places.
+
+Rows: 9
+
+| countryLabel | wdItem | population | services | servicesPerMillion |
+|---|---|---|---|---|
+| Norway | Q20 | 5627400 | 18 | 3.199 |
+| Portugal | Q45 | 10600000 | 12 | 1.132 |
+| Israel | Q801 | 9840000 | 4 | 0.407 |
+| Belgium | Q31 | 11825551 | 4 | 0.338 |
+| Italy | Q38 | 60599936 | 11 | 0.182 |
+| Spain | Q29 | 48592909 | 6 | 0.123 |
+| France | Q142 | 68605616 | 6 | 0.087 |
+| Germany | Q183 | 84358845 | 7 | 0.083 |
+| United Kingdom | Q145 | 67326569 | 3 | 0.045 |

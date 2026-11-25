@@ -1,0 +1,37 @@
+# Q17 — Federation: local EUREMAP KG joined to the live Wikidata SPARQL endpoint.
+# Join key: eur:Country skos:exactMatch wd:Qxx (already present in euremap-kg-full.ttl).
+# Country names come from the LOCAL KG only (skos:prefLabel); Wikidata contributes population.
+# servicesPerMillion = service count per 1,000,000 inhabitants (latest non-deprecated P1082).
+PREFIX eur:      <https://w3id.org/euremap/ontology/>
+PREFIX skos:     <http://www.w3.org/2004/02/skos/core#>
+PREFIX p:        <http://www.wikidata.org/prop/>
+PREFIX ps:       <http://www.wikidata.org/prop/statement/>
+PREFIX wikibase: <http://wikiba.se/ontology#>
+
+SELECT ?countryLabel ?wdItem (MAX(?pop) AS ?population)
+       ?services ((?services * 1000000.0) / MAX(?pop) AS ?servicesPerMillion)
+WHERE {
+  # Local: number of EUREMAP services hosted in each country, plus name and WD crosswalk
+  {
+    SELECT ?country (COUNT(DISTINCT ?service) AS ?services)
+    WHERE {
+      ?service a eur:Service ;
+               eur:providedBy/eur:locatedInCountry ?country .
+    }
+    GROUP BY ?country
+  }
+  ?country skos:prefLabel ?countryLabel ;
+           skos:exactMatch ?wdItem .
+  FILTER(STRSTARTS(STR(?wdItem), "http://www.wikidata.org/entity/"))
+  FILTER(LANG(?countryLabel) = "en")
+
+  # Remote: population (P1082) from Wikidata, latest non-deprecated statement
+  SERVICE <https://query.wikidata.org/sparql> {
+    ?wdItem p:P1082 ?stmt .
+    ?stmt ps:P1082 ?pop .
+    ?stmt wikibase:rank ?rank .
+    FILTER(?rank != wikibase:DeprecatedRank)
+  }
+}
+GROUP BY ?countryLabel ?wdItem ?services
+ORDER BY DESC(?servicesPerMillion)
