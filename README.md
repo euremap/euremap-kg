@@ -80,7 +80,7 @@ Key design choices:
 | Techniques in text | `eur:hasCapability` | `res:cap-flash-chromatography` (≡ CHMO:0002582) |
 | Scales / amounts | `eur:hasCapacity` | 1–30 mg MGM, purification yield |
 
-## SPARQL examples (see `queries/RESULTS.md` for full output)
+## SPARQL examples (see `queries/README.md` for full output)
 
 | Query | Question answered | Result highlight |
 |---|---|---|
