@@ -17,7 +17,7 @@ Source: catalogue listing and the 71 service detail pages (e.g. [EUREMAP_021](ht
 | `shapes/euremap-shapes.ttl` | SHACL validation shapes (graph currently conforms) |
 | `queries/Q01…Q16.rq` | 17 SPARQL queries; `queries/RESULTS.md` holds the actual results |
 | `euremap-kg-full.ttl` / `.jsonld` | Ontology + data merged (2,932 triples) |
-| `build.py`, `run.py`, `source/` | Reproducible generator, validator/query runner, catalogue snapshot |
+| `build.py`, `generate_and_verify_graph.py`, `source/` | Reproducible generator, validator/query runner, catalogue snapshot |
 
 ## Namespaces
 
@@ -125,7 +125,7 @@ curl -u admin:pw -X POST "http://localhost:3030/euremap/data?default" \
      -H "Content-Type: text/turtle" --data-binary @euremap-kg-full.ttl
 
 # or locally with Python
-pip install rdflib pyshacl && python3 run.py   # validates SHACL and runs every query
+pip install rdflib pyshacl && python3 generate_and_verify_graph.py   # validates SHACL and runs every query
 ```
 
 To refresh from the live catalogue, replace `source/catalogue-snapshot-*.json` and rerun `build.py`.
