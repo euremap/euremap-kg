@@ -25,7 +25,7 @@ Source: catalogue listing and the 71 service detail pages (e.g. [EUREMAP_021](ht
 @prefix eur: <https://w3id.org/euremap/ontology/> .   # schema terms
 @prefix res: <https://w3id.org/euremap/resource/> .   # instances & concepts
 ```
-The `w3id.org/euremap` namespace is provisional until the w3id redirect is registered. Reused vocabularies: DCAT, W3C ORG, SKOS, DCTERMS, PROV-O, Schema.org, FOAF. Alignments: CHMO (analytical chemistry methods), EDAM (bioinformatics), ROR, Wikidata, EU Publications Office country authority, bio.tools. All external identifiers were checked against their source APIs (OLS4, ROR, bio.tools).
+The `w3id.org/euremap` namespace is permanent, with the w3id redirect registered and live. Reused vocabularies: DCAT, W3C ORG, SKOS, DCTERMS, PROV-O, Schema.org, FOAF. Alignments: CHMO (analytical chemistry methods), EDAM (bioinformatics), ROR, Wikidata, EU Publications Office country authority, bio.tools. All external identifiers were checked against their source APIs (OLS4, ROR, bio.tools).
 
 ## Model
 
